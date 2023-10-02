@@ -15,15 +15,15 @@
     "fields": [
       {
         "name": "corpus",
+        "type": "string",
         "title": "Corpus",
-        "description": "Name of a group of pieces",
-        "type": "string"
+        "description": "Name of a group of pieces"
       },
       {
         "name": "piece",
+        "type": "string",
         "title": "Piece identifier",
-        "description": "Name identifier (filename without suffixes) of a piece",
-        "type": "string"
+        "description": "Name identifier (filename without suffixes) of a piece"
       },
       {
         "name": "TimeSig",
@@ -59,9 +59,9 @@
       },
       {
         "name": "volta_mcs",
+        "type": "array",
         "title": "Volta Measure Counts",
-        "description": "For each group of alternative endings, a nested list where each inner list contains the \"mc\" values of the <Measure> tags grouped into one ending.",
-        "type": "array"
+        "description": "For each group of alternative endings, a nested list where each inner list contains the \"mc\" values of the <Measure> tags grouped into one ending."
       },
       {
         "name": "all_notes_qb",
@@ -105,18 +105,18 @@
       },
       {
         "name": "composed_start",
+        "type": "string",
         "title": "Earliest Composition Year",
         "description": "Earliest possible year of composition.",
-        "type": "string",
         "constraints": {
           "pattern": "^\\d{3,4}|\\.{2}$"
         }
       },
       {
         "name": "composed_end",
+        "type": "string",
         "title": "Latest Composition Year",
         "description": "Latest possible year of composition.",
-        "type": "string",
         "constraints": {
           "pattern": "^\\d{3,4}|\\.{2}$"
         }
@@ -131,9 +131,9 @@
       },
       {
         "name": "movementNumber",
+        "type": "integer",
         "title": "Movement Number",
         "description": "Metadata field for the number of a movement. Should be specified as integer, not as a Roman number.",
-        "type": "integer",
         "bareNumber": false
       },
       {
@@ -297,6 +297,10 @@
         "type": "string"
       },
       {
+        "name": "transcriber",
+        "type": "string"
+      },
+      {
         "name": "wdt:P86",
         "type": "string"
       },
@@ -354,10 +358,6 @@
       },
       {
         "name": "reviewer",
-        "type": "string"
-      },
-      {
-        "name": "transcriber",
         "type": "string"
       },
       {
@@ -522,20 +522,20 @@
       "piece"
     ],
     "facet": "metadata",
-    "identifier": "Of40FSKESY4M4Q",
-    "filepath": "metadata/Of40FSKESY4M4Q.schema.yaml",
+    "identifier": "s3ymk2mRscp_sw",
+    "filepath": "metadata/s3ymk2mRscp_sw.schema.yaml",
     "used_in": "distant_listening_corpus"
   },
   "creator": {
     "@context": "https://schema.org/",
     "@type": "SoftwareApplication",
-    "@id": "https://github.com/johentsch/ms3",
+    "@id": "https://pypi.org/project/ms3/",
     "name": "ms3",
     "description": "A parser for MuseScore 3 files and data factory for annotated music corpora.",
     "author": {
       "name": "Johannes Hentschel",
       "@id": "https://orcid.org/0000-0002-1986-9545"
     },
-    "softwareVersion": "2.2.1"
+    "softwareVersion": "2.2.2"
   }
 }
