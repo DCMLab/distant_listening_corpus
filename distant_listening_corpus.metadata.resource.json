@@ -15,15 +15,15 @@
     "fields": [
       {
         "name": "corpus",
-        "type": "string",
         "title": "Corpus",
-        "description": "Name of a group of pieces"
+        "description": "Name of a group of pieces",
+        "type": "string"
       },
       {
         "name": "piece",
-        "type": "string",
         "title": "Piece identifier",
-        "description": "Name identifier (filename without suffixes) of a piece"
+        "description": "Name identifier (filename without suffixes) of a piece",
+        "type": "string"
       },
       {
         "name": "TimeSig",
@@ -59,9 +59,9 @@
       },
       {
         "name": "volta_mcs",
-        "type": "array",
         "title": "Volta Measure Counts",
-        "description": "For each group of alternative endings, a nested list where each inner list contains the \"mc\" values of the <Measure> tags grouped into one ending."
+        "description": "For each group of alternative endings, a nested list where each inner list contains the \"mc\" values of the <Measure> tags grouped into one ending.",
+        "type": "array"
       },
       {
         "name": "all_notes_qb",
@@ -105,18 +105,18 @@
       },
       {
         "name": "composed_start",
-        "type": "string",
         "title": "Earliest Composition Year",
         "description": "Earliest possible year of composition.",
+        "type": "string",
         "constraints": {
           "pattern": "^\\d{3,4}|\\.{2}$"
         }
       },
       {
         "name": "composed_end",
-        "type": "string",
         "title": "Latest Composition Year",
         "description": "Latest possible year of composition.",
+        "type": "string",
         "constraints": {
           "pattern": "^\\d{3,4}|\\.{2}$"
         }
@@ -131,9 +131,9 @@
       },
       {
         "name": "movementNumber",
-        "type": "integer",
         "title": "Movement Number",
         "description": "Metadata field for the number of a movement. Should be specified as integer, not as a Roman number.",
+        "type": "integer",
         "bareNumber": false
       },
       {
@@ -361,15 +361,7 @@
         "type": "string"
       },
       {
-        "name": "part_name_text",
-        "type": "string"
-      },
-      {
         "name": "text",
-        "type": "string"
-      },
-      {
-        "name": "comment",
         "type": "string"
       },
       {
@@ -515,6 +507,10 @@
       {
         "name": "source.1",
         "type": "string"
+      },
+      {
+        "name": "part_name_text",
+        "type": "string"
       }
     ],
     "primaryKey": [
@@ -522,8 +518,8 @@
       "piece"
     ],
     "facet": "metadata",
-    "identifier": "s3ymk2mRscp_sw",
-    "filepath": "metadata/s3ymk2mRscp_sw.schema.yaml",
+    "identifier": "hOaI2uJklKhXDQ",
+    "filepath": "metadata/hOaI2uJklKhXDQ.schema.yaml",
     "used_in": "distant_listening_corpus"
   },
   "creator": {
