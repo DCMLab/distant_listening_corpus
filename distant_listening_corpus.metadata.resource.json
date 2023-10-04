@@ -27,35 +27,57 @@
       },
       {
         "name": "TimeSig",
-        "type": "string"
+        "title": "Time Signatures",
+        "description": "All time signatures in a piece and where they occur. Format: '<MC>: <timesig>, <MC>: <timesig>, ...' Corresponds to a dictionary without outer curly braces.",
+        "type": "string",
+        "constraints": {
+          "pattern": "^{?((\\d+): (\\d+\\/\\d+)(?:, )?)+}?$"
+        }
       },
       {
         "name": "KeySig",
-        "type": "string"
+        "title": "Key Signatures",
+        "description": "All key signatures in a piece and where they occur. Format: '<MC>: <keysig>, <MC>: <keysig>, ...'Corresponds to a dictionary without outer curly braces.",
+        "type": "string",
+        "constraints": {
+          "pattern": "^{?((\\d+): (-?\\d+)(?:, )?)+}?$"
+        }
       },
       {
         "name": "last_mc",
-        "type": "string"
+        "title": "Highest Measure Count",
+        "description": "The highest Measure Count value in the piece. Corresponds to the number of <Measure> tags.",
+        "type": "integer"
       },
       {
         "name": "last_mn",
-        "type": "string"
+        "title": "Highest Measure Number",
+        "description": "The highest Measure Number in the piece. Corresponds roughly to the number of complete bars.",
+        "type": "integer"
       },
       {
         "name": "length_qb",
-        "type": "string"
+        "title": "Quarter Length",
+        "description": "The length of a piece in quarter notes.",
+        "type": "number"
       },
       {
         "name": "last_mc_unfolded",
-        "type": "string"
+        "title": "Highest Measure Count (unfolded)",
+        "description": "The amount of <Measure> tags of a full playthrough, i.e. when all repeats are unfolded. Equals 'last_mc' if piece has no repeat signs.",
+        "type": "integer"
       },
       {
         "name": "last_mn_unfolded",
-        "type": "string"
+        "title": "Highest Measure Number (unfolded)",
+        "description": "The last Measure Number when all repeats are unfolded. Equals 'last_mn' if piece has no repeat signs.",
+        "type": "integer"
       },
       {
         "name": "length_qb_unfolded",
-        "type": "string"
+        "title": "Quarter Length (unfolded)",
+        "description": "The length of full playthrough in quarter notes, i.e. when all repeats are unfolded. Equals 'length_qb' if piece has no repeat signs.",
+        "type": "number"
       },
       {
         "name": "volta_mcs",
@@ -65,27 +87,39 @@
       },
       {
         "name": "all_notes_qb",
-        "type": "string"
+        "title": "Summed Note Duration",
+        "description": "The summed duration of all notes in a given piece, measured in \u2669.",
+        "type": "number"
       },
       {
         "name": "n_onsets",
-        "type": "string"
+        "title": "Number of Note Onsets",
+        "description": "Number of onsets in a piece. Different from the number of entries in the 'notes' table, because that one corresponds to the number of note heads; but notes being tied to do not represent onsets.",
+        "type": "integer"
       },
       {
         "name": "n_onset_positions",
-        "type": "string"
+        "title": "Number of Unique Onset Positions (slices)",
+        "description": "Number of unique onset positions in a piece. Corresponds to the number of slices when performing full expansion.",
+        "type": "integer"
       },
       {
         "name": "guitar_chord_count",
-        "type": "string"
+        "title": "Number of Guitar/Jazz Chord Labels",
+        "description": "Number of guitar/jazz/absolute chord labels in a piece.",
+        "type": "integer"
       },
       {
         "name": "form_label_count",
-        "type": "string"
+        "title": "Number of Form Annotation Labels",
+        "description": "Number of form annotation labels in a piece.",
+        "type": "integer"
       },
       {
         "name": "label_count",
-        "type": "string"
+        "title": "Number of DCML Labels",
+        "description": "Number of chord annotation labels that match the regex of the DCML annotation standard.",
+        "type": "integer"
       },
       {
         "name": "annotated_key",
@@ -532,6 +566,6 @@
       "name": "Johannes Hentschel",
       "@id": "https://orcid.org/0000-0002-1986-9545"
     },
-    "softwareVersion": "2.2.2"
+    "softwareVersion": "2.2.2.post1.dev3+gb1f17d8.d20231002"
   }
 }

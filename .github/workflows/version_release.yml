@@ -15,7 +15,8 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.MS3_BOT_TOKEN }}
           ref: "${{ github.event.pull_request.base.ref }}"
-
+          submodules: recursive
+          
       - name: "Get latest tag version"
         id: tag
         continue-on-error: true
