@@ -48,13 +48,18 @@ jobs:
           fi          
           git commit -m 'chore: files updated with tag: ${{ steps.generate_tag.outputs.new_tag }}'
           git push
-    
+
+      - name: "Create tag"
+        run: |
+          git tag -a "${{ steps.generate_tag.outputs.new_tag }}" -m "chore: files updated with tag: ${{ steps.generate_tag.outputs.new_tag }}"
+          git push origin "${{ steps.generate_tag.outputs.new_tag }}"
+
       - name: "Get ms3 package & apply transform"
         continue-on-error: true
         run: |
             pip install --upgrade pip
             pip install ms3
-            ms3 transform -M -N -X -F -D
+            ms3 transform -M -N -X -F -C -D
 
       - uses: ncipollo/release-action@v1
         with:
@@ -65,4 +70,3 @@ jobs:
           name: "${{ github.event.pull_request.title }}"
           tag: "${{ steps.generate_tag.outputs.new_tag }}"
           makeLatest: "latest"
-          commit: "${{ github.event.pull_request.base.ref }}"
