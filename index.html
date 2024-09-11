@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Distant Listening Corpus &#8212; The Distant Listening Corpus v2.2 documentation</title>
+    <title>Distant Listening Corpus &#8212; The Distant Listening Corpus v2.3 documentation</title>
   
   
   
@@ -113,7 +113,7 @@
   
   
   
-    <p class="title logo__title">The Distant Listening Corpus v2.2 documentation</p>
+    <p class="title logo__title">The Distant Listening Corpus v2.3 documentation</p>
   
 </a></div>
     
@@ -292,7 +292,15 @@ document.write(`
 <section id="distant-listening-corpus">
 <h1><a class="toc-backref" href="#id1" role="doc-backlink">Distant Listening Corpus</a><a class="headerlink" href="#distant-listening-corpus" title="Permalink to this heading">#</a></h1>
 <p>Includes <a class="reference external" href="https://github.com/DCMLab/dcml_corpora">dcml_corpora</a> (public) plus those that are to be published and merged into it.</p>
-<p>It has the <code class="docutils literal notranslate"><span class="pre">version_release</span></code> workflow installed. In order to automatically create a new version release that includes the whole corpus as datapackage, create and merge a Pull Request.</p>
+<p>It has the <code class="docutils literal notranslate"><span class="pre">version_release</span></code> workflow installed. In order to automatically create a new version release that includes
+the whole corpus as datapackage, create and merge a Pull Request. However, three Frescobalid pieces currently have the
+invalid global key <code class="docutils literal notranslate"><span class="pre">e.phrygian</span></code> which is not recognized by the regEx of the DCML standard version 2.3.0. As a
+consequence, the boolean columns <code class="docutils literal notranslate"><span class="pre">globalkey_is_minor</span></code> and <code class="docutils literal notranslate"><span class="pre">localkey_is_minor</span></code> have missing values for these piece,
+which often leads to errors when wanting to load the concatenated dataframes with the correct (boolean) data type.
+To avoid this, the datapackage should currently exclude the three pieces by using</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ms3 transform -M -N -X -D -e &quot;12.31|12.33|12.45&quot;
+</pre></div>
+</div>
 </section>
 <div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Further information:</span></p>
