@@ -13,7 +13,7 @@ and serves as welcome page for both
 For information on how to obtain and use the dataset, please refer to [this documentation page](https://dcmlab.github.io/distant_listening_corpus/introduction).
 
 <!-- TOC -->
-* [The Distant Listening Corpus](#the-distant-listening-corpus)
+* [The Distant Listening Corpus (v2.4)](#the-distant-listening-corpus-v24)
   * [Cite as](#cite-as)
   * [Version history](#version-history)
   * [Getting the data](#getting-the-data)
@@ -32,48 +32,9 @@ For information on how to obtain and use the dataset, please refer to [this docu
   * [Questions, Suggestions, Corrections, Bug Reports](#questions-suggestions-corrections-bug-reports)
   * [License](#license)
 * [Overview](#overview)
-  * [ABC](#abc)
-  * [bach_en_fr_suites](#bach_en_fr_suites)
-  * [bach_solo](#bach_solo)
-  * [bartok_bagatelles](#bartok_bagatelles)
-  * [beethoven_piano_sonatas](#beethoven_piano_sonatas)
-  * [c_schumann_lieder](#c_schumann_lieder)
-  * [chopin_mazurkas](#chopin_mazurkas)
-  * [corelli](#corelli)
-  * [couperin_clavecin](#couperin_clavecin)
-  * [couperin_concerts](#couperin_concerts)
-  * [cpe_bach_keyboard](#cpe_bach_keyboard)
-  * [debussy_suite_bergamasque](#debussy_suite_bergamasque)
-  * [dvorak_silhouettes](#dvorak_silhouettes)
-  * [frescobaldi_fiori_musicali](#frescobaldi_fiori_musicali)
-  * [grieg_lyric_pieces](#grieg_lyric_pieces)
-  * [handel_keyboard](#handel_keyboard)
-  * [jc_bach_sonatas](#jc_bach_sonatas)
-  * [kleine_geistliche_konzerte](#kleine_geistliche_konzerte)
-  * [kozeluh_sonatas](#kozeluh_sonatas)
-  * [liszt_pelerinage](#liszt_pelerinage)
-  * [mahler_kindertotenlieder](#mahler_kindertotenlieder)
-  * [medtner_tales](#medtner_tales)
-  * [mendelssohn_quartets](#mendelssohn_quartets)
-  * [mozart_piano_sonatas](#mozart_piano_sonatas)
-  * [pergolesi_stabat_mater](#pergolesi_stabat_mater)
-  * [peri_euridice](#peri_euridice)
-  * [pleyel_quartets](#pleyel_quartets)
-  * [poulenc_mouvements_perpetuels](#poulenc_mouvements_perpetuels)
-  * [rachmaninoff_piano](#rachmaninoff_piano)
-  * [ravel_piano](#ravel_piano)
-  * [scarlatti_sonatas](#scarlatti_sonatas)
-  * [schubert_winterreise](#schubert_winterreise)
-  * [schulhoff_suite_dansante_en_jazz](#schulhoff_suite_dansante_en_jazz)
-  * [schumann_kinderszenen](#schumann_kinderszenen)
-  * [schumann_liederkreis](#schumann_liederkreis)
-  * [sweelinck_keyboard](#sweelinck_keyboard)
-  * [tchaikovsky_seasons](#tchaikovsky_seasons)
-  * [wagner_overtures](#wagner_overtures)
-  * [wf_bach_sonatas](#wf_bach_sonatas)
 <!-- TOC -->
 
-# The Distant Listening Corpus
+# The Distant Listening Corpus (v2.4)
 
 This corpus has been created within the [DCML corpus initiative](https://github.com/DCMLab/dcml_corpora) and employs
 the [DCML harmony annotation standard](https://github.com/DCMLab/standards).
