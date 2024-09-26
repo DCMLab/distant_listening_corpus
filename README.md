@@ -13,7 +13,7 @@ and serves as welcome page for both
 For information on how to obtain and use the dataset, please refer to [this documentation page](https://dcmlab.github.io/distant_listening_corpus/introduction).
 
 <!-- TOC -->
-* [The Distant Listening Corpus (v2.4)](#the-distant-listening-corpus-v24)
+* [The Distant Listening Corpus (v2.5)](#the-distant-listening-corpus-v24)
   * [Cite as](#cite-as)
   * [Version history](#version-history)
   * [Getting the data](#getting-the-data)
@@ -34,7 +34,7 @@ For information on how to obtain and use the dataset, please refer to [this docu
 * [Overview](#overview)
 <!-- TOC -->
 
-# The Distant Listening Corpus (v2.4)
+# The Distant Listening Corpus (v2.5)
 
 This corpus has been created within the [DCML corpus initiative](https://github.com/DCMLab/dcml_corpora) and employs
 the [DCML harmony annotation standard](https://github.com/DCMLab/standards).
