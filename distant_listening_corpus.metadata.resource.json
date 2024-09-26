@@ -15,111 +15,111 @@
     "fields": [
       {
         "name": "corpus",
-        "type": "string",
         "title": "Corpus",
-        "description": "Name of a group of pieces"
+        "description": "Name of a group of pieces",
+        "type": "string"
       },
       {
         "name": "piece",
-        "type": "string",
         "title": "Piece identifier",
-        "description": "Name identifier (filename without suffixes) of a piece"
+        "description": "Name identifier (filename without suffixes) of a piece",
+        "type": "string"
       },
       {
         "name": "TimeSig",
-        "type": "string",
         "title": "Time Signatures",
         "description": "All time signatures in a piece and where they occur. Format: '<MC>: <timesig>, <MC>: <timesig>, ...' Corresponds to a dictionary without outer curly braces.",
+        "type": "string",
         "constraints": {
           "pattern": "^{?((\\d+): (\\d+\\/\\d+)(?:, )?)+}?$"
         }
       },
       {
         "name": "KeySig",
-        "type": "string",
         "title": "Key Signatures",
         "description": "All key signatures in a piece and where they occur. Format: '<MC>: <keysig>, <MC>: <keysig>, ...'Corresponds to a dictionary without outer curly braces.",
+        "type": "string",
         "constraints": {
           "pattern": "^{?((\\d+): (-?\\d+)(?:, )?)+}?$"
         }
       },
       {
         "name": "last_mc",
-        "type": "integer",
         "title": "Highest Measure Count",
-        "description": "The highest Measure Count value in the piece. Corresponds to the number of <Measure> tags."
+        "description": "The highest Measure Count value in the piece. Corresponds to the number of <Measure> tags.",
+        "type": "integer"
       },
       {
         "name": "last_mn",
-        "type": "integer",
         "title": "Highest Measure Number",
-        "description": "The highest Measure Number in the piece. Corresponds roughly to the number of complete bars."
+        "description": "The highest Measure Number in the piece. Corresponds roughly to the number of complete bars.",
+        "type": "integer"
       },
       {
         "name": "length_qb",
-        "type": "number",
         "title": "Quarter Length",
-        "description": "The length of a piece in quarter notes."
+        "description": "The length of a piece in quarter notes.",
+        "type": "number"
       },
       {
         "name": "last_mc_unfolded",
-        "type": "integer",
         "title": "Highest Measure Count (unfolded)",
-        "description": "The amount of <Measure> tags of a full playthrough, i.e. when all repeats are unfolded. Equals 'last_mc' if piece has no repeat signs."
+        "description": "The amount of <Measure> tags of a full playthrough, i.e. when all repeats are unfolded. Equals 'last_mc' if piece has no repeat signs.",
+        "type": "integer"
       },
       {
         "name": "last_mn_unfolded",
-        "type": "integer",
         "title": "Highest Measure Number (unfolded)",
-        "description": "The last Measure Number when all repeats are unfolded. Equals 'last_mn' if piece has no repeat signs."
+        "description": "The last Measure Number when all repeats are unfolded. Equals 'last_mn' if piece has no repeat signs.",
+        "type": "integer"
       },
       {
         "name": "length_qb_unfolded",
-        "type": "number",
         "title": "Quarter Length (unfolded)",
-        "description": "The length of full playthrough in quarter notes, i.e. when all repeats are unfolded. Equals 'length_qb' if piece has no repeat signs."
+        "description": "The length of full playthrough in quarter notes, i.e. when all repeats are unfolded. Equals 'length_qb' if piece has no repeat signs.",
+        "type": "number"
       },
       {
         "name": "volta_mcs",
-        "type": "array",
         "title": "Volta Measure Counts",
-        "description": "For each group of alternative endings, a nested list where each inner list contains the \"mc\" values of the <Measure> tags grouped into one ending."
+        "description": "For each group of alternative endings, a nested list where each inner list contains the \"mc\" values of the <Measure> tags grouped into one ending.",
+        "type": "array"
       },
       {
         "name": "all_notes_qb",
-        "type": "number",
         "title": "Summed Note Duration",
-        "description": "The summed duration of all notes in a given piece, measured in \u2669."
+        "description": "The summed duration of all notes in a given piece, measured in \u2669.",
+        "type": "number"
       },
       {
         "name": "n_onsets",
-        "type": "integer",
         "title": "Number of Note Onsets",
-        "description": "Number of onsets in a piece. Different from the number of entries in the 'notes' table, because that one corresponds to the number of note heads; but notes being tied to do not represent onsets."
+        "description": "Number of onsets in a piece. Different from the number of entries in the 'notes' table, because that one corresponds to the number of note heads; but notes being tied to do not represent onsets.",
+        "type": "integer"
       },
       {
         "name": "n_onset_positions",
-        "type": "integer",
         "title": "Number of Unique Onset Positions (slices)",
-        "description": "Number of unique onset positions in a piece. Corresponds to the number of slices when performing full expansion."
+        "description": "Number of unique onset positions in a piece. Corresponds to the number of slices when performing full expansion.",
+        "type": "integer"
       },
       {
         "name": "guitar_chord_count",
-        "type": "integer",
         "title": "Number of Guitar/Jazz Chord Labels",
-        "description": "Number of guitar/jazz/absolute chord labels in a piece."
+        "description": "Number of guitar/jazz/absolute chord labels in a piece.",
+        "type": "integer"
       },
       {
         "name": "form_label_count",
-        "type": "integer",
         "title": "Number of Form Annotation Labels",
-        "description": "Number of form annotation labels in a piece."
+        "description": "Number of form annotation labels in a piece.",
+        "type": "integer"
       },
       {
         "name": "label_count",
-        "type": "integer",
         "title": "Number of DCML Labels",
-        "description": "Number of chord annotation labels that match the regex of the DCML annotation standard."
+        "description": "Number of chord annotation labels that match the regex of the DCML annotation standard.",
+        "type": "integer"
       },
       {
         "name": "annotated_key",
@@ -139,18 +139,18 @@
       },
       {
         "name": "composed_start",
-        "type": "string",
         "title": "Earliest Composition Year",
         "description": "Earliest possible year of composition.",
+        "type": "string",
         "constraints": {
           "pattern": "^\\d{3,4}|\\.{2}$"
         }
       },
       {
         "name": "composed_end",
-        "type": "string",
         "title": "Latest Composition Year",
         "description": "Latest possible year of composition.",
+        "type": "string",
         "constraints": {
           "pattern": "^\\d{3,4}|\\.{2}$"
         }
@@ -165,9 +165,9 @@
       },
       {
         "name": "movementNumber",
-        "type": "integer",
         "title": "Movement Number",
         "description": "Metadata field for the number of a movement. Should be specified as integer, not as a Roman number.",
+        "type": "integer",
         "bareNumber": false
       },
       {
@@ -335,30 +335,6 @@
         "type": "string"
       },
       {
-        "name": "wdt:P86",
-        "type": "string"
-      },
-      {
-        "name": "sequencer",
-        "type": "string"
-      },
-      {
-        "name": "staff_5_ambitus",
-        "type": "string"
-      },
-      {
-        "name": "staff_5_instrument",
-        "type": "string"
-      },
-      {
-        "name": "staff_6_ambitus",
-        "type": "string"
-      },
-      {
-        "name": "staff_6_instrument",
-        "type": "string"
-      },
-      {
         "name": "imslp.1",
         "type": "string"
       },
@@ -391,11 +367,31 @@
         "type": "string"
       },
       {
+        "name": "staff_5_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_5_ambitus",
+        "type": "string"
+      },
+      {
         "name": "extension",
         "type": "string"
       },
       {
+        "name": "staff_6_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_6_instrument",
+        "type": "string"
+      },
+      {
         "name": "PDF",
+        "type": "string"
+      },
+      {
+        "name": "wdt:P86",
         "type": "string"
       },
       {
@@ -531,10 +527,6 @@
         "type": "string"
       },
       {
-        "name": "viaf.1",
-        "type": "string"
-      },
-      {
         "name": "source.1",
         "type": "string"
       },
@@ -548,8 +540,8 @@
       "piece"
     ],
     "facet": "metadata",
-    "identifier": "P9CnxanoVdh8QQ",
-    "filepath": "metadata/P9CnxanoVdh8QQ.schema.yaml",
+    "identifier": "ExNgCbkWw3A9Pg",
+    "filepath": "metadata/ExNgCbkWw3A9Pg.schema.yaml",
     "used_in": "distant_listening_corpus"
   },
   "creator": {
@@ -564,6 +556,6 @@
     },
     "softwareVersion": "2.5.3"
   },
-  "git_revision": "45ab8ee3ef325e63759839869a162521ed4e115e",
-  "git_tag": "v2.3-5-g45ab8ee"
+  "git_revision": "5bd0da36c330c10cfb836885a6d44dc47798fa84",
+  "git_tag": "v2.3-3-g5bd0da3"
 }
