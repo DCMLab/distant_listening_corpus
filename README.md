@@ -547,7 +547,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 
 |file_name|measures|labels|standard|
 |---------|-------:|-----:|--------|
-|op06n01  |      18|    25|2.3.0   |
+|op06n01  |      18|    28|2.3.0   |
 |op06n02  |      30|    57|2.3.0   |
 |op06n03  |      24|    32|2.3.0   |
 |op06n04  |      12|    42|2.3.0   |
@@ -555,12 +555,12 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |op06n06  |      25|    53|2.3.0   |
 |op06n07  |     118|   110|2.3.0   |
 |op06n08  |      32|    70|2.3.0   |
-|op06n09  |      70|    88|2.3.0   |
+|op06n09  |      70|    86|2.3.0   |
 |op06n10  |     102|   224|2.3.0   |
 |op06n11  |      87|   100|2.3.0   |
 |op06n12  |      44|    77|2.3.0   |
 |op06n13  |      26|    42|2.3.0   |
-|op06n14  |     218|   199|2.3.0   |
+|op06n14  |     218|   242|2.3.0   |
 
 
 ## beethoven_piano_sonatas
@@ -672,7 +672,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |op13no6 Die stille Lotosblume          |      47|   118|2.3.0   |
 |op23no1 Was weinst du Blumlein         |      68|   139|2.3.0   |
 |op23no2 An einem lichten Morgen        |      38|    94|2.3.0   |
-|op23no3 Geheimes Flustern hier und dort|      55|    74|2.3.0   |
+|op23no3 Geheimes Flustern hier und dort|      50|    74|2.3.0   |
 |op23no4 Auf einem grunen Hugel         |      30|    94|2.3.0   |
 |op23no5 Das ist ein Tag der klingen mag|      45|   122|2.3.0   |
 |op23no6 O Lust o Lust                  |      40|    90|2.3.0   |
@@ -737,6 +737,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |BI89-4op24-4 |     146|   294|2.3.0   |
 |BI93-1op67-1 |      60|    94|2.3.0   |
 |BI93-2op67-3 |      56|    97|2.3.0   |
+|BI105-1op30-1|      53|     0|        |
 
 
 ## corelli
@@ -1010,72 +1011,72 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 
 |file_name|measures|labels|standard|
 |---------|-------:|-----:|--------|
-|         |      19|     0|        |
-|         |      12|     0|        |
-|         |       3|     0|        |
-|         |       7|     0|        |
-|         |       4|     0|        |
-|         |      14|     0|        |
-|         |      14|     0|        |
-|         |       8|     0|        |
-|         |      18|     0|        |
-|         |     125|     0|        |
-|         |      48|   216|2.3.0   |
-|         |      25|    42|2.3.0   |
-|         |     166|   244|2.3.0   |
-|         |     192|   340|2.3.0   |
-|         |      31|    91|2.3.0   |
-|         |     133|   215|2.3.0   |
-|         |     192|   280|2.3.0   |
-|         |      41|    88|2.3.0   |
-|         |     100|   165|2.3.0   |
-|         |     156|     0|        |
-|         |      17|     0|        |
-|         |     131|     0|        |
-|         |     104|   386|2.3.0   |
-|         |      60|   114|2.3.0   |
-|         |     229|   390|2.3.0   |
-|         |     234|   450|2.3.0   |
-|         |      69|     0|        |
-|         |      39|     0|        |
-|         |      44|     0|        |
-|         |      77|     0|        |
-|         |      49|     0|        |
-|         |     160|     0|        |
-|         |      42|     0|        |
-|         |      25|     0|        |
-|         |      68|     0|        |
-|         |     128|     0|        |
-|         |      32|     0|        |
-|         |     135|     0|        |
-|         |      29|     0|        |
-|         |      30|     0|        |
-|         |      37|     0|        |
-|         |      66|     0|        |
-|         |      30|     0|        |
-|         |     122|     0|        |
-|         |     176|   435|2.3.0   |
-|         |      71|   164|2.3.0   |
-|         |      24|    58|2.3.0   |
-|         |      48|     0|        |
-|         |     149|   425|2.3.0   |
-|         |      47|     0|        |
-|         |      73|   101|2.3.0   |
-|         |     172|     0|        |
-|         |      41|     0|        |
-|         |      52|     0|        |
-|         |      94|     0|        |
-|         |      41|     0|        |
-|         |      32|     0|        |
-|         |      58|     0|        |
-|         |     141|     0|        |
-|         |      81|     0|        |
-|         |      73|     0|        |
-|         |      52|     0|        |
-|         |     224|     0|        |
-|         |      90|     0|        |
-|         |      44|     0|        |
-|         |      70|     0|        |
+|wq112n02 |      19|    38|2.3.0   |
+|wq112n08 |      12|    56|2.3.0   |
+|wq112n15 |      13|    28|2.3.0   |
+|wq113n03 |       7|    29|2.3.0   |
+|wq114n07 |       4|    45|2.3.0   |
+|wq117n11 |      14|    35|2.3.0   |
+|wq117n12 |      14|    21|2.3.0   |
+|wq117n13 |       3|    86|2.3.0   |
+|wq117n14 |      26|    36|2.3.0   |
+|wq119n07 |     123|   340|2.3.0   |
+|wq50n01a |      48|   216|2.3.0   |
+|wq50n01b |      25|    42|2.3.0   |
+|wq50n01c |     166|   244|2.3.0   |
+|wq50n02a |     192|   340|2.3.0   |
+|wq50n02b |      31|    91|2.3.0   |
+|wq50n02c |     133|   215|2.3.0   |
+|wq50n03a |     192|   280|2.3.0   |
+|wq50n03b |      41|    88|2.3.0   |
+|wq50n03c |     100|   165|2.3.0   |
+|wq50n04a |     156|   329|2.3.0   |
+|wq50n04b |      17|    73|2.3.0   |
+|wq50n04c |     131|   333|2.3.0   |
+|wq50n05a |     104|   386|2.3.0   |
+|wq50n05b |      60|   114|2.3.0   |
+|wq50n05c |     229|   390|2.3.0   |
+|wq50n06  |     234|   450|2.3.0   |
+|wq55n01a |      69|    95|2.3.0   |
+|wq55n01b |      39|    58|2.3.0   |
+|wq55n01c |      44|    78|2.3.0   |
+|wq55n02a |      77|   167|2.3.0   |
+|wq55n02b |      49|   116|2.3.0   |
+|wq55n02c |     160|   163|2.3.0   |
+|wq55n03a |      42|    89|2.3.0   |
+|wq55n03b |      25|    41|2.3.0   |
+|wq55n03c |      68|   147|2.3.0   |
+|wq55n04a |     128|   314|2.3.0   |
+|wq55n04b |      32|   121|2.3.0   |
+|wq55n04c |     135|   266|2.3.0   |
+|wq55n05a |      29|   102|2.3.0   |
+|wq55n05b |      30|    64|2.3.0   |
+|wq55n05c |      37|    70|2.3.0   |
+|wq55n06a |      66|   229|2.3.0   |
+|wq55n06b |      30|    89|2.3.0   |
+|wq55n06c |     122|   202|2.3.0   |
+|wq56n01  |     176|   435|2.3.0   |
+|wq56n02a |      71|   164|2.3.0   |
+|wq56n02b |      24|    58|2.3.0   |
+|wq56n02c |      48|   115|2.3.0   |
+|wq56n03  |     149|   425|2.3.0   |
+|wq56n04a |      47|   161|2.3.0   |
+|wq56n04b |      73|   101|2.3.0   |
+|wq56n05  |     172|   308|2.3.0   |
+|wq56n06a |      41|    83|2.3.0   |
+|wq56n06b |      52|    90|2.3.0   |
+|wq57n01  |      94|   557|2.3.0   |
+|wq57n02a |      41|   116|2.3.0   |
+|wq57n02b |      32|    68|2.3.0   |
+|wq57n02c |      58|   139|2.3.0   |
+|wq57n03  |     141|   283|2.3.0   |
+|wq57n04a |      81|   175|2.3.0   |
+|wq57n04b |      73|   166|2.3.0   |
+|wq57n04c |      52|    98|2.3.0   |
+|wq57n05  |     224|   366|2.3.0   |
+|wq57n06a |      90|   161|2.3.0   |
+|wq57n06b |      44|   106|2.3.0   |
+|wq57n06c |      70|   135|2.3.0   |
 
 
 ## debussy_suite_bergamasque
@@ -1258,7 +1259,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |wa04op05no4a_Allegro                |     117|   197|2.3.0   |
 |wa04op05no4b_Rondeaux               |      69|   114|2.3.0   |
 |wa05op05no5a_Allegro_Assai          |      99|   209|2.3.0   |
-|wa05op05no5b_Adagio                 |      55|   130|2.3.0   |
+|wa05op05no5b_Adagio                 |      55|   131|2.3.0   |
 |wa05op05no5c_Prestissimo            |     102|   205|2.3.0   |
 |wa06op05no6a_Grave                  |      62|   148|2.3.0   |
 |wa06op05no6b_Allegro_Moderato       |      77|   281|2.3.0   |
@@ -1271,7 +1272,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |wa09op17no3b_Allegro                |     111|   186|2.3.0   |
 |wa10op17no4a_Allegro                |      98|   226|2.3.0   |
 |wa10op17no4b_Presto_Assai           |      99|   119|2.3.0   |
-|wa11op17no5a_Allegro                |     102|   213|2.3.0   |
+|wa11op17no5a_Allegro                |     102|   214|2.3.0   |
 |wa11op17no5b_Presto                 |     127|   229|2.3.0   |
 |wa12op17no6a_Allegro                |     118|   194|2.3.0   |
 |wa12op17no6b_Andante                |      74|   166|2.3.0   |
@@ -1486,6 +1487,38 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |06op80d  |     461|   493|2.1.0   |
 
 
+## monteverdi_madrigals
+
+|      file_name      |measures|labels|standard|
+|---------------------|-------:|-----:|--------|
+|2-12                 |      93|   225|2.1.0   |
+|3-09                 |      84|   190|2.1.0   |
+|3-11                 |      84|   190|2.1.0   |
+|4-19                 |     111|   185|2.1.0   |
+|5-01                 |      67|   176|2.1.0   |
+|5-03                 |      74|   152|2.1.0   |
+|5-04a                |      82|   128|2.1.0   |
+|5-04c                |      53|   105|2.1.0   |
+|5-04d                |      59|   125|2.1.0   |
+|5-04e                |      95|   219|2.1.0   |
+|5-05b                |      58|    98|2.1.0   |
+|5-05c                |      75|   151|2.1.0   |
+|5-06                 |      53|   105|2.1.0   |
+|5-07                 |      59|   125|2.1.0   |
+|5-08                 |      95|   219|2.1.0   |
+|5-09                 |      84|   167|2.1.0   |
+|5-10                 |      58|    98|2.1.0   |
+|5-11                 |      75|   151|2.1.0   |
+|5-14                 |      91|   167|2.1.0   |
+|5-15                 |      84|   167|2.1.0   |
+|5-17                 |      57|   104|2.1.0   |
+|6-01a                |      34|    83|2.1.0   |
+|8-18                 |     106|   295|2.1.0   |
+|8-19                 |     142|   281|2.1.0   |
+|9-12                 |      26|    52|2.1.0   |
+|laudate_pueri_dominum|     177|   386|2.1.0   |
+
+
 ## mozart_piano_sonatas
 
 |file_name|measures|labels|standard|
@@ -1557,6 +1590,11 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |05. Quis est homo qui non fleret|      49|   122|2.2.0   |
 |06. Vidit suum dulcem natum     |      43|   153|2.2.0   |
 |07. Eja, Mater fons amois       |      94|   212|2.2.0   |
+|08. Fac ut ardeat cor meum      |      72|     0|        |
+|09. Sancta mater, istud agas    |      84|     0|        |
+|10. Fac ut portem Christi mortem|      26|     0|        |
+|11. Inflammatus et accensus     |      52|     0|        |
+|12. Quando corpus morietur      |      94|     0|        |
 
 
 ## peri_euridice
@@ -1575,7 +1613,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 
 |file_name |measures|labels|standard|
 |----------|-------:|-----:|--------|
-|b307op2n1a|     197|   403|2.3.0   |
+|b307op2n1a|     197|   402|2.3.0   |
 |b307op2n1b|     107|   190|2.3.0   |
 |b307op2n1c|      78|   156|2.3.0   |
 |b309op2n3a|      98|   189|2.3.0   |
@@ -1627,7 +1665,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |Ravel_-_Jeux_dEau                          |      85|   257|2.1.0   |
 |Ravel_-_Miroirs_I._Noctuelles              |     132|     0|        |
 |Ravel_-_Miroirs_II._Oiseaux_tristes        |      32|     0|        |
-|Ravel_-_Miroirs_III._Une_Barque_sur_l'ocean|     143|   237|2.1.0   |
+|Ravel_-_Miroirs_III._Une_Barque_sur_l'ocean|     143|   236|2.1.0   |
 |Ravel_-_Miroirs_IV._Alborada_del_gracioso  |     229|   368|2.1.0   |
 
 
@@ -1740,9 +1778,9 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 
 |            file_name            |measures|labels|standard|
 |---------------------------------|-------:|-----:|--------|
-|suite_dansante_en_jazz_1_stomp   |      46|    96|2.3.0   |
+|suite_dansante_en_jazz_1_stomp   |      46|    97|2.3.0   |
 |suite_dansante_en_jazz_2_strait  |      39|    87|2.3.0   |
-|suite_dansante_en_jazz_3_waltz   |      70|    91|2.3.0   |
+|suite_dansante_en_jazz_3_waltz   |      70|    92|2.3.0   |
 |suite_dansante_en_jazz_4_tango   |      40|    63|2.3.0   |
 |suite_dansante_en_jazz_5_slow    |      41|    96|2.3.0   |
 |suite_dansante_en_jazz_6_fox-trot|      50|    53|2.3.0   |
@@ -1814,8 +1852,8 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 
 |                        file_name                         |measures|labels|standard|
 |----------------------------------------------------------|-------:|-----:|--------|
-|WWV090_Tristan_01_Vorspiel-Prelude_Ricordi1888Floridia    |     111|   360|2.1.0   |
-|WWV096-Meistersinger_01_Vorspiel-Prelude_SchottKleinmichel|     222|  1075|2.1.0   |
+|WWV090_Tristan_01_Vorspiel-Prelude_Ricordi1888Floridia    |     111|   359|2.1.0   |
+|WWV096-Meistersinger_01_Vorspiel-Prelude_SchottKleinmichel|     222|  1074|2.1.0   |
 
 
 ## wf_bach_sonatas
