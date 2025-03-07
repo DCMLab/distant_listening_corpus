@@ -41,25 +41,11 @@ the [DCML harmony annotation standard](https://github.com/DCMLab/standards).
 
 The publication covers the following public corpora (the DOI links always point at the latest version respectively):
 
-* [Ludwig van Beethoven - String Quartets](https://zenodo.org/doi/10.5281/zenodo.7441343)
-* [Ludwig van Beethoven - Piano Sonatas](https://doi.org/10.5281/zenodo.7473560)
-* [Frédéric Chopin - Mazurkas](https://doi.org/10.5281/zenodo.7473566)
-* [Arcangelo Corelli – Trio Sonatas](https://zenodo.org/doi/10.5281/zenodo.7504011)
-* [Claude Debussy - Suite Bergamasque](https://doi.org/10.5281/zenodo.7473568)
-* [Antonín Dvořák - Silhouettes](https://doi.org/10.5281/zenodo.7473576)
-* [Edvard Grieg - Lyric Pieces](https://doi.org/10.5281/zenodo.7473578)
-* [Franz Liszt - Années de Pèlerinage](https://doi.org/10.5281/zenodo.7473580)
-* [Nikolai Medtner - Tales](https://doi.org/10.5281/zenodo.7473528)
-* [Wolfgang Amadeus Mozart - Piano Sonatas](https://zenodo.org/doi/10.5281/zenodo.7424962)
-* [Robert Schumann - Kinderszenen](https://doi.org/10.5281/zenodo.7473582)
-* [Pyotr Tchaikovsky - The Seasons](https://doi.org/10.5281/zenodo.7473586)
-
-Moreover, it covers the following corpora that will become public with publication of the DLC data report:
 
 * J.S. Bach – English and French Suites
 * J.S. Bach – Solo Pieces (A corpus of annotated scores)
 * Béla Bartók – 14 Bagatelles, Op. 6
-* François Couperin – L'art de toucher le clavecin
+* [François Couperin – L'art de toucher le clavecin](https://doi.org/10.5281/zenodo.14984598)
 * François Couperin – Concerts Royaux
 * Clara Schumann – Lieder
 * Carl Philipp Emanuel Bach – Works for Keyboard
@@ -74,7 +60,7 @@ Moreover, it covers the following corpora that will become public with publicati
 * Jacopo Peri – Euridice (1600)
 * Ignaz Pleyel – String Quartets
 * Francis Poulenc – Mouvements Perpetuels
-* Sergei Rachmaninoff – Piano Pieces
+* [Sergei Rachmaninoff – Piano Pieces](https://doi.org/10.5281/zenodo.14984155)
 * Maurice Ravel – Piano Pieces
 * Domenico Scarlatti – Keyboard Sonatas
 * Franz Schubert – Winterreise
@@ -82,6 +68,32 @@ Moreover, it covers the following corpora that will become public with publicati
 * Robert Schumann – Liederkreis
 * Jan Sweelinck – Organ Pieces
 * Richard Wagner – OverturesWilhelm Friedemann Bach – Piano Sonatas
+
+
+_Hentschel, J., Rammos, Y., Neuwirth, M., Moss, F. C., & Rohrmeier, M. (2024). An annotated corpus of tonal piano music 
+from the long 19th century. Empirical Musicology Review, 18(1), 84–95. https://doi.org/10.18061/emr.v18i1.8903_
+
+* [Ludwig van Beethoven - Piano Sonatas](https://doi.org/10.5281/zenodo.7473560)
+* [Frédéric Chopin - Mazurkas](https://doi.org/10.5281/zenodo.7473566)
+* [Arcangelo Corelli – Trio Sonatas](https://zenodo.org/doi/10.5281/zenodo.7504011)
+* [Claude Debussy - Suite Bergamasque](https://doi.org/10.5281/zenodo.7473568)
+* [Antonín Dvořák - Silhouettes](https://doi.org/10.5281/zenodo.7473576)
+* [Edvard Grieg - Lyric Pieces](https://doi.org/10.5281/zenodo.7473578)
+* [Franz Liszt - Années de Pèlerinage](https://doi.org/10.5281/zenodo.7473580)
+* [Nikolai Medtner - Tales](https://doi.org/10.5281/zenodo.7473528)
+* [Robert Schumann - Kinderszenen](https://doi.org/10.5281/zenodo.7473582)
+* [Pyotr Tchaikovsky - The Seasons](https://doi.org/10.5281/zenodo.7473586)
+
+_Hentschel, J., Neuwirth, M., & Rohrmeier, M. (2021). The Annotated Mozart Sonatas: Score, harmony, and cadence. 
+Transactions of the International Society for Music Information Retrieval, 4(1), 67–80. https://doi.org/10.5334/tismir.63_
+
+* [Wolfgang Amadeus Mozart - Piano Sonatas](https://zenodo.org/doi/10.5281/zenodo.7424962)
+
+_Neuwirth, M., Harasim, D., Moss, F. C., & Rohrmeier, M. (2018). The Annotated Beethoven Corpus (ABC): 
+A Dataset of Harmonic Analyses of All Beethoven String Quartets. Frontiers in Digital Humanities, 
+5(July), 1–5. https://doi.org/10.3389/fdigh.2018.00016_
+
+* [Ludwig van Beethoven - String Quartets](https://zenodo.org/doi/10.5281/zenodo.7441343)
 
 
 ## Cite as
