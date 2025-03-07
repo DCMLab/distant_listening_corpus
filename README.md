@@ -49,7 +49,7 @@ The publication covers the following public corpora (the DOI links always point 
 * François Couperin – Concerts Royaux
 * Clara Schumann – Lieder
 * Carl Philipp Emanuel Bach – Works for Keyboard
-* Girolamo Frescobaldi (1583-1643) – Fiori Musicali, op. 12 (1635)
+* [Girolamo Frescobaldi (1583-1643) – Fiori Musicali, op. 12 (1635)](https://doi.org/10.5281/zenodo.14984864)
 * Georg Friedrich Händel – Grobschmied Variations (The Harmonious Blacksmith), HWV 430
 * J.C. Bach – Keyboard Sonatas
 * Heinrich Schütz – Kleine Geistliche Konzerte
