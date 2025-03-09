@@ -48,21 +48,21 @@ The publication covers the following public corpora (the DOI links always point 
 * [François Couperin – L'art de toucher le clavecin](https://doi.org/10.5281/zenodo.14984598)
 * François Couperin – Concerts Royaux
 * Clara Schumann – Lieder
-* Carl Philipp Emanuel Bach – Works for Keyboard
+* [Carl Philipp Emanuel Bach – Works for Keyboard](https://doi.org/10.5281/zenodo.14996326)
 * [Girolamo Frescobaldi (1583-1643) – Fiori Musicali, op. 12 (1635)](https://doi.org/10.5281/zenodo.14984864)
 * Georg Friedrich Händel – Grobschmied Variations (The Harmonious Blacksmith), HWV 430
-* J.C. Bach – Keyboard Sonatas
+* [J.C. Bach – Keyboard Sonatas](https://doi.org/10.5281/zenodo.14996292)
 * Heinrich Schütz – Kleine Geistliche Konzerte
 * Leopold Koželuch – Piano Sonatas
 * Gustav Mahler – Kindertotenlieder
-* Felix Mendelssohn – String Quartets
-* Giovanni Battista Pergolesi – Stabat Mater (1736)
+* [Felix Mendelssohn – String Quartets](https://doi.org/10.5281/zenodo.14996150)
+* [Giovanni Battista Pergolesi – Stabat Mater (1736)](https://doi.org/10.5281/zenodo.14990099)
 * Jacopo Peri – Euridice (1600)
 * Ignaz Pleyel – String Quartets
 * Francis Poulenc – Mouvements Perpetuels
 * [Sergei Rachmaninoff – Piano Pieces](https://doi.org/10.5281/zenodo.14984155)
 * Maurice Ravel – Piano Pieces
-* Domenico Scarlatti – Keyboard Sonatas
+* [Domenico Scarlatti – Keyboard Sonatas](https://doi.org/10.5281/zenodo.14992884)
 * Franz Schubert – Winterreise
 * Erwin Schulhoff – Suite dansante en jazz
 * Robert Schumann – Liederkreis
@@ -75,7 +75,6 @@ from the long 19th century. Empirical Musicology Review, 18(1), 84–95. https:/
 
 * [Ludwig van Beethoven - Piano Sonatas](https://doi.org/10.5281/zenodo.7473560)
 * [Frédéric Chopin - Mazurkas](https://doi.org/10.5281/zenodo.7473566)
-* [Arcangelo Corelli – Trio Sonatas](https://zenodo.org/doi/10.5281/zenodo.7504011)
 * [Claude Debussy - Suite Bergamasque](https://doi.org/10.5281/zenodo.7473568)
 * [Antonín Dvořák - Silhouettes](https://doi.org/10.5281/zenodo.7473576)
 * [Edvard Grieg - Lyric Pieces](https://doi.org/10.5281/zenodo.7473578)
@@ -83,6 +82,10 @@ from the long 19th century. Empirical Musicology Review, 18(1), 84–95. https:/
 * [Nikolai Medtner - Tales](https://doi.org/10.5281/zenodo.7473528)
 * [Robert Schumann - Kinderszenen](https://doi.org/10.5281/zenodo.7473582)
 * [Pyotr Tchaikovsky - The Seasons](https://doi.org/10.5281/zenodo.7473586)
+
+_Hentschel, J., Moss, F. C., Neuwirth, M., & Rohrmeier, M. A. (2021). A semi-automated workflow paradigm for the distributed creation and curation of expert annotations. Proceedings of the 22nd International Society for Music Information Retrieval Conference, ISMIR, 262–269. https://doi.org/10.5281/ZENODO.5624417_
+
+* [Arcangelo Corelli – Trio Sonatas](https://zenodo.org/doi/10.5281/zenodo.7504011)
 
 _Hentschel, J., Neuwirth, M., & Rohrmeier, M. (2021). The Annotated Mozart Sonatas: Score, harmony, and cadence. 
 Transactions of the International Society for Music Information Retrieval, 4(1), 67–80. https://doi.org/10.5334/tismir.63_
