@@ -345,12 +345,12 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |n07op59-1_01|     400|   482|1.0.0   |
 |n07op59-1_02|     476|   635|1.0.0   |
 |n07op59-1_03|     132|   374|1.0.0   |
-|n07op59-1_04|     327|   605|1.0.0   |
+|n07op59-1_04|     327|   604|1.0.0   |
 |n08op59-2_01|     255|   445|1.0.0   |
 |n08op59-2_02|     157|   326|1.0.0   |
 |n08op59-2_03|     134|   262|1.0.0   |
 |n08op59-2_04|     409|   567|1.0.0   |
-|n09op59-3_01|     269|   515|1.0.0   |
+|n09op59-3_01|     269|   516|1.0.0   |
 |n09op59-3_02|     207|   481|1.0.0   |
 |n09op59-3_03|      96|   177|1.0.0   |
 |n09op59-3_04|     428|   699|1.0.0   |
@@ -387,7 +387,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |n16op135_01 |     193|   398|1.0.0   |
 |n16op135_02 |     272|   376|1.0.0   |
 |n16op135_03 |      54|   178|1.0.0   |
-|n16op135_04 |     282|   562|1.0.0   |
+|n16op135_04 |     282|   563|1.0.0   |
 
 
 ## bach_en_fr_suites
@@ -608,7 +608,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |07-1     |     344|   527|2.3.0   |
 |07-2     |      87|   218|2.3.0   |
 |07-3     |      86|    92|2.3.0   |
-|07-4     |     113|   266|2.3.0   |
+|07-4     |     113|   268|2.3.0   |
 |08-1     |     310|   503|2.3.0   |
 |08-2     |      73|   143|2.3.0   |
 |08-3     |     210|   365|2.3.0   |
@@ -643,7 +643,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |17-1     |     228|   352|2.3.0   |
 |17-2     |     103|   223|2.3.0   |
 |17-3     |     399|   460|2.3.0   |
-|18-1     |     253|   269|2.3.0   |
+|18-1     |     253|   268|2.3.0   |
 |18-2     |     169|   273|2.3.0   |
 |18-3     |      61|   178|2.3.0   |
 |18-4     |     333|   410|2.3.0   |
@@ -875,7 +875,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |op04n04b |      41|    80|2.3.0   |
 |op04n04c |      17|   102|2.3.0   |
 |op04n04d |      31|   107|2.3.0   |
-|op04n05a |      20|   101|2.3.0   |
+|op04n05a |      20|   100|2.3.0   |
 |op04n05b |      28|   105|2.3.0   |
 |op04n05c |      39|    78|2.3.0   |
 |op04n05d |      12|    38|2.3.0   |
@@ -902,7 +902,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |op04n10b |      33|   104|2.3.0   |
 |op04n10c |       4|     8|2.3.0   |
 |op04n10d |      14|    51|2.3.0   |
-|op04n10e |      48|   152|2.3.0   |
+|op04n10e |      48|   153|2.3.0   |
 |op04n11a |      24|   156|2.3.0   |
 |op04n11b |      73|   116|2.3.0   |
 |op04n11c |      36|   142|2.3.0   |
@@ -1157,9 +1157,9 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |12.28_Toccata_avanti_il_Recercar                                       |      13|    60|        |
 |12.29_Recercar_cromaticho_post_il_Credo                                |      70|   248|        |
 |12.30_Alto_recercar                                                    |      81|   319|        |
-|12.31_Toccata_per_l'Elevatione                                         |      33|   130|        |
+|12.31_Toccata_per_l'Elevatione                                         |      33|   132|        |
 |12.32_Recercar_con_obligo_del_Basso_come_appare                        |      64|   219|        |
-|12.33_Canzon_quarti_toni_dopo_il_post_Comune                           |      58|   208|        |
+|12.33_Canzon_quarti_toni_dopo_il_post_Comune                           |      58|   207|        |
 |12.34_Toccata_avanti_la_Messa_della_Madonna                            |      12|    38|        |
 |12.35_Kyrie,_Tema_I                                                    |      12|    42|        |
 |12.36_Kyrie,_Tema_K                                                    |      13|    46|        |
@@ -1171,7 +1171,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |12.42_Recercar_dopo_il_Credo                                           |      46|   156|        |
 |12.43_Toccata_avanti_il_Recercar                                       |      14|    38|        |
 |12.44_Recercar_con_obligo_di_cantare_la_quinta_parte_non_senza_toccarla|      59|   202|        |
-|12.45_Toccata_per_l'Elevatione                                         |      24|    85|        |
+|12.45_Toccata_per_l'Elevatione                                         |      24|    86|        |
 |12.46_Bergamasca                                                       |     124|   415|        |
 |12.47_Capriccio_sopra_la_Girolmeta                                     |     102|   375|        |
 
@@ -1431,7 +1431,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |161.04_Sonetto_47_del_Petrarca                                           |      95|   153|2.3.0   |
 |161.05_Sonetto_104_del_Petrarca                                          |      79|   121|2.3.0   |
 |161.06_Sonetto_123_del_Petrarca                                          |      84|   149|2.3.0   |
-|161.07_Apres_une_lecture_du_Dante                                        |     373|   631|2.3.0   |
+|161.07_Apres_une_lecture_du_Dante                                        |     373|   633|2.3.0   |
 |162.01_Gondoliera                                                        |     125|   121|2.3.0   |
 |162.02_Canzone                                                           |      60|    98|2.3.0   |
 |162.03_Tarantella_da_Guillaume_Louis_Cottrau._Presto_e_canzone_napolitana|     479|   716|2.1.1   |
@@ -1485,14 +1485,14 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |02op13b  |     125|   544|2.1.0   |
 |02op13c  |     163|   415|2.1.0   |
 |02op13d  |     397|   805|2.1.0   |
-|03op44,1a|     374|   751|2.1.0   |
+|03op44,1a|     374|   748|2.1.0   |
 |03op44,1b|     225|   393|2.1.0   |
-|03op44,1c|     155|   438|2.1.0   |
+|03op44,1c|     155|   437|2.1.0   |
 |03op44,1d|     316|   819|2.1.0   |
-|04op44,2a|     277|   839|2.1.0   |
+|04op44,2a|     277|   837|2.1.0   |
 |04op44,2b|     244|   829|2.1.0   |
 |04op44,2c|      83|   328|2.1.0   |
-|04op44,2d|     515|   794|2.1.0   |
+|04op44,2d|     515|   793|2.1.0   |
 |05op44,3a|     369|  1044|2.1.0   |
 |05op44,3b|     301|   635|2.1.0   |
 |05op44,3c|     131|   385|2.1.0   |
@@ -1509,7 +1509,6 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |---------------------|-------:|-----:|--------|
 |2-12                 |      93|   225|2.1.0   |
 |3-09                 |      84|   190|2.1.0   |
-|3-11                 |      84|   190|2.1.0   |
 |4-19                 |     111|   185|2.1.0   |
 |5-01                 |      67|   176|2.1.0   |
 |5-03                 |      74|   152|2.1.0   |
@@ -1519,15 +1518,9 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |5-04e                |      95|   219|2.1.0   |
 |5-05b                |      58|    98|2.1.0   |
 |5-05c                |      75|   151|2.1.0   |
-|5-06                 |      53|   105|2.1.0   |
-|5-07                 |      59|   125|2.1.0   |
-|5-08                 |      95|   219|2.1.0   |
+|5-08                 |      91|   167|2.1.0   |
 |5-09                 |      84|   167|2.1.0   |
-|5-10                 |      58|    98|2.1.0   |
-|5-11                 |      75|   151|2.1.0   |
-|5-14                 |      91|   167|2.1.0   |
-|5-15                 |      84|   167|2.1.0   |
-|5-17                 |      57|   104|2.1.0   |
+|5-11                 |      57|   104|2.1.0   |
 |6-01a                |      34|    83|2.1.0   |
 |8-18                 |     106|   295|2.1.0   |
 |8-19                 |     142|   281|2.1.0   |
@@ -1599,13 +1592,13 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 
 |           file_name            |measures|labels|standard|
 |--------------------------------|-------:|-----:|--------|
-|01. Stabat Mater dolorosa       |      47|   166|2.2.0   |
+|01. Stabat Mater dolorosa       |      47|   174|2.2.0   |
 |02. Cujus animam gementem       |     108|   228|2.2.0   |
 |03. O quam tristis et afflicta  |      26|    84|2.2.0   |
 |04. Quae moerebat et dolebat    |     103|   214|2.2.0   |
 |05. Quis est homo qui non fleret|      49|   122|2.2.0   |
 |06. Vidit suum dulcem natum     |      43|   153|2.2.0   |
-|07. Eja, Mater fons amois       |      94|   212|2.2.0   |
+|07. Eja, Mater fons amois       |      94|   214|2.2.0   |
 |08. Fac ut ardeat cor meum      |      72|     0|        |
 |09. Sancta mater, istud agas    |      84|     0|        |
 |10. Fac ut portem Christi mortem|      26|     0|        |
@@ -1617,11 +1610,11 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 
 |      file_name      |measures|labels|standard|
 |---------------------|-------:|-----:|--------|
-|peri_euridice_scene_0|      14|    32|2.3.0   |
-|peri_euridice_scene_1|     119|   341|2.3.0   |
-|peri_euridice_scene_2|     288|   734|2.3.0   |
+|peri_euridice_scene_0|      14|    31|2.3.0   |
+|peri_euridice_scene_1|     119|   342|2.3.0   |
+|peri_euridice_scene_2|     288|   732|2.3.0   |
 |peri_euridice_scene_3|     135|   323|2.3.0   |
-|peri_euridice_scene_4|     304|   724|2.3.0   |
+|peri_euridice_scene_4|     304|   721|2.3.0   |
 |peri_euridice_scene_5|     260|   735|2.3.0   |
 
 
@@ -1662,7 +1655,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |op42_03  |      16|    52|2.3.0   |
 |op42_04  |      16|    22|2.3.0   |
 |op42_11  |      16|    54|2.3.0   |
-|op42_12  |      23|    70|2.3.0   |
+|op42_12  |      23|    69|2.3.0   |
 |op42_13a |      17|    69|2.3.0   |
 |op42_13b |      13|    47|2.3.0   |
 |op42_14  |      16|    35|2.3.0   |
@@ -1705,7 +1698,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |K014     |      43|   146|2.3.0   |
 |K017     |     129|   198|2.3.0   |
 |K018     |      51|   272|2.3.0   |
-|K019     |      92|   229|2.3.0   |
+|K019     |      92|   227|2.3.0   |
 |K020     |     102|   146|2.3.0   |
 |K021     |     150|   270|2.3.0   |
 |K022     |      78|   207|2.3.0   |
@@ -1725,14 +1718,14 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
 |K046     |     144|   321|2.3.0   |
 |K047     |      75|   309|2.3.0   |
 |K048     |     124|   234|2.3.0   |
-|K049     |     118|   268|2.3.0   |
+|K049     |     118|   270|2.3.0   |
 |K050     |     159|   246|2.3.0   |
 |K051     |      47|   257|2.3.0   |
 |K052     |      55|   378|2.3.0   |
 |K053     |     100|   135|2.3.0   |
 |K054     |      57|   202|2.3.0   |
 |K055     |     133|   197|2.3.0   |
-|K056     |      58|   220|2.3.0   |
+|K056     |      58|   222|2.3.0   |
 |K057     |     182|   311|2.3.0   |
 |K059     |      31|    97|2.3.0   |
 |K061     |     156|   268|2.3.0   |
