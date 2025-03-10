@@ -20,7 +20,7 @@ from enum import Enum
 import ms3
 import pandas as pd
 
-from code.utils import make_labeled_pitch_array
+from utils import make_labeled_pitch_array
 
 DLC_PATH = ms3.resolve_dir("..")
 DATASET = "pitch_arrays"
@@ -35,20 +35,12 @@ def filter_corpus(corpus):
     
 def get_ms3_corpus(corpus_path):
     corpus = ms3.Corpus(corpus_path)
-    filter_corpus(corpus)
+    #filter_corpus(corpus)
     return corpus
-
-for subcorpus_dir in os.listdir(DLC_PATH):
-    subcorpus_path = os.path.join(DLC_PATH, subcorpus_dir)
-    if os.path.isfile(subcorpus_path): continue
-    corpus = get_ms3_corpus(subcorpus_path)
-    break
     
-corpus
+
 
 # %%
-corpus: ms3.Corpus = get_ms3_corpus("~/distant_listening_corpus/beethoven_piano_sonatas")
-
 def get_pitch_array_from_piece(
     piece: ms3.Piece,
 ):
@@ -106,10 +98,30 @@ def store_pitch_arrays_for_corpus(
             ms3.write_tsv(metadata, metadata_path, index=True)
         except Exception as e:
             print(e)
-        
-        
-store_pitch_arrays_for_corpus(
-    corpus=corpus,
+
+
+def store_pitch_arrays_for_corpora(
+        metacorpus_path: str,
+        output_dir: str,
+        metadata_path: str,
+        column_name: str,
+        corpus_subdir: bool = True
+):
+    for subcorpus_dir in os.listdir(metacorpus_path):
+        subcorpus_path = os.path.join(DLC_PATH, subcorpus_dir)
+        if os.path.isfile(subcorpus_path): continue
+        corpus = get_ms3_corpus(subcorpus_path)
+        store_pitch_arrays_for_corpus(
+            corpus=corpus,
+            output_dir=output_dir,
+            metadata_path=metadata_path,
+            column_name=column_name,
+            corpus_subdir=corpus_subdir
+        )
+
+
+store_pitch_arrays_for_corpora(
+    metacorpus_path=DLC_PATH,
     output_dir=DATASET,
     metadata_path="distant_listening_corpus.metadata.tsv",
     column_name=DATASET
@@ -280,12 +292,12 @@ spec_specs = dict(
     ),
 )
 
-specs = labeled_pitch_array.dtypes.rename("dtype")
-specs_df = pd.concat([
-    specs,
-    pd.DataFrame.from_dict(spec_specs, orient="index")
-], axis=1)[["dtype", "used_for", "description"]]
-specs_df.to_csv("labeld_pitch_array_specs.csv", index=True)
-specs_df
+# specs = labeled_pitch_array.dtypes.rename("dtype")
+# specs_df = pd.concat([
+#     specs,
+#     pd.DataFrame.from_dict(spec_specs, orient="index")
+# ], axis=1)[["dtype", "used_for", "description"]]
+# specs_df.to_csv("labeld_pitch_array_specs.csv", index=True)
+# specs_df
 
 # %%
