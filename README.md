@@ -42,32 +42,33 @@ the [DCML harmony annotation standard](https://github.com/DCMLab/standards).
 The publication covers the following public corpora (the DOI links always point at the latest version respectively):
 
 
-* J.S. Bach – English and French Suites
-* J.S. Bach – Solo Pieces (A corpus of annotated scores)
-* Béla Bartók – 14 Bagatelles, Op. 6
+* [J.S. Bach – English and French Suites](https://doi.org/10.5281/zenodo.14996489)
+* [J.S. Bach – Solo Pieces (A corpus of annotated scores)](https://doi.org/10.5281/zenodo.14996765)
+* [Béla Bartók – 14 Bagatelles, Op. 6](https://doi.org/10.5281/zenodo.14996945)
 * [François Couperin – L'art de toucher le clavecin](https://doi.org/10.5281/zenodo.14984598)
+* [Clara Schumann – Lieder](https://doi.org/10.5281/zenodo.14996952)
 * François Couperin – Concerts Royaux
-* Clara Schumann – Lieder
 * [Carl Philipp Emanuel Bach – Works for Keyboard](https://doi.org/10.5281/zenodo.14996326)
 * [Girolamo Frescobaldi (1583-1643) – Fiori Musicali, op. 12 (1635)](https://doi.org/10.5281/zenodo.14984864)
-* Georg Friedrich Händel – Grobschmied Variations (The Harmonious Blacksmith), HWV 430
+* [Georg Friedrich Händel – Grobschmied Variations (The Harmonious Blacksmith), HWV 430](https://doi.org/10.5281/zenodo.14996996)
 * [J.C. Bach – Keyboard Sonatas](https://doi.org/10.5281/zenodo.14996292)
-* Heinrich Schütz – Kleine Geistliche Konzerte
-* Leopold Koželuch – Piano Sonatas
-* Gustav Mahler – Kindertotenlieder
+* [Heinrich Schütz – Kleine Geistliche Konzerte](https://doi.org/10.5281/zenodo.14997003)
+* [Leopold Koželuch – Piano Sonatas](https://doi.org/10.5281/zenodo.14997015)
+* [Gustav Mahler – Kindertotenlieder](https://doi.org/10.5281/zenodo.14997022)
 * [Felix Mendelssohn – String Quartets](https://doi.org/10.5281/zenodo.14996150)
 * [Giovanni Battista Pergolesi – Stabat Mater (1736)](https://doi.org/10.5281/zenodo.14990099)
-* Jacopo Peri – Euridice (1600)
-* Ignaz Pleyel – String Quartets
-* Francis Poulenc – Mouvements Perpetuels
-* [Sergei Rachmaninoff – Piano Pieces](https://doi.org/10.5281/zenodo.14984155)
-* Maurice Ravel – Piano Pieces
+* [Jacopo Peri – Euridice (1600)](https://doi.org/10.5281/zenodo.14996445)
+* [Ignaz Pleyel – String Quartets](https://doi.org/10.5281/zenodo.14997048)
+* [Francis Poulenc – Mouvements Perpetuels](https://doi.org/10.5281/zenodo.14997053)
+* [Sergei Rachmaninoff – Piano Pieces](https://doi.org/10.5281/zenodo.14984155) 
+* [Maurice Ravel – Piano Pieces](https://doi.org/10.5281/zenodo.14997064)
 * [Domenico Scarlatti – Keyboard Sonatas](https://doi.org/10.5281/zenodo.14992884)
-* Franz Schubert – Winterreise
-* Erwin Schulhoff – Suite dansante en jazz
-* Robert Schumann – Liederkreis
-* Jan Sweelinck – Organ Pieces
-* Richard Wagner – OverturesWilhelm Friedemann Bach – Piano Sonatas
+* [Franz Schubert – Winterreise](https://doi.org/10.5281/zenodo.14997095)
+* [Erwin Schulhoff – Suite dansante en jazz](https://doi.org/10.5281/zenodo.14997098)
+* [Robert Schumann – Liederkreis](https://doi.org/10.5281/zenodo.14997104)
+* [Jan Sweelinck – Organ Pieces](https://doi.org/10.5281/zenodo.14997111)
+* [Richard Wagner – Overtures](https://doi.org/10.5281/zenodo.14997120)
+* [Wilhelm Friedemann Bach – Piano Sonatas](https://doi.org/10.5281/zenodo.14997133)
 
 
 _Hentschel, J., Rammos, Y., Neuwirth, M., Moss, F. C., & Rohrmeier, M. (2024). An annotated corpus of tonal piano music 
