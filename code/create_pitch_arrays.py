@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.4
+#       jupytext_version: 1.16.7
 #   kernelspec:
 #     display_name: dimcat
 #     language: python
@@ -22,11 +22,6 @@ import pandas as pd
 
 from utils import make_labeled_pitch_array
 
-DLC_PATH = ms3.resolve_dir("..")
-DATASET = "pitch_arrays"
-
-
-# %%
 def filter_corpus(corpus):
     corpus.view.include("facets", "scores")#, "expanded")
     #corpus.disambiguate_facet("expanded")
@@ -39,24 +34,32 @@ def get_ms3_corpus(corpus_path):
     return corpus
     
 
+DLC_PATH = ms3.resolve_dir("..")
+DATASET = "pitch_arrays"
+
 
 # %%
-def get_pitch_array_from_piece(
-    piece: ms3.Piece,
-):
-    for fileinfo, facets in piece.iter_extracted_facets(
+def get_facet_dict_from_piece(piece: ms3.Piece) -> dict:
+    fileinfo, facets = next(piece.iter_extracted_facets(
             ("measures", "notes", "expanded"),
             force=True,
             unfold=True,
             interval_index=False
-    ):
-        break
+    ))
+    return facets
+
+
+def get_pitch_array_from_piece(
+    piece: ms3.Piece,
+):
+    facets = get_facet_dict_from_piece(piece)
     return make_labeled_pitch_array(
         notes=facets["notes"], 
         labels=facets["expanded"],
         measures=facets["measures"]
     )
-    
+
+
 def store_pitch_array(
         pitch_array: pd.DataFrame,
     output_dir: str,
@@ -120,6 +123,16 @@ def store_pitch_arrays_for_corpora(
         )
 
 
+# %%
+def inspect(corpus: str, piece: str):
+    corpus_obj = get_ms3_corpus(os.path.join(DLC_PATH, corpus))
+    piece_obj = next(pce for piece_id, pce in corpus_obj.iter_pieces() if piece_id == piece)
+    labeled_pitch_array = get_pitch_array_from_piece(piece_obj)
+    return labeled_pitch_array
+    
+inspect("kozeluh_sonatas", "16op15no1c")
+
+# %%
 store_pitch_arrays_for_corpora(
     metacorpus_path=DLC_PATH,
     output_dir=DATASET,
