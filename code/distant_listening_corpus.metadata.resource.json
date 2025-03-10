@@ -1,0 +1,561 @@
+{
+  "name": "distant_listening_corpus.metadata",
+  "type": "table",
+  "path": "distant_listening_corpus.metadata.tsv",
+  "scheme": "file",
+  "format": "tsv",
+  "mediatype": "text/tsv",
+  "encoding": "utf-8",
+  "dialect": {
+    "csv": {
+      "delimiter": "\t"
+    }
+  },
+  "schema": {
+    "fields": [
+      {
+        "name": "corpus",
+        "type": "string",
+        "title": "Corpus",
+        "description": "Name of a group of pieces"
+      },
+      {
+        "name": "piece",
+        "type": "string",
+        "title": "Piece identifier",
+        "description": "Name identifier (filename without suffixes) of a piece"
+      },
+      {
+        "name": "TimeSig",
+        "type": "string",
+        "title": "Time Signatures",
+        "description": "All time signatures in a piece and where they occur. Format: '<MC>: <timesig>, <MC>: <timesig>, ...' Corresponds to a dictionary without outer curly braces.",
+        "constraints": {
+          "pattern": "^{?((\\d+): (\\d+\\/\\d+)(?:, )?)+}?$"
+        }
+      },
+      {
+        "name": "KeySig",
+        "type": "string",
+        "title": "Key Signatures",
+        "description": "All key signatures in a piece and where they occur. Format: '<MC>: <keysig>, <MC>: <keysig>, ...'Corresponds to a dictionary without outer curly braces.",
+        "constraints": {
+          "pattern": "^{?((\\d+): (-?\\d+)(?:, )?)+}?$"
+        }
+      },
+      {
+        "name": "last_mc",
+        "type": "integer",
+        "title": "Highest Measure Count",
+        "description": "The highest Measure Count value in the piece. Corresponds to the number of <Measure> tags."
+      },
+      {
+        "name": "last_mn",
+        "type": "integer",
+        "title": "Highest Measure Number",
+        "description": "The highest Measure Number in the piece. Corresponds roughly to the number of complete bars."
+      },
+      {
+        "name": "length_qb",
+        "type": "number",
+        "title": "Quarter Length",
+        "description": "The length of a piece in quarter notes."
+      },
+      {
+        "name": "last_mc_unfolded",
+        "type": "integer",
+        "title": "Highest Measure Count (unfolded)",
+        "description": "The amount of <Measure> tags of a full playthrough, i.e. when all repeats are unfolded. Equals 'last_mc' if piece has no repeat signs."
+      },
+      {
+        "name": "last_mn_unfolded",
+        "type": "integer",
+        "title": "Highest Measure Number (unfolded)",
+        "description": "The last Measure Number when all repeats are unfolded. Equals 'last_mn' if piece has no repeat signs."
+      },
+      {
+        "name": "length_qb_unfolded",
+        "type": "number",
+        "title": "Quarter Length (unfolded)",
+        "description": "The length of full playthrough in quarter notes, i.e. when all repeats are unfolded. Equals 'length_qb' if piece has no repeat signs."
+      },
+      {
+        "name": "volta_mcs",
+        "type": "array",
+        "title": "Volta Measure Counts",
+        "description": "For each group of alternative endings, a nested list where each inner list contains the \"mc\" values of the <Measure> tags grouped into one ending."
+      },
+      {
+        "name": "all_notes_qb",
+        "type": "number",
+        "title": "Summed Note Duration",
+        "description": "The summed duration of all notes in a given piece, measured in \u2669."
+      },
+      {
+        "name": "n_onsets",
+        "type": "integer",
+        "title": "Number of Note Onsets",
+        "description": "Number of onsets in a piece. Different from the number of entries in the 'notes' table, because that one corresponds to the number of note heads; but notes being tied to do not represent onsets."
+      },
+      {
+        "name": "n_onset_positions",
+        "type": "integer",
+        "title": "Number of Unique Onset Positions (slices)",
+        "description": "Number of unique onset positions in a piece. Corresponds to the number of slices when performing full expansion."
+      },
+      {
+        "name": "guitar_chord_count",
+        "type": "integer",
+        "title": "Number of Guitar/Jazz Chord Labels",
+        "description": "Number of guitar/jazz/absolute chord labels in a piece."
+      },
+      {
+        "name": "form_label_count",
+        "type": "integer",
+        "title": "Number of Form Annotation Labels",
+        "description": "Number of form annotation labels in a piece."
+      },
+      {
+        "name": "label_count",
+        "type": "integer",
+        "title": "Number of DCML Labels",
+        "description": "Number of chord annotation labels that match the regex of the DCML annotation standard."
+      },
+      {
+        "name": "annotated_key",
+        "type": "string"
+      },
+      {
+        "name": "harmony_version",
+        "type": "string"
+      },
+      {
+        "name": "annotators",
+        "type": "string"
+      },
+      {
+        "name": "reviewers",
+        "type": "string"
+      },
+      {
+        "name": "composed_start",
+        "type": "string",
+        "title": "Earliest Composition Year",
+        "description": "Earliest possible year of composition.",
+        "constraints": {
+          "pattern": "^\\d{3,4}|\\.{2}$"
+        }
+      },
+      {
+        "name": "composed_end",
+        "type": "string",
+        "title": "Latest Composition Year",
+        "description": "Latest possible year of composition.",
+        "constraints": {
+          "pattern": "^\\d{3,4}|\\.{2}$"
+        }
+      },
+      {
+        "name": "composer",
+        "type": "string"
+      },
+      {
+        "name": "workTitle",
+        "type": "string"
+      },
+      {
+        "name": "movementNumber",
+        "type": "integer",
+        "title": "Movement Number",
+        "description": "Metadata field for the number of a movement. Should be specified as integer, not as a Roman number.",
+        "bareNumber": false
+      },
+      {
+        "name": "movementTitle",
+        "type": "string"
+      },
+      {
+        "name": "workNumber",
+        "type": "string"
+      },
+      {
+        "name": "poet",
+        "type": "string"
+      },
+      {
+        "name": "lyricist",
+        "type": "string"
+      },
+      {
+        "name": "arranger",
+        "type": "string"
+      },
+      {
+        "name": "copyright",
+        "type": "string"
+      },
+      {
+        "name": "creationDate",
+        "type": "string"
+      },
+      {
+        "name": "mscVersion",
+        "type": "string"
+      },
+      {
+        "name": "platform",
+        "type": "string"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "translator",
+        "type": "string"
+      },
+      {
+        "name": "title_text",
+        "type": "string"
+      },
+      {
+        "name": "lyricist_text",
+        "type": "string"
+      },
+      {
+        "name": "composer_text",
+        "type": "string"
+      },
+      {
+        "name": "musescore",
+        "type": "string"
+      },
+      {
+        "name": "ms3_version",
+        "type": "string"
+      },
+      {
+        "name": "subdirectory",
+        "type": "string"
+      },
+      {
+        "name": "rel_path",
+        "type": "string"
+      },
+      {
+        "name": "has_drumset",
+        "type": "string"
+      },
+      {
+        "name": "ambitus",
+        "type": "string"
+      },
+      {
+        "name": "comments",
+        "type": "string"
+      },
+      {
+        "name": "originalFormat",
+        "type": "string"
+      },
+      {
+        "name": "staff_1_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_1_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_2_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_2_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_3_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_3_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_4_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_4_instrument",
+        "type": "string"
+      },
+      {
+        "name": "composed_source",
+        "type": "string"
+      },
+      {
+        "name": "subtitle_text",
+        "type": "string"
+      },
+      {
+        "name": "P86 (composer)",
+        "type": "string"
+      },
+      {
+        "name": "wikidata",
+        "type": "string"
+      },
+      {
+        "name": "musicbrainz",
+        "type": "string"
+      },
+      {
+        "name": "viaf",
+        "type": "string"
+      },
+      {
+        "name": "imslp",
+        "type": "string"
+      },
+      {
+        "name": "pdf",
+        "type": "string"
+      },
+      {
+        "name": "score_integrity",
+        "type": "string"
+      },
+      {
+        "name": "typesetter",
+        "type": "string"
+      },
+      {
+        "name": "transcriber",
+        "type": "string"
+      },
+      {
+        "name": "imslp.1",
+        "type": "string"
+      },
+      {
+        "name": "key",
+        "type": "string"
+      },
+      {
+        "name": "mode",
+        "type": "string"
+      },
+      {
+        "name": "electronic editor",
+        "type": "string"
+      },
+      {
+        "name": "electronic encoder",
+        "type": "string"
+      },
+      {
+        "name": "path",
+        "type": "string"
+      },
+      {
+        "name": "text",
+        "type": "string"
+      },
+      {
+        "name": "score integrity",
+        "type": "string"
+      },
+      {
+        "name": "extension",
+        "type": "string"
+      },
+      {
+        "name": "staff_5_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_5_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_6_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_6_instrument",
+        "type": "string"
+      },
+      {
+        "name": "PDF",
+        "type": "string"
+      },
+      {
+        "name": "wdt:P86",
+        "type": "string"
+      },
+      {
+        "name": "librettist",
+        "type": "string"
+      },
+      {
+        "name": "sceneNumber",
+        "type": "string"
+      },
+      {
+        "name": "sceneTitle",
+        "type": "string"
+      },
+      {
+        "name": "staff_7_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_7_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_8_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_8_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_9_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_9_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_10_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_10_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_11_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_11_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_12_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_12_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_13_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_13_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_14_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_14_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_15_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_15_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_16_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_16_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_17_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_17_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_18_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_18_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_19_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_19_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_20_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_20_instrument",
+        "type": "string"
+      },
+      {
+        "name": "staff_21_ambitus",
+        "type": "string"
+      },
+      {
+        "name": "staff_21_instrument",
+        "type": "string"
+      },
+      {
+        "name": "source.1",
+        "type": "string"
+      },
+      {
+        "name": "part_name_text",
+        "type": "string"
+      }
+    ],
+    "primaryKey": [
+      "corpus",
+      "piece"
+    ],
+    "facet": "metadata",
+    "identifier": "MGs8nK3ewvFUMg",
+    "filepath": "metadata/MGs8nK3ewvFUMg.schema.yaml",
+    "used_in": "distant_listening_corpus"
+  },
+  "creator": {
+    "@context": "https://schema.org/",
+    "@type": "SoftwareApplication",
+    "@id": "https://pypi.org/project/ms3/",
+    "name": "ms3",
+    "description": "A parser for MuseScore 3 files and data factory for annotated music corpora.",
+    "author": {
+      "name": "Johannes Hentschel",
+      "@id": "https://orcid.org/0000-0002-1986-9545"
+    },
+    "softwareVersion": "2.5.4.post1.dev5+g7441cab"
+  },
+  "git_revision": "a1b3f77ca8bff4c74be072c96aaa24daa48b8c73",
+  "git_tag": "v3.0-9-ga1b3f77"
+}

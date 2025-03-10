@@ -14,16 +14,16 @@
 # ---
 
 # %%
-
 import os
 from enum import Enum
 
 import ms3
 import pandas as pd
 
-from code.utils import make_pitch_array, prepare_labels, make_labeled_pitch_array
+from code.utils import make_labeled_pitch_array
 
-DLC_PATH = ms3.resolve_dir("~/distant_listening_corpus")
+DLC_PATH = ms3.resolve_dir("..")
+DATASET = "pitch_arrays"
 
 
 # %%
@@ -47,43 +47,73 @@ for subcorpus_dir in os.listdir(DLC_PATH):
 corpus
 
 # %%
-corpus = get_ms3_corpus("~/distant_listening_corpus/beethoven_piano_sonatas")
+corpus: ms3.Corpus = get_ms3_corpus("~/distant_listening_corpus/beethoven_piano_sonatas")
 
-for _, piece in corpus.iter_pieces():
-    break
-    
-for fileinfo, facets in piece.iter_extracted_facets(
-        ("measures", "notes", "expanded"),
-        force=True,
-        unfold=True,
-        interval_index=False
+def get_pitch_array_from_piece(
+    piece: ms3.Piece,
 ):
-    break
+    for fileinfo, facets in piece.iter_extracted_facets(
+            ("measures", "notes", "expanded"),
+            force=True,
+            unfold=True,
+            interval_index=False
+    ):
+        break
+    return make_labeled_pitch_array(
+        notes=facets["notes"], 
+        labels=facets["expanded"],
+        measures=facets["measures"]
+    )
+    
+def store_pitch_array(
+        pitch_array: pd.DataFrame,
+    output_dir: str,
+        tsv_name: str
+):
+    os.makedirs(output_dir, exist_ok=True)
+    filepath = os.path.join(output_dir, tsv_name)
+    pitch_array.to_csv(
+        filepath, 
+        sep="\t",
+        index=False
+    )
+    return filepath
 
-measures = facets["measures"]
-display(measures.head(3))
-notes = facets["notes"]
-notes.head(3)
-
-# %%
-pitch_array = make_pitch_array(notes, measures, label_notes=False)
-pitch_array.to_csv("beethoven1.tsv", sep="\t", index=False)
-pitch_array
-
-# %%
-labeled_pitch_array = make_labeled_pitch_array(
-    notes=notes, 
-    labels=facets["expanded"],
-    measures=measures
+def store_pitch_arrays_for_corpus(
+    corpus: ms3.Corpus,
+    output_dir: str,
+    metadata_path: str,
+    column_name: str,
+    corpus_subdir: bool = True
+):
+    output_dir = ms3.resolve_dir(output_dir)
+    if corpus_subdir:
+        output_dir = os.path.join(output_dir, corpus.name)
+    metadata = ms3.load_tsv(metadata_path, index_col="piece")
+    metadata.head()
+    if column_name not in metadata.columns:
+        metadata.insert(0, column_name, value=False)
+    for piece_id, piece in corpus.iter_pieces():
+        print(piece_id, end=" ")
+        if metadata.loc[piece_id, column_name]: 
+            print("SKIPPED")
+            continue
+        try:
+            pitch_array = get_pitch_array_from_piece(piece)
+            filepath = store_pitch_array(pitch_array, output_dir=output_dir, tsv_name=f"{piece_id}.tsv")
+            print(filepath)
+            metadata.loc[piece_id, column_name] = True
+            ms3.write_tsv(metadata, metadata_path, index=True)
+        except Exception as e:
+            print(e)
+        
+        
+store_pitch_arrays_for_corpus(
+    corpus=corpus,
+    output_dir=DATASET,
+    metadata_path="distant_listening_corpus.metadata.tsv",
+    column_name=DATASET
 )
-
-tmp_labeled_pitch_array = labeled_pitch_array[[
-    col for col 
-    in labeled_pitch_array.columns 
-    if col not in pitch_array.columns]]
-tmp_labeled_pitch_array = prepare_labels(facets["expanded"])
-labeled_pitch_array.to_csv("beethoven1_labeled.tsv", sep="\t", index=False)
-labeled_pitch_array
 
 
 # %%

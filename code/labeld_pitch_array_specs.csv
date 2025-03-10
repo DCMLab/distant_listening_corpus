@@ -1,0 +1,71 @@
+,dtype,used_for,description
+onset_div,int64,input graph creation,Proportional integer position
+duration_div,int64,input graph creation,Proportional integer duration
+pitch,Int64,input graph creation,MIDI value
+tpc,Int64,computing fields,"Tonal Pitch Class (0=C, -1=F, 1=G, etc., aka specific pitch, aka fifths)"
+step,object,input graph creation,Note name without accidental (A-G)
+alter,int64,input graph creation,"Note accidental: [-3, 3]"
+ts_beats,string,input graph creation,Numerator of the time signature
+ts_beat_type,string,input graph creation,Denominator of the time signature
+staff,int64,input graph creation,"Number of the staff containing the note, 1 being the upper staff"
+voice,int64,input graph creation,"Notational layer containing the note: [1, 4]"
+is_note_onset,boolean,input graph creation,False when a note is tied to a previous one
+beat,float64,training beat inference task,Values >= 1. Natural numbers represent beat positions according to the time signature. The number of beats in a measure is defined by ts_beats but divided by 3 if it's a multiple of 3.
+ks_fifths,Int64,input graph creation,"Key signature: [-7, 7]"
+mc,int64,input graph metadata and informational purposes,"Measure count, ID of the measure-like object (non-unique in unfolded score)"
+mn,int64,input graph metadata and informational purposes,Measure number as per conventions. One MN can be composed of several MC.
+mc_playthrough,int64,input graph metadata and informational purposes,"Measure count, unique in unfolded score"
+mn_playthrough,string,input graph creation,Conventional measure numbers but for unfolded score (means of identifying complete measures)
+quarterbeats_playthrough,object,input graph creation,"Continuous offset (""qstamp"") in unfolded score"
+duration,object,computing fields,Note duration expressed as fraction of a whole note
+section_start,boolean,training section inference task,"True for notes on the first position following a double/repeat bar line or section break. True values always correspond to the beginning of an MC, so a section beginning with a rest will not be taken into account."
+octave,object,input graph metadata and informational purposes,Octave of the note with 4 = middle octave. Does not always correspond to pitch // 12 - 1.
+is_harmony_onset,boolean,training harmony inference task,True for notes coinciding with a change in harmony.
+cadence,string,computing fields,Original cadence label (my include cadence subtypes)
+cadence_type,string,training cadence induction task,"Cadence label ∈ (PAC, IAC, HC, EC, DC, PC)"
+phraseend,string,computing fields,Original phrase labels.
+is_phrase_ending,boolean,training phrase inference task,"True for notes that coincide with the structural ending of a phrase (i.e., the phrase can have a codetta after this position before the next one begins)."
+unfolded_harmony_index,Int64,computing fields,Index of the labels in the original unfolded table (before merging it with the notes)
+label,string,computing fields,Original annotation labels
+alt_label,string,,
+globalkey,string,,
+localkey,string,,
+pedal,string,,
+chord,string,,
+special,string,,
+numeral,string,,
+form,string,,
+figbass,string,,
+changes,string,,
+relativeroot,string,,
+chord_type,string,,
+globalkey_is_minor,boolean,,
+localkey_is_minor,boolean,,
+chord_tones,object,,
+added_tones,object,,
+root,Int64,,
+bass_note,Int64,,
+globalkey_mode,string,,
+localkey_mode,string,,
+localkey_resolved,string,,
+localkey_and_mode,string,,
+root_roman,string,,
+relativeroot_resolved,string,,
+effective_localkey,string,,
+effective_localkey_resolved,string,,
+effective_localkey_is_minor,string,,
+chord_reduced,string,,
+chord_reduced_and_mode,string,,
+pedal_resolved,string,,
+chord_and_mode,string,,
+applied_to_numeral,string,,
+numeral_or_applied_to_numeral,string,,
+globalkey_tpc,Int64,computing fields,"Root of the global key expressed as Tonal Pitch Class (0=C, -1=F, 1=G, etc., aka specific pitch, aka fifths)"
+localkey_tpc,Int64,computing fields,"Root of the local key expressed as Tonal Pitch Class (0=C, -1=F, 1=G, etc., aka specific pitch, aka fifths)"
+tonicized_tpc,Int64,computing fields,"Root of the tonicized key expressed as Tonal Pitch Class (0=C, -1=F, 1=G, etc., aka specific pitch, aka fifths)"
+sic_with_global,Int64,,
+sic_with_local,Int64,computing fields,"Relative position of the note's tonal pitch class in the local key, expressed as Specific Interval Class (0=unison, -1=+P4/-P5, 3=+M6/-m3, etc.)"
+sic_with_tonicized,Int64,,
+tpc_is_in_label,boolean,training harmony inference task,True if a note's pitch class is part of the harmony label
+tpc_is_root,boolean,training harmony inference task,True if a note's tonal pitch class is the harmony label's root
+tpc_is_bass,boolean,training harmony inference task,True if a note's tonal pitch class is the harmony label's bass
