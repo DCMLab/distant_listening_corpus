@@ -56,6 +56,7 @@ The publication covers the following public corpora (the DOI links always point 
 * [Leopold Koželuch – Piano Sonatas](https://doi.org/10.5281/zenodo.14997015)
 * [Gustav Mahler – Kindertotenlieder](https://doi.org/10.5281/zenodo.14997022)
 * [Felix Mendelssohn – String Quartets](https://doi.org/10.5281/zenodo.14996150)
+* [Claudio Monteverdi – Madrigals](https://doi.org/10.5281/zenodo.15003026)
 * [Giovanni Battista Pergolesi – Stabat Mater (1736)](https://doi.org/10.5281/zenodo.14990099)
 * [Jacopo Peri – Euridice (1600)](https://doi.org/10.5281/zenodo.14996445)
 * [Ignaz Pleyel – String Quartets](https://doi.org/10.5281/zenodo.14997048)
