@@ -243,7 +243,7 @@ class DivMaker():
 def make_continuous_mc_beats_series(
     measures: pd.DataFrame,
     negative_anacrusis: Optional[Fraction] = None,
-    round_to: Optional[int] = None,
+    beat_decimals: Optional[int] = None,
     name: str = "continuous_beats"
 ) -> pd.Series:
     """This is an adapted copy of ms3.utils.make_continuous_offset_series() which is originally used for getting the
@@ -261,9 +261,9 @@ def make_continuous_mc_beats_series(
         negative_anacrusis:
             By default, the first value is 0. If you pass a fraction here, the first value will be its negative and the
             second value will be 0.
-        round_to:
+        beat_decimals:
             If None (default) the continous beats are added as Fraction objects,
-            otherwise as floats rounded to round_to decimals.
+            otherwise as floats rounded to beat_decimals decimals.
 
 
     Returns:
@@ -276,7 +276,7 @@ def make_continuous_mc_beats_series(
         measures,
         onset2beat,
         ["act_dur", "timesig"],
-        round_to=round_to,
+        beat_decimals=beat_decimals,
         first_beat=0
     )
     result = durations_in_beats.cumsum()
@@ -292,7 +292,7 @@ def make_continuous_mc_beats_series(
 def make_continuous_mn_beats_series(
     measures: pd.DataFrame,
     negative_anacrusis: Optional[Fraction] = None,
-    round_to: Optional[int] = None,
+    beat_decimals: Optional[int] = None,
     name: str = "continuous_beats",
     mn_col_name: str = "mn_playthrough"
 ) -> pd.Series:
@@ -304,7 +304,7 @@ def make_continuous_mn_beats_series(
     Args:
         measures:
         negative_anacrusis:
-        round_to:
+        beat_decimals:
         name:
         mn_col_name:
 
@@ -314,7 +314,7 @@ def make_continuous_mn_beats_series(
     continuous_mc_beats = make_continuous_mc_beats_series(
         measures = measures,
         negative_anacrusis=negative_anacrusis,
-        round_to=round_to,
+        beat_decimals=beat_decimals,
         name=name
     )
     continuous_mc_beats.index = measures[mn_col_name]
@@ -359,21 +359,21 @@ def make_section_start_column(
 
 def prepare_measures(
         measures: pd.DataFrame,
-        round_to: Optional[int] = None,
+        beat_decimals: Optional[int] = None,
 ) -> pd.DataFrame:
     """
 
     Args:
         measures:
-        round_to:
+        beat_decimals:
             If None (default) the continous beats are added as Fraction objects,
-            otherwise as floats rounded to round_to decimals.
+            otherwise as floats rounded to beat_decimals decimals.
 
     Returns:
 
     """
     section_start_column = make_section_start_column(measures)
-    continous_beats_column = make_continuous_mc_beats_series(measures, round_to=round_to)
+    continous_beats_column = make_continuous_mc_beats_series(measures, beat_decimals=beat_decimals)
     measures = pd.concat([
         measures.rename(columns=dict(quarterbeats="quarterbeats_playthrough")),
         continous_beats_column,
@@ -392,7 +392,7 @@ RENAME_ORIGINAL_COLUMNS = dict( # columns to keep under a different name
     keysig="ks_fifths"
 )
 COLUMN_ORDER = [
-    "onset_div", "duration_div", "continuous_beats", "pitch", "tpc", "step", "alter", "ts_beats",
+    "onset_div", "duration_div", "continuous_beats", "pitch", "tpc", "step", "alter", "beat", "ts_beats",
     "ts_beat_type", "staff", "voice"
 ]
 PITCH_ARRAY_DTYPES = dict(                  # dtype dict passed to pd.DataFrame.astype()
@@ -425,7 +425,7 @@ def ts_beat_size(ts: str) -> Fraction:
 def onset2beat(
         onset: Fraction,
         timesig: str,
-        round_to: Literal[None]
+        beat_decimals: Literal[None]
 ) -> Fraction:
     ...
 
@@ -434,7 +434,7 @@ def onset2beat(
 def onset2beat(
         onset: Fraction,
         timesig: str,
-        round_to: int
+        beat_decimals: int
 ) -> float:
     ...
 
@@ -443,7 +443,7 @@ def onset2beat(
 def onset2beat(
         onset: Fraction,
         timesig: str,
-        round_to: Optional[int] = None,
+        beat_decimals: Optional[int] = None,
         first_beat: float | int = 1.
 ) -> float | Fraction:
     """ Turn an offset in whole notes into a beat based on the time signature.
@@ -454,14 +454,14 @@ def onset2beat(
             Offset from the measure's beginning as fraction of a whole note.
         timesig:
             Time signature, i.e., a string representing a fraction.
-        round_to:
-            If None (default) the beat is returned as Fraction, otherwise as float rounded to round_to decimals.
+        beat_decimals:
+            If None (default) the beat is returned as Fraction, otherwise as float rounded to beat_decimals decimals.
     """
     size = ts_beat_size(timesig)
     beat, remainder = divmod(onset, size)
     subbeat = remainder / size
     result = beat + first_beat + subbeat
-    return result if round_to is None else round(float(result), round_to)
+    return result if beat_decimals is None else round(float(result), beat_decimals)
 
 
 def prepare_notes_with_measure_information(
@@ -483,7 +483,7 @@ def prepare_notes_with_measure_information(
     Returns:
 
     """
-    prepared_measures = prepare_measures(measures, round_to=beat_decimals)
+    prepared_measures = prepare_measures(measures, beat_decimals=beat_decimals)
     potential_columns = ["quarterbeats_playthrough"] + MERGE_MEASURE_COLUMNS
     if label_notes:
         potential_columns += MERGE_LABEL_COLUMNS
@@ -503,7 +503,7 @@ def prepare_notes_with_measure_information(
         merged.section_start = merged.section_start.fillna(False)
 
     # continuous beats
-    beat = ms3.transform(merged, onset2beat, ["mn_onset", "timesig"], first_beat=0, round_to=beat_decimals)
+    beat = ms3.transform(merged, onset2beat, ["mn_onset", "timesig"], first_beat=0, beat_decimals=beat_decimals)
 
     anacrusis_mask = (notes.mn_playthrough == "0a")
     if anacrusis_mask.any():
@@ -513,7 +513,7 @@ def prepare_notes_with_measure_information(
         anacrusis_beats -= first_value
         beat.loc[anacrusis_mask] = anacrusis_beats
 
-    mn_offsets = make_continuous_mn_beats_series(measures, round_to=beat_decimals)
+    mn_offsets = make_continuous_mn_beats_series(measures, beat_decimals=beat_decimals)
     continuous_beats = make_continuous_beats_column(
         mn_column=merged.mn_playthrough,
         beat_float_column=beat,
@@ -527,7 +527,7 @@ def prepare_notes(
         beat_decimals: Optional[int] = None,
         name: str = "beat"
 ) -> pd.DataFrame:
-    beat = ms3.transform(notes, onset2beat, ["mn_onset", "timesig"], round_to=beat_decimals).rename(name)
+    beat = ms3.transform(notes, onset2beat, ["mn_onset", "timesig"], beat_decimals=beat_decimals).rename(name)
     columns = notes.columns.tolist()
     notes = pd.concat([notes, beat], axis=1)
     columns.insert(
@@ -576,6 +576,7 @@ def make_pitch_array(
     if label_notes:
         potential_columns += MERGE_LABEL_COLUMNS
     keep_original_columns = [col for col in potential_columns if col in prepared_notes.columns]
+    print(f"{potential_columns =}\n{keep_original_columns =}")
     original_columns = prepared_notes[keep_original_columns]
 
     rename_original_columns = {k: v for k, v in RENAME_ORIGINAL_COLUMNS.items() if k in prepared_notes.columns}
