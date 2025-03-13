@@ -240,21 +240,19 @@ class DivMaker():
 # endregion DivMaker
 # region prepare_measures
 
-def make_continuous_beats_series(
+def make_continuous_mc_beats_series(
     measures: pd.DataFrame,
     negative_anacrusis: Optional[Fraction] = None,
     round_to: Optional[int] = None,
     name: str = "continuous_beats"
 ) -> pd.Series:
-    """This is a copy of ms3.utils.make_continuous_offset_series() which is originally used for getting the
+    """This is an adapted copy of ms3.utils.make_continuous_offset_series() which is originally used for getting the
     quarternote offset position ("quarterbeats") for the beginning of each measure (MC).
     Here, it is adapted for getting beat offset positions according to the respective time signatures.
 
     Accepts a measure table without 'quarterbeats' column and computes each MC's offset from the piece's beginning.
     Deal with voltas before passing the table.
 
-    If you need an offset_dict and the measures already come with a 'quarterbeats' column, you can call
-    :func:`make_offset_dict_from_measures`.
 
     Args:
         measures:
@@ -269,21 +267,11 @@ def make_continuous_beats_series(
 
 
     Returns:
-        Cumulative sum of the actual durations, shifted down by 1. Compared to the original DataFrame it has
-        length + 2 because it adds the end value twice, once with the next index value, and once with the index 'end'.
-        Otherwise the end value would be lost due to the shifting.
+        Cumulative sum of the actual durations, shifted down by 1.
 
     Raises:
         ValueError
     """
-    if "mc_playthrough" in measures.columns:
-        index_col = "mc_playthrough"
-    elif "mc" in measures.columns:
-        index_col = "mc"
-    else:
-        raise ValueError(
-            "Expected to have at least one column called 'mc' or 'mc_playthrough'."
-        )
     durations_in_beats = ms3.transform(
         measures,
         onset2beat,
@@ -300,6 +288,62 @@ def make_continuous_beats_series(
     if negative_anacrusis is not None:
         result -= abs(negative_anacrusis)
     return result.rename(name)
+
+def make_continuous_mn_beats_series(
+    measures: pd.DataFrame,
+    negative_anacrusis: Optional[Fraction] = None,
+    round_to: Optional[int] = None,
+    name: str = "continuous_beats",
+    mn_col_name: str = "mn_playthrough"
+) -> pd.Series:
+    """ Gets the continuous MC beats and drops the MC rows that duplicate MN values.
+    This creates a mapping from measure numbers to continuous beat positions which can
+    be used to create a continuous_beat columns for events by adding their beat_float but where
+    beat 1 == beat_float 0.0.
+
+    Args:
+        measures:
+        negative_anacrusis:
+        round_to:
+        name:
+        mn_col_name:
+
+    Returns:
+
+    """
+    continuous_mc_beats = make_continuous_mc_beats_series(
+        measures = measures,
+        negative_anacrusis=negative_anacrusis,
+        round_to=round_to,
+        name=name
+    )
+    continuous_mc_beats.index = measures[mn_col_name]
+    return continuous_mc_beats[~continuous_mc_beats.index.duplicated()]
+
+def make_continuous_beats_column(
+    mn_column: pd.Series,
+    beat_float_column: Optional[pd.Series],
+    mn_offsets: pd.Series | dict,
+    name: str = "continuous_beats",
+) -> pd.Series:
+    """ This is an adapted copy of ms3.utils.make_quarterbeats_column()
+
+    Turn each combination of mc and mc_onset into a quarterbeat value using the mn_offsets that maps mc to
+    the measure's quarterbeat position (distance from the beginning of the piece).
+
+    Args:
+        mn_column: A sequence of MC values, each of which will be mapped to its quarterbeats value in ``mn_offsets``.
+        beat_float_column: If specified, these values will be added to the mapped quarterbeats values.
+        mn_offsets: {mc -> quarterbeats}, can be a Series.
+        name: Name of the returned Series.
+
+    Returns:
+        Quarterbeats column.
+    """
+    continuous_beats = mn_column.map(mn_offsets)
+    if beat_float_column is not None:
+        continuous_beats += beat_float_column
+    return continuous_beats.rename(name)
 
 def make_section_start_column(
         measures: pd.DataFrame,
@@ -329,7 +373,7 @@ def prepare_measures(
 
     """
     section_start_column = make_section_start_column(measures)
-    continous_beats_column = make_continuous_beats_series(measures, round_to=round_to)
+    continous_beats_column = make_continuous_mc_beats_series(measures, round_to=round_to)
     measures = pd.concat([
         measures.rename(columns=dict(quarterbeats="quarterbeats_playthrough")),
         continous_beats_column,
@@ -347,7 +391,10 @@ RENAME_ORIGINAL_COLUMNS = dict( # columns to keep under a different name
     midi="pitch",
     keysig="ks_fifths"
 )
-COLUMN_ORDER = ["onset_div", "duration_div", "pitch", "tpc", "step", "alter", "ts_beats", "ts_beat_type", "staff", "voice"]
+COLUMN_ORDER = [
+    "onset_div", "duration_div", "continuous_beats", "pitch", "tpc", "step", "alter", "ts_beats",
+    "ts_beat_type", "staff", "voice"
+]
 PITCH_ARRAY_DTYPES = dict(                  # dtype dict passed to pd.DataFrame.astype()
     mn_playthrough = "string",
 )
@@ -420,16 +467,23 @@ def onset2beat(
 def prepare_notes_with_measure_information(
         notes: pd.DataFrame,
         measures: pd.DataFrame,
-        label_notes: bool = False
+        label_notes: bool = False,
+        beat_decimals: Optional[int] = None
 ) -> pd.DataFrame:
     """ Add key signature from measure table and, optionally, labels created from it.
 
     Args:
+        notes:
+        measures:
         label_notes:
             If set to True, the measures table is used to create binary labels that are True for MCs
             where a new section begins.
+        beat_decimals:
+
+    Returns:
+
     """
-    prepared_measures = prepare_measures(measures)
+    prepared_measures = prepare_measures(measures, round_to=beat_decimals)
     potential_columns = ["quarterbeats_playthrough"] + MERGE_MEASURE_COLUMNS
     if label_notes:
         potential_columns += MERGE_LABEL_COLUMNS
@@ -447,6 +501,25 @@ def prepare_notes_with_measure_information(
     merged.keysig = merged.keysig.ffill()
     if label_notes:
         merged.section_start = merged.section_start.fillna(False)
+
+    # continuous beats
+    beat = ms3.transform(merged, onset2beat, ["mn_onset", "timesig"], first_beat=0, round_to=beat_decimals)
+
+    anacrusis_mask = (notes.mn_playthrough == "0a")
+    if anacrusis_mask.any():
+        # beats of an anacrusis measure need to start from zero rather than their metrical value
+        anacrusis_beats = beat[anacrusis_mask].copy()
+        first_value = anacrusis_beats.iat[0]
+        anacrusis_beats -= first_value
+        beat.loc[anacrusis_mask] = anacrusis_beats
+
+    mn_offsets = make_continuous_mn_beats_series(measures, round_to=beat_decimals)
+    continuous_beats = make_continuous_beats_column(
+        mn_column=merged.mn_playthrough,
+        beat_float_column=beat,
+        mn_offsets=mn_offsets
+    )
+    merged = pd.concat([merged, continuous_beats], axis=1)
     return merged
 
 def prepare_notes(
@@ -499,7 +572,7 @@ def make_pitch_array(
     )
     onset_div, duration_div = div_maker[("onsets", "durations")]
 
-    potential_columns = list(KEEP_ORIGINAL_COLUMNS)
+    potential_columns = list(set(KEEP_ORIGINAL_COLUMNS).union(set(COLUMN_ORDER)))
     if label_notes:
         potential_columns += MERGE_LABEL_COLUMNS
     keep_original_columns = [col for col in potential_columns if col in prepared_notes.columns]
