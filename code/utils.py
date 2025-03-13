@@ -496,7 +496,7 @@ def prepare_notes_with_measure_information(
         left = notes,
         right = prepared_measures[merge_measure_columns],
         on = "quarterbeats_playthrough",
-        how = "outer",
+        how = "left",
     )
     merged.keysig = merged.keysig.ffill()
     if label_notes:
