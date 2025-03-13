@@ -113,18 +113,23 @@ def store_pitch_arrays_for_corpus(
         ms3.write_tsv(metadata, metadata_path, index=True)
     for piece_id, piece in corpus.iter_pieces():
         id_tuple = (corpus.name, piece_id)
-        print(id_tuple, end=" ")
+        print(f"\n{id_tuple}", end=" ")
         if metadata.loc[id_tuple, column_name]: 
             print("SKIPPED")
             continue
         try:
+            utils.colorprint("I")
             pitch_array = get_pitch_array_from_piece(piece)
             filepath = store_pitch_array(pitch_array, output_dir=output_dir, tsv_name=f"{piece_id}.tsv")
-            print(filepath)
             metadata.loc[id_tuple, column_name] = True
+            utils.colorprint("O")
             ms3.write_tsv(metadata, metadata_path, index=True)
+            print(filepath, end="")
+            utils.colorprint("O", utils.bcolors.OKGREEN)
         except Exception as e:
             print(e)
+    
+    utils.colorprint(f"{corpus.name} DONE", utils.bcolors.OKGREEN)
 
 
 def store_pitch_arrays_for_corpora(
@@ -162,6 +167,8 @@ def store_pitch_arrays_for_corpora(
             corpus_subdir=corpus_subdir,
             reset=reset
         )
+        
+    utils.colorprint("EVERYTHING DONE", utils.bcolors.OKGREEN)
 
 
 # %%

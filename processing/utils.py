@@ -553,6 +553,22 @@ def prepare_notes(
         notes.iloc[:, mn_onset_pos:]
     ], axis=1)
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+def colorprint(
+        txt,
+    color = bcolors.WARNING
+):
+    print(f"{color}{txt}{bcolors.ENDC}", end="")
 
 def make_pitch_array(
         notes: pd.DataFrame,
@@ -573,6 +589,7 @@ def make_pitch_array(
 
 
     """
+    colorprint("N")
     prepared_notes = prepare_notes(notes, beat_decimals=beat_decimals)
     if measures is not None:
         prepared_notes = prepare_notes_with_measure_information(
@@ -581,14 +598,17 @@ def make_pitch_array(
             label_notes=label_notes,
             beat_decimals=beat_decimals
         )
+    colorprint("N", bcolors.OKGREEN)
 
-
+    colorprint("D")
     div_maker = DivMaker(
         onsets=prepared_notes.quarterbeats_playthrough,
         durations=prepared_notes.duration * 4  # normally duration_qb but due to a bug these are currently floats
     )
     onset_div, duration_div = div_maker[("onsets", "durations")]
+    colorprint("D", bcolors.OKGREEN)
 
+    colorprint("C")
     potential_columns = list(set(KEEP_ORIGINAL_COLUMNS).union(set(COLUMN_ORDER)))
     if label_notes:
         potential_columns += MERGE_LABEL_COLUMNS
@@ -629,6 +649,7 @@ def make_pitch_array(
         ] + new_dataframes,
         axis=1
     )
+    colorprint("C", bcolors.OKGREEN)
     column_order = [col for col in COLUMN_ORDER if col in result.columns]
     column_order += sorted(col for col in result.columns if col not in column_order)
     return result[column_order].astype(PITCH_ARRAY_DTYPES)
@@ -747,8 +768,11 @@ def make_labeled_pitch_array(
         beat_decimals: Optional[int] = 3,
 ):
     pitch_array = make_pitch_array(notes, measures, label_notes=True, beat_decimals=beat_decimals)
+    colorprint("L")
     prepared_labels = prepare_labels(labels)
+    colorprint("L", bcolors.OKGREEN)
 
+    colorprint("M")
     merged = pd.merge(
         left = pitch_array,
         right = prepared_labels.drop(columns=[
@@ -762,7 +786,9 @@ def make_labeled_pitch_array(
     )
     merged.is_harmony_onset = merged.is_harmony_onset.fillna(False)
     merged.is_phrase_ending = merged.is_phrase_ending.fillna(False)
+    colorprint("M", bcolors.OKGREEN)
 
+    colorprint("P")
     harmony_index_col = merged.columns.get_loc("unfolded_harmony_index")
     pitch_side = merged.iloc[:, :harmony_index_col]
     harmony_side = merged.iloc[:, harmony_index_col:]
@@ -774,8 +800,11 @@ def make_labeled_pitch_array(
         pitch_side,
         harmony_side.groupby(harmony_grouper).ffill()
     ], axis=1)
+    colorprint("P", bcolors.OKGREEN)
+    colorprint("C")
     merged = compute_interval_classes_to_keys(merged)
     merged = add_boolean_label_columns(merged)
+    colorprint("C", bcolors.OKGREEN)
     return merged
 
 #endregion make_labeled_pitch_array
