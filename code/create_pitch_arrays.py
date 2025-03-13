@@ -20,8 +20,6 @@ from enum import Enum
 import ms3
 import pandas as pd
 
-from utils import make_labeled_pitch_array
-
 def filter_corpus(corpus):
     corpus.view.include("facets", "scores")#, "expanded")
     #corpus.disambiguate_facet("expanded")
@@ -36,6 +34,11 @@ def get_ms3_corpus(corpus_path):
 
 DLC_PATH = ms3.resolve_dir("..")
 DATASET = "pitch_arrays"
+
+# %%
+# %load_ext autoreload
+# %autoreload 2
+import utils
 
 
 # %%
@@ -53,7 +56,7 @@ def get_pitch_array_from_piece(
     piece: ms3.Piece,
 ):
     facets = get_facet_dict_from_piece(piece)
-    return make_labeled_pitch_array(
+    return utils.make_labeled_pitch_array(
         notes=facets["notes"], 
         labels=facets["expanded"],
         measures=facets["measures"]
@@ -79,7 +82,8 @@ def store_pitch_arrays_for_corpus(
     output_dir: str,
     metadata_path: str,
     column_name: str,
-    corpus_subdir: bool = True
+    corpus_subdir: bool = True,
+    reset: bool = False
 ):
     """
     
@@ -89,6 +93,7 @@ def store_pitch_arrays_for_corpus(
         metadata_path: 
         column_name: The name of the column in which the progress for parsing the dataset will be stored.
         corpus_subdir: 
+        reset: Set to True in order to not skip pieces that have already been marked as processed in the metadata.
 
     Returns:
 
@@ -100,6 +105,10 @@ def store_pitch_arrays_for_corpus(
     metadata.head()
     if column_name not in metadata.columns:
         metadata.insert(0, column_name, value=False)
+    elif reset:
+        piece_names = corpus.get_all_pnames(pieces_not_in_metadata=False)
+        metadata.loc[piece_names, column_name] = False
+        ms3.write_tsv(metadata, metadata_path, index=True)
     for piece_id, piece in corpus.iter_pieces():
         print(piece_id, end=" ")
         if metadata.loc[piece_id, column_name]: 
@@ -120,7 +129,8 @@ def store_pitch_arrays_for_corpora(
         output_dir: str,
         metadata_path: str,
         column_name: str,
-        corpus_subdir: bool = True
+        corpus_subdir: bool = True,
+        reset: bool = False
 ):
     """
     
@@ -130,6 +140,7 @@ def store_pitch_arrays_for_corpora(
         metadata_path: 
         column_name: The name of the column in which the progress for parsing the dataset will be stored.
         corpus_subdir: 
+        reset: Set to True in order to not skip pieces that have already been marked as processed in the metadata.
     """
     for subcorpus_dir in os.listdir(metacorpus_path):
         subcorpus_path = os.path.join(DLC_PATH, subcorpus_dir)
@@ -140,19 +151,18 @@ def store_pitch_arrays_for_corpora(
             output_dir=output_dir,
             metadata_path=metadata_path,
             column_name=column_name,
-            corpus_subdir=corpus_subdir
+            corpus_subdir=corpus_subdir,
+            reset=reset
         )
 
 
 # %%
-corpus_subdir = "schulhoff_suite_dansante_en_jazz"
-corpus = get_ms3_corpus(f"~/distant_listening_corpus/{corpus_subdir}")
-store_pitch_arrays_for_corpus(
-    corpus=corpus,
+store_pitch_arrays_for_corpora(
+    metacorpus_path=DLC_PATH,
     output_dir=DATASET,
     metadata_path="distant_listening_corpus.metadata.tsv",
     column_name=DATASET,
-    corpus_subdir=corpus_subdir
+    reset=True,
 )
 
 
@@ -166,12 +176,26 @@ def inspect(corpus: str, piece: str):
 inspect("kozeluh_sonatas", "16op15no1c")
 
 # %%
-store_pitch_arrays_for_corpora(
-    metacorpus_path=DLC_PATH,
+corpus_subdir = "beethoven_piano_sonatas"
+corpus = get_ms3_corpus(f"~/distant_listening_corpus/{corpus_subdir}")
+
+# %%
+store_pitch_arrays_for_corpus(
+    corpus=corpus,
     output_dir=DATASET,
     metadata_path="distant_listening_corpus.metadata.tsv",
-    column_name=DATASET
+    column_name=DATASET,
+    corpus_subdir=corpus_subdir,
+    reset=True
 )
+
+# %%
+piece = corpus["01-1"]
+facets = get_facet_dict_from_piece(piece)
+
+# %%
+pitch_array = get_pitch_array_from_piece(piece)
+pitch_array
 
 
 # %%
