@@ -612,7 +612,7 @@ def make_pitch_array(
         axis=1
     )
     column_order = [col for col in COLUMN_ORDER if col in result.columns]
-    column_order += [col for col in result.columns if col not in column_order]
+    column_order += sorted(col for col in result.columns if col not in column_order)
     return result[column_order].astype(PITCH_ARRAY_DTYPES)
 
 # endregion make_pitch_array

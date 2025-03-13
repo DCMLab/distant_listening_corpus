@@ -101,24 +101,26 @@ def store_pitch_arrays_for_corpus(
     output_dir = ms3.resolve_dir(output_dir)
     if corpus_subdir:
         output_dir = os.path.join(output_dir, corpus.name)
-    metadata = ms3.load_tsv(metadata_path, index_col="piece")
+    metadata = ms3.load_tsv(metadata_path, index_col=["corpus", "piece"])
     metadata.head()
     if column_name not in metadata.columns:
         metadata.insert(0, column_name, value=False)
     elif reset:
         piece_names = corpus.get_all_pnames(pieces_not_in_metadata=False)
-        metadata.loc[piece_names, column_name] = False
+        ids = [(corpus.name, piece) for piece in piece_names]
+        metadata.loc[ids, column_name] = False
         ms3.write_tsv(metadata, metadata_path, index=True)
     for piece_id, piece in corpus.iter_pieces():
-        print(piece_id, end=" ")
-        if metadata.loc[piece_id, column_name]: 
+        id_tuple = (corpus.name, piece_id)
+        print(id_tuple, end=" ")
+        if metadata.loc[id_tuple, column_name]: 
             print("SKIPPED")
             continue
         try:
             pitch_array = get_pitch_array_from_piece(piece)
             filepath = store_pitch_array(pitch_array, output_dir=output_dir, tsv_name=f"{piece_id}.tsv")
             print(filepath)
-            metadata.loc[piece_id, column_name] = True
+            metadata.loc[id_tuple, column_name] = True
             ms3.write_tsv(metadata, metadata_path, index=True)
         except Exception as e:
             print(e)
