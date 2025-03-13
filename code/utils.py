@@ -240,6 +240,67 @@ class DivMaker():
 # endregion DivMaker
 # region prepare_measures
 
+def make_continuous_beats_series(
+    measures: pd.DataFrame,
+    negative_anacrusis: Optional[Fraction] = None,
+    round_to: Optional[int] = None,
+    name: str = "continuous_beats"
+) -> pd.Series:
+    """This is a copy of ms3.utils.make_continuous_offset_series() which is originally used for getting the
+    quarternote offset position ("quarterbeats") for the beginning of each measure (MC).
+    Here, it is adapted for getting beat offset positions according to the respective time signatures.
+
+    Accepts a measure table without 'quarterbeats' column and computes each MC's offset from the piece's beginning.
+    Deal with voltas before passing the table.
+
+    If you need an offset_dict and the measures already come with a 'quarterbeats' column, you can call
+    :func:`make_offset_dict_from_measures`.
+
+    Args:
+        measures:
+            A measures table with 'normal' RangeIndex containing the column 'act_durs' and one of
+            'mc' or 'mc_playthrough' (if repeats were unfolded).
+        negative_anacrusis:
+            By default, the first value is 0. If you pass a fraction here, the first value will be its negative and the
+            second value will be 0.
+        round_to:
+            If None (default) the continous beats are added as Fraction objects,
+            otherwise as floats rounded to round_to decimals.
+
+
+    Returns:
+        Cumulative sum of the actual durations, shifted down by 1. Compared to the original DataFrame it has
+        length + 2 because it adds the end value twice, once with the next index value, and once with the index 'end'.
+        Otherwise the end value would be lost due to the shifting.
+
+    Raises:
+        ValueError
+    """
+    if "mc_playthrough" in measures.columns:
+        index_col = "mc_playthrough"
+    elif "mc" in measures.columns:
+        index_col = "mc"
+    else:
+        raise ValueError(
+            "Expected to have at least one column called 'mc' or 'mc_playthrough'."
+        )
+    durations_in_beats = ms3.transform(
+        measures,
+        onset2beat,
+        ["act_dur", "timesig"],
+        round_to=round_to,
+        first_beat=0
+    )
+    result = durations_in_beats.cumsum()
+    # last_val = result.iloc[-1]
+    # last_ix = result.index[-1] + 1
+    result = result.shift(fill_value=0)
+    # ending = pd.Series([last_val, last_val], index=[last_ix, "end"])
+    # result = pd.concat([result, ending])
+    if negative_anacrusis is not None:
+        result -= abs(negative_anacrusis)
+    return result.rename(name)
+
 def make_section_start_column(
         measures: pd.DataFrame,
 ) -> pd.Series:
@@ -253,15 +314,30 @@ def make_section_start_column(
 
 
 def prepare_measures(
-        measures:pd.DataFrame,
+        measures: pd.DataFrame,
+        round_to: Optional[int] = None,
 ) -> pd.DataFrame:
+    """
+
+    Args:
+        measures:
+        round_to:
+            If None (default) the continous beats are added as Fraction objects,
+            otherwise as floats rounded to round_to decimals.
+
+    Returns:
+
+    """
     section_start_column = make_section_start_column(measures)
+    continous_beats_column = make_continuous_beats_series(measures, round_to=round_to)
     measures = pd.concat([
         measures.rename(columns=dict(quarterbeats="quarterbeats_playthrough")),
+        continous_beats_column,
         section_start_column
     ], axis=1)
     measures.keysig = measures.keysig.astype("Int64")
     return measures
+
 
 # endregion prepare_measures
 # region make_pitch_array
