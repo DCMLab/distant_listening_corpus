@@ -412,7 +412,7 @@ RENAME_ORIGINAL_COLUMNS = dict( # columns to keep under a different name
     keysig="ks_fifths"
 )
 COLUMN_ORDER = [
-    "onset_div", "duration_div", "continuous_beats", "pitch", "tpc", "step", "alter", "beat", "ts_beats",
+    "onset_div", "duration_div", "continuous_beats", "pitch", "tpc", "step", "alter", "beat_float", "ts_beats",
     "ts_beat_type", "staff", "voice"
 ]
 PITCH_ARRAY_DTYPES = dict(                  # dtype dict passed to pd.DataFrame.astype()
@@ -529,11 +529,11 @@ def prepare_notes_with_measure_information(
 def prepare_notes(
         notes: pd.DataFrame,
         beat_decimals: Optional[int] = None,
-        name: str = "beat"
+        name: str = "beat_float"
 ) -> pd.DataFrame:
-    beat = ms3.transform(notes, onset2beat, ["mn_onset", "timesig"], beat_decimals=beat_decimals).rename(name)
+    beat_float = ms3.transform(notes, onset2beat, ["mn_onset", "timesig"], beat_decimals=beat_decimals).rename(name)
     columns = notes.columns.tolist()
-    notes = pd.concat([notes, beat], axis=1)
+    notes = pd.concat([notes, beat_float], axis=1)
     columns.insert(
         columns.index("mn_onset") + 1,
         name
@@ -551,7 +551,7 @@ def make_pitch_array(
 
     Args:
         beat_decimals:
-            Integer controlling the number of decimal places in the column "beat". If you pass None,
+            Integer controlling the number of decimal places in the column "beat_float". If you pass None,
             the column will contain :obj:`Fraction` objects.
         label_notes:
             By default, this function includes only transformations that are part of the input representation.
