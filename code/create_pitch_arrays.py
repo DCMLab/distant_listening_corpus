@@ -81,6 +81,18 @@ def store_pitch_arrays_for_corpus(
     column_name: str,
     corpus_subdir: bool = True
 ):
+    """
+    
+    Args:
+        corpus: 
+        output_dir: 
+        metadata_path: 
+        column_name: The name of the column in which the progress for parsing the dataset will be stored.
+        corpus_subdir: 
+
+    Returns:
+
+    """
     output_dir = ms3.resolve_dir(output_dir)
     if corpus_subdir:
         output_dir = os.path.join(output_dir, corpus.name)
@@ -110,6 +122,15 @@ def store_pitch_arrays_for_corpora(
         column_name: str,
         corpus_subdir: bool = True
 ):
+    """
+    
+    Args:
+        metacorpus_path: 
+        output_dir: 
+        metadata_path: 
+        column_name: The name of the column in which the progress for parsing the dataset will be stored.
+        corpus_subdir: 
+    """
     for subcorpus_dir in os.listdir(metacorpus_path):
         subcorpus_path = os.path.join(DLC_PATH, subcorpus_dir)
         if os.path.isfile(subcorpus_path): continue
@@ -121,6 +142,18 @@ def store_pitch_arrays_for_corpora(
             column_name=column_name,
             corpus_subdir=corpus_subdir
         )
+
+
+# %%
+corpus_subdir = "schulhoff_suite_dansante_en_jazz"
+corpus = get_ms3_corpus(f"~/distant_listening_corpus/{corpus_subdir}")
+store_pitch_arrays_for_corpus(
+    corpus=corpus,
+    output_dir=DATASET,
+    metadata_path="distant_listening_corpus.metadata.tsv",
+    column_name=DATASET,
+    corpus_subdir=corpus_subdir
+)
 
 
 # %%
