@@ -345,6 +345,26 @@ def make_continuous_beats_column(
         continuous_beats += beat_float_column
     return continuous_beats.rename(name)
 
+
+def add_continuous_beat_column(merged, measures, beat_decimals):
+    beat = ms3.transform(merged, onset2beat, ["mn_onset", "timesig"], first_beat=0, beat_decimals=beat_decimals)
+    anacrusis_mask = (merged.mn_playthrough == "0a")
+    if anacrusis_mask.any():
+        # beats of an anacrusis measure need to start from zero rather than their metrical value
+        anacrusis_beats = beat[anacrusis_mask].copy()
+        first_value = anacrusis_beats.iat[0]
+        anacrusis_beats -= first_value
+        beat.loc[anacrusis_mask] = anacrusis_beats
+    mn_offsets = make_continuous_mn_beats_series(measures, beat_decimals=beat_decimals)
+    continuous_beats = make_continuous_beats_column(
+        mn_column=merged.mn_playthrough,
+        beat_float_column=beat,
+        mn_offsets=mn_offsets
+    )
+    merged = pd.concat([merged, continuous_beats], axis=1)
+    return merged
+
+
 def make_section_start_column(
         measures: pd.DataFrame,
 ) -> pd.Series:
@@ -503,23 +523,7 @@ def prepare_notes_with_measure_information(
         merged.section_start = merged.section_start.fillna(False)
 
     # continuous beats
-    beat = ms3.transform(merged, onset2beat, ["mn_onset", "timesig"], first_beat=0, beat_decimals=beat_decimals)
-
-    anacrusis_mask = (notes.mn_playthrough == "0a")
-    if anacrusis_mask.any():
-        # beats of an anacrusis measure need to start from zero rather than their metrical value
-        anacrusis_beats = beat[anacrusis_mask].copy()
-        first_value = anacrusis_beats.iat[0]
-        anacrusis_beats -= first_value
-        beat.loc[anacrusis_mask] = anacrusis_beats
-
-    mn_offsets = make_continuous_mn_beats_series(measures, beat_decimals=beat_decimals)
-    continuous_beats = make_continuous_beats_column(
-        mn_column=merged.mn_playthrough,
-        beat_float_column=beat,
-        mn_offsets=mn_offsets
-    )
-    merged = pd.concat([merged, continuous_beats], axis=1)
+    merged = add_continuous_beat_column(merged, measures, beat_decimals)
     return merged
 
 def prepare_notes(
@@ -576,7 +580,7 @@ def make_pitch_array(
     if label_notes:
         potential_columns += MERGE_LABEL_COLUMNS
     keep_original_columns = [col for col in potential_columns if col in prepared_notes.columns]
-    print(f"{potential_columns =}\n{keep_original_columns =}")
+
     original_columns = prepared_notes[keep_original_columns]
 
     rename_original_columns = {k: v for k, v in RENAME_ORIGINAL_COLUMNS.items() if k in prepared_notes.columns}
