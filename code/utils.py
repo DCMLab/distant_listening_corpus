@@ -449,6 +449,20 @@ def prepare_notes_with_measure_information(
         merged.section_start = merged.section_start.fillna(False)
     return merged
 
+def prepare_notes(
+        notes: pd.DataFrame,
+        beat_decimals: Optional[int] = None,
+        name: str = "beat"
+) -> pd.DataFrame:
+    beat = ms3.transform(notes, onset2beat, ["mn_onset", "timesig"], round_to=beat_decimals).rename(name)
+    columns = notes.columns.tolist()
+    notes = pd.concat([notes, beat], axis=1)
+    columns.insert(
+        columns.index("mn_onset") + 1,
+        name
+    )
+    return notes[columns]
+
 
 def make_pitch_array(
         notes: pd.DataFrame,
@@ -469,10 +483,15 @@ def make_pitch_array(
 
 
     """
+    prepared_notes = prepare_notes(notes)
     if measures is not None:
-        prepared_notes = prepare_notes_with_measure_information(notes, measures, label_notes=label_notes)
-    else:
-        prepared_notes = notes
+        prepared_notes = prepare_notes_with_measure_information(
+            prepared_notes,
+            measures,
+            label_notes=label_notes,
+            beat_decimals=beat_decimals
+        )
+
 
     div_maker = DivMaker(
         onsets=prepared_notes.quarterbeats_playthrough,
@@ -503,7 +522,6 @@ def make_pitch_array(
     new_dataframes.append(
         prepared_notes.timesig.str.extract(r"^(?P<ts_beats>\d+)/(?P<ts_beat_type>\d+)$")
     )
-    new_columns["beat"] = ms3.transform(prepared_notes, onset2beat, ["mn_onset", "timesig"], round_to=beat_decimals)
 
 
     result = pd.concat(
