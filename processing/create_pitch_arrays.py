@@ -59,7 +59,8 @@ def get_pitch_array_from_piece(
     return utils.make_labeled_pitch_array(
         notes=facets["notes"], 
         labels=facets["expanded"],
-        measures=facets["measures"]
+        measures=facets["measures"],
+        beat_decimals=3
     )
 
 

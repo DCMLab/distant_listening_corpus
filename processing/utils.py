@@ -573,7 +573,7 @@ def make_pitch_array(
 
 
     """
-    prepared_notes = prepare_notes(notes)
+    prepared_notes = prepare_notes(notes, beat_decimals=beat_decimals)
     if measures is not None:
         prepared_notes = prepare_notes_with_measure_information(
             prepared_notes,
@@ -743,9 +743,10 @@ def add_boolean_label_columns(merged: pd.DataFrame) -> pd.DataFrame:
 def make_labeled_pitch_array(
         notes: pd.DataFrame,
         labels: pd.DataFrame,
-        measures: Optional[pd.DataFrame] = None
+        measures: Optional[pd.DataFrame] = None,
+        beat_decimals: Optional[int] = 3,
 ):
-    pitch_array = make_pitch_array(notes, measures, label_notes=True)
+    pitch_array = make_pitch_array(notes, measures, label_notes=True, beat_decimals=beat_decimals)
     prepared_labels = prepare_labels(labels)
 
     merged = pd.merge(
