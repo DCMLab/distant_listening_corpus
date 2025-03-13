@@ -412,8 +412,8 @@ RENAME_ORIGINAL_COLUMNS = dict( # columns to keep under a different name
     keysig="ks_fifths"
 )
 COLUMN_ORDER = [
-    "onset_div", "duration_div", "continuous_beats", "pitch", "tpc", "step", "alter", "beat_float", "ts_beats",
-    "ts_beat_type", "staff", "voice"
+    "onset_div", "duration_div", "continuous_beats", "pitch", "tpc", "step", "alter", "beat_float", "downbeat",
+    "ts_beats", "ts_beat_type", "staff", "voice"
 ]
 PITCH_ARRAY_DTYPES = dict(                  # dtype dict passed to pd.DataFrame.astype()
     mn_playthrough = "string",
@@ -526,19 +526,32 @@ def prepare_notes_with_measure_information(
     merged = add_continuous_beat_column(merged, measures, beat_decimals)
     return merged
 
+def float_is_integer(f: float) -> bool:
+    try:
+        return f.is_integer()
+    except Exception as e:
+        print(f"Unable to evaluate whether {f!r} is an integer.")
+        return False
+
 def prepare_notes(
         notes: pd.DataFrame,
         beat_decimals: Optional[int] = None,
-        name: str = "beat_float"
+        beat_float_name: str = "beat_float",
+        downbeat_name: str = "downbeat"
 ) -> pd.DataFrame:
-    beat_float = ms3.transform(notes, onset2beat, ["mn_onset", "timesig"], beat_decimals=beat_decimals).rename(name)
-    columns = notes.columns.tolist()
-    notes = pd.concat([notes, beat_float], axis=1)
-    columns.insert(
-        columns.index("mn_onset") + 1,
-        name
-    )
-    return notes[columns]
+    beat_float = ms3.transform(notes, onset2beat, ["mn_onset", "timesig"], beat_decimals=beat_decimals)
+    is_downbeat_mask = beat_float.map(float_is_integer)
+    downbeat = beat_float.where(is_downbeat_mask, 0).astype("Int64")
+    beat_columns = pd.DataFrame({
+        beat_float_name: beat_float,
+        downbeat_name: downbeat
+    }, index=notes.index)
+    mn_onset_pos = notes.columns.get_loc("mn_onset") + 1
+    return pd.concat([
+        notes.iloc[:, :mn_onset_pos],
+        beat_columns,
+        notes.iloc[:, mn_onset_pos:]
+    ], axis=1)
 
 
 def make_pitch_array(
