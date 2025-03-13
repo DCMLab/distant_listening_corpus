@@ -320,7 +320,8 @@ def onset2beat(
 def onset2beat(
         onset: Fraction,
         timesig: str,
-        round_to: Optional[int] = None
+        round_to: Optional[int] = None,
+        first_beat: float | int = 1.
 ) -> float | Fraction:
     """ Turn an offset in whole notes into a beat based on the time signature.
         Uses: ts_beat_size()
@@ -331,12 +332,12 @@ def onset2beat(
         timesig:
             Time signature, i.e., a string representing a fraction.
         round_to:
-
+            If None (default) the beat is returned as Fraction, otherwise as float rounded to round_to decimals.
     """
     size = ts_beat_size(timesig)
     beat, remainder = divmod(onset, size)
     subbeat = remainder / size
-    result = beat + 1 + subbeat
+    result = beat + first_beat + subbeat
     return result if round_to is None else round(float(result), round_to)
 
 
