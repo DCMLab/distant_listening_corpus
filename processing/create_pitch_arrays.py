@@ -145,9 +145,14 @@ def store_pitch_arrays_for_corpora(
         reset: Set to True in order to not skip pieces that have already been marked as processed in the metadata.
     """
     for subcorpus_dir in os.listdir(metacorpus_path):
+        if subcorpus_dir.startswith("."): continue
         subcorpus_path = os.path.join(DLC_PATH, subcorpus_dir)
         if os.path.isfile(subcorpus_path): continue
-        corpus = get_ms3_corpus(subcorpus_path)
+        try:
+            corpus = get_ms3_corpus(subcorpus_path)
+        except AssertionError as e:
+            print(f"{subcorpus_path} seems not be a corpus: failed with {e}")
+            continue
         store_pitch_arrays_for_corpus(
             corpus=corpus,
             output_dir=output_dir,
@@ -159,6 +164,16 @@ def store_pitch_arrays_for_corpora(
 
 
 # %%
+def inspect(corpus: str, piece: str):
+    corpus_obj = get_ms3_corpus(os.path.join(DLC_PATH, corpus))
+    piece_obj = next(pce for piece_id, pce in corpus_obj.iter_pieces() if piece_id == piece)
+    labeled_pitch_array = get_pitch_array_from_piece(piece_obj)
+    return labeled_pitch_array
+    
+lpa = inspect("ABC", "n07op59-1_01")
+lpa
+
+# %%
 store_pitch_arrays_for_corpora(
     metacorpus_path=DLC_PATH,
     output_dir=DATASET,
@@ -166,16 +181,6 @@ store_pitch_arrays_for_corpora(
     column_name=DATASET,
     reset=True,
 )
-
-
-# %%
-def inspect(corpus: str, piece: str):
-    corpus_obj = get_ms3_corpus(os.path.join(DLC_PATH, corpus))
-    piece_obj = next(pce for piece_id, pce in corpus_obj.iter_pieces() if piece_id == piece)
-    labeled_pitch_array = get_pitch_array_from_piece(piece_obj)
-    return labeled_pitch_array
-    
-inspect("kozeluh_sonatas", "16op15no1c")
 
 # %%
 corpus_subdir = "beethoven_piano_sonatas"

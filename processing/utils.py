@@ -703,7 +703,11 @@ def add_boolean_label_columns(merged: pd.DataFrame) -> pd.DataFrame:
 
     def is_in_chord_tones(sic: int, chord_tones: Tuple[int]) -> bool:
         """Used for element-wise containment check"""
-        return sic in chord_tones
+        try:
+            return sic in chord_tones
+        except TypeError as e:
+            print(f"{sic} in {chord_tones} resulted in {e!r}")
+            return pd.NA
 
     concatenate_this = [
         merged,
