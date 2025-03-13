@@ -170,40 +170,31 @@ def inspect(corpus: str, piece: str):
     labeled_pitch_array = get_pitch_array_from_piece(piece_obj)
     return labeled_pitch_array
     
-lpa = inspect("ABC", "n07op59-1_01")
-lpa
+# lpa = inspect("kozeluh_sonatas", "09op08no1a")
+# lpa
+
 
 # %%
-store_pitch_arrays_for_corpora(
-    metacorpus_path=DLC_PATH,
-    output_dir=DATASET,
-    metadata_path="distant_listening_corpus.metadata.tsv",
-    column_name=DATASET,
-    reset=True,
-)
+# corpus_subdir = "beethoven_piano_sonatas"
+# corpus = get_ms3_corpus(f"~/distant_listening_corpus/{corpus_subdir}")
 
 # %%
-corpus_subdir = "beethoven_piano_sonatas"
-corpus = get_ms3_corpus(f"~/distant_listening_corpus/{corpus_subdir}")
+# store_pitch_arrays_for_corpus(
+#     corpus=corpus,
+#     output_dir=DATASET,
+#     metadata_path="distant_listening_corpus.metadata.tsv",
+#     column_name=DATASET,
+#     corpus_subdir=corpus_subdir,
+#     reset=True
+# )
 
 # %%
-store_pitch_arrays_for_corpus(
-    corpus=corpus,
-    output_dir=DATASET,
-    metadata_path="distant_listening_corpus.metadata.tsv",
-    column_name=DATASET,
-    corpus_subdir=corpus_subdir,
-    reset=True
-)
+# piece = corpus["01-1"]
+# facets = get_facet_dict_from_piece(piece)
 
 # %%
-piece = corpus["01-1"]
-facets = get_facet_dict_from_piece(piece)
-
-# %%
-pitch_array = get_pitch_array_from_piece(piece)
-pitch_array
-
+# pitch_array = get_pitch_array_from_piece(piece)
+# pitch_array
 
 # %%
 class Purpose(str, Enum):
@@ -378,3 +369,11 @@ spec_specs = dict(
 # specs_df
 
 # %%
+if __name__ == "__main__":
+    store_pitch_arrays_for_corpora(
+        metacorpus_path=DLC_PATH,
+        output_dir=DATASET,
+        metadata_path="distant_listening_corpus.metadata.tsv",
+        column_name=DATASET,
+        reset=True,
+    )
