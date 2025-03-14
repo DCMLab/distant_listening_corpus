@@ -1,5 +1,5 @@
 ![Version](https://img.shields.io/github/v/release/DCMLab/distant_listening_corpus?display_name=tag)
-[![DOI](https://zenodo.org/badge/688808953.svg)](https://zenodo.org/badge/latestdoi/688808953)
+[![DOI](https://zenodo.org/badge/688808953.svg)](https://doi.org/10.5281/zenodo.13844105)
 ![GitHub repo size](https://img.shields.io/github/repo-size/DCMLab/distant_listening_corpus)
 ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-9cf)
 
@@ -13,23 +13,15 @@ and serves as welcome page for both
 For information on how to obtain and use the dataset, please refer to [this documentation page](https://dcmlab.github.io/distant_listening_corpus/introduction).
 
 <!-- TOC -->
-* [The Distant Listening Corpus (v3.0)](#the-distant-listening-corpus-v30)
-  * [Cite as](#cite-as)
-  * [Version history](#version-history)
+* [The Distant Listening Corpus (A corpus of annotated scores)](#the-distant-listening-corpus-a-corpus-of-annotated-scores)
   * [Getting the data](#getting-the-data)
-    * [With full version history](#with-full-version-history)
-    * [Without full version history](#without-full-version-history)
   * [Data Formats](#data-formats)
     * [Opening Scores](#opening-scores)
     * [Opening TSV files in a spreadsheet](#opening-tsv-files-in-a-spreadsheet)
     * [Loading TSV files in Python](#loading-tsv-files-in-python)
-  * [How to read `metadata.tsv`](#how-to-read-metadatatsv)
-    * [File information](#file-information)
-    * [Composition information](#composition-information)
-    * [Score information](#score-information)
-    * [Identifiers](#identifiers)
-  * [Generating all TSV files from the scores](#generating-all-tsv-files-from-the-scores)
+  * [Version history](#version-history)
   * [Questions, Suggestions, Corrections, Bug Reports](#questions-suggestions-corrections-bug-reports)
+  * [Cite as](#cite-as)
   * [License](#license)
 * [Overview](#overview)
   * [ABC](#abc)
@@ -74,7 +66,9 @@ For information on how to obtain and use the dataset, please refer to [this docu
   * [wf_bach_sonatas](#wf_bach_sonatas)
 <!-- TOC -->
 
-# The Distant Listening Corpus (v3.0)
+# The Distant Listening Corpus (A corpus of annotated scores)
+
+_A modular infrastructure for the empirical study of (an)notated music_
 
 This corpus has been created within the [DCML corpus initiative](https://github.com/DCMLab/dcml_corpora) and employs
 the [DCML harmony annotation standard](https://github.com/DCMLab/standards).
@@ -140,213 +134,72 @@ A Dataset of Harmonic Analyses of All Beethoven String Quartets. Frontiers in Di
 
 * [Ludwig van Beethoven - String Quartets](https://zenodo.org/doi/10.5281/zenodo.7441343)
 
+## Getting the data
 
-## Cite as
+* download individual subcorpora as ZIP files using the URLs provided above
+* download a [Frictionless Datapackage](https://specs.frictionlessdata.io/data-package/) that includes concatenations
+  of the TSV files in the four folders (`measures`, `notes`, `chords`, and `harmonies`) and a JSON descriptor:
+  * [distant_listening_corpus.zip](https://github.com/DCMLab/distant_listening_corpus/releases/latest/download/distant_listening_corpus.zip)
+  * [distant_listening_corpus.datapackage.json](https://github.com/DCMLab/distant_listening_corpus/releases/latest/download/distant_listening_corpus.datapackage.json)
+* clone the repo (~2.4 GB): `git clone --recursive -j12 https://github.com/DCMLab/distant_listening_corpus.git` 
+
+
+## Data Formats
+
+Each piece in this corpus is represented by five files with identical name prefixes, each in its own folder. 
+For example, the *Prélude* of J.S. Bach’s first English Suite, BWV 806, has the following files:
+
+* `MS3/BWV806_01_Prelude.mscx`: Uncompressed MuseScore 3.6.2 file including the music and annotation labels.
+* `notes/BWV806_01_Prelude.notes.tsv`: A table of all note heads contained in the score and their relevant features (not each of them represents an onset, some are tied together)
+* `measures/BWV806_01_Prelude.measures.tsv`: A table with relevant information about the measures in the score.
+* `chords/BWV806_01_Prelude.chords.tsv`: A table containing layer-wise unique onset positions with the musical markup (such as dynamics, articulation, lyrics, figured bass, etc.).
+* `harmonies/BWV806_01_Prelude.harmonies.tsv`: A table of the included harmony labels (including cadences and phrases) with their positions in the score.
+
+Each TSV file comes with its own JSON descriptor that describes the meanings and datatypes of the columns ("fields") it contains,
+follows the [Frictionless specification](https://specs.frictionlessdata.io/tabular-data-resource/),
+and can be used to validate and correctly load the described file. 
+
+### Opening Scores
+
+After navigating to your local copy, you can open the scores in the folder `MS3` with the free and open source score
+editor [MuseScore](https://musescore.org). Please note that the scores have been edited, annotated and tested with
+[MuseScore 3.6.2](https://github.com/musescore/MuseScore/releases/tag/v3.6.2). 
+MuseScore 4 has since been released which renders them correctly but cannot store them back in the same format.
+
+### Opening TSV files in a spreadsheet
+
+Tab-separated value (TSV) files are like Comma-separated value (CSV) files and can be opened with most modern text
+editors. However, for correctly displaying the columns, you might want to use a spreadsheet or an addon for your
+favourite text editor. When you use a spreadsheet such as Excel, it might annoy you by interpreting fractions as
+dates. This can be circumvented by using `Data --> From Text/CSV` or the free alternative
+[LibreOffice Calc](https://www.libreoffice.org/download/download/). Other than that, TSV data can be loaded with
+every modern programming language.
+
+### Loading TSV files in Python
+
+Since the TSV files contain null values, lists, fractions, and numbers that are to be treated as strings, you may want
+to use this code to load any TSV files related to this repository (provided you're doing it in Python). After a quick
+`pip install -U ms3` (requires Python 3.10 or later) you'll be able to load any TSV like this:
+
+```python
+import ms3
+
+labels = ms3.load_tsv("harmonies/BWV806_01_Prelude.harmonies.tsv")
+notes = ms3.load_tsv("notes/BWV806_01_Prelude.notes.tsv")
+```
+
 
 ## Version history
 
 See the [GitHub releases](https://github.com/DCMLab/distant_listening_corpus/releases).
-## Getting the data
-
-### With full version history
-
-The dataset is version-controlled via [git](https://git-scm.com/). In
-order to download the files with all revisions they have gone through,
-git needs to be installed on your machine. Then you can clone this
-repository using the command
-
-``` bash
-git clone --recurse-submodules -j8 https://github.com/DCMLab/distant_listening_corpus.git
-```
-
-`-j8` is available from git \>= 2.8 and fetches up to 8 submodules at a
-time in parallel
-
-### Without full version history
-
-If you are only interested in the current version of the corpus, you can
-download the ZIP file of each submodule:
-
--   [ABC](https://github.com/DCMLab/ABC/archive/refs/heads/main.zip)
--   [bach_en_fr_suites](https://github.com/DCMLab/bach_en_fr_suites/archive/refs/heads/main.zip)
--   [bach_solo](https://github.com/DCMLab/bach_solo/archive/refs/heads/main.zip)
--   [bartok_bagatelles](https://github.com/DCMLab/bartok_bagatelles/archive/refs/heads/main.zip)
--   [beethoven_piano_sonatas](https://github.com/DCMLab/beethoven_piano_sonatas/archive/refs/heads/main.zip)
--   [c_schumann_lieder](https://github.com/DCMLab/c_schumann_lieder/archive/refs/heads/main.zip)
--   [chopin_mazurkas](https://github.com/DCMLab/chopin_mazurkas/archive/refs/heads/main.zip)
--   [corelli](https://github.com/DCMLab/corelli/archive/refs/heads/main.zip)
--   [couperin_clavecin](https://github.com/DCMLab/couperin_clavecin/archive/refs/heads/main.zip)
--   [couperin_concerts](https://github.com/DCMLab/couperin_concerts/archive/refs/heads/main.zip)
--   [cpe_bach_keyboard](https://github.com/DCMLab/cpe_bach_keyboard/archive/refs/heads/main.zip)
--   [debussy_suite_bergamasque](https://github.com/DCMLab/debussy_suite_bergamasque/archive/refs/heads/main.zip)
--   [dvorak_silhouettes](https://github.com/DCMLab/dvorak_silhouettes/archive/refs/heads/main.zip)
--   [frescobaldi_fiori_musicali](https://github.com/DCMLab/frescobaldi_fiori_musicali/archive/refs/heads/main.zip)
--   [grieg_lyric_pieces](https://github.com/DCMLab/grieg_lyric_pieces/archive/refs/heads/main.zip)
--   [handel_keyboard](https://github.com/DCMLab/handel_keyboard/archive/refs/heads/main.zip)
--   [jc_bach_sonatas](https://github.com/DCMLab/jc_bach_sonatas/archive/refs/heads/main.zip)
--   [kleine_geistliche_konzerte](https://github.com/DCMLab/kleine_geistliche_konzerte/archive/refs/heads/main.zip)
--   [kozeluh_sonatas](https://github.com/DCMLab/kozeluh_sonatas/archive/refs/heads/main.zip)
--   [liszt_pelerinage](https://github.com/DCMLab/liszt_pelerinage/archive/refs/heads/main.zip)
--   [mahler_kindertotenlieder](https://github.com/DCMLab/mahler_kindertotenlieder/archive/refs/heads/main.zip)
--   [medtner_tales](https://github.com/DCMLab/medtner_tales/archive/refs/heads/main.zip)
--   [mendelssohn_quartets](https://github.com/DCMLab/mendelssohn_quartets/archive/refs/heads/main.zip)
--   [monteverdi_madrigals](https://github.com/DCMLab/monteverdi_madrigals/archive/refs/heads/main.zip)
--   [mozart_piano_sonatas](https://github.com/DCMLab/mozart_piano_sonatas/archive/refs/heads/main.zip)
--   [pergolesi_stabat_mater](https://github.com/DCMLab/pergolesi_stabat_mater/archive/refs/heads/main.zip)
--   [peri_euridice](https://github.com/DCMLab/peri_euridice/archive/refs/heads/main.zip)
--   [pleyel_quartets](https://github.com/DCMLab/pleyel_quartets/archive/refs/heads/main.zip)
--   [poulenc_mouvements_perpetuels](https://github.com/DCMLab/poulenc_mouvements_perpetuels/archive/refs/heads/main.zip)
--   [rachmaninoff_piano](https://github.com/DCMLab/rachmaninoff_piano/archive/refs/heads/main.zip)
--   [ravel_piano](https://github.com/DCMLab/ravel_piano/archive/refs/heads/main.zip)
--   [scarlatti_sonatas](https://github.com/DCMLab/scarlatti_sonatas/archive/refs/heads/main.zip)
--   [schubert_winterreise](https://github.com/DCMLab/schubert_winterreise/archive/refs/heads/main.zip)
--   [schulhoff_suite_dansante_en_jazz](https://github.com/DCMLab/schulhoff_suite_dansante_en_jazz/archive/refs/heads/main.zip)
--   [schumann_kinderszenen](https://github.com/DCMLab/schumann_kinderszenen/archive/refs/heads/main.zip)
--   [schumann_liederkreis](https://github.com/DCMLab/schumann_liederkreis/archive/refs/heads/main.zip)
--   [sweelinck_keyboard](https://github.com/DCMLab/sweelinck_keyboard/archive/refs/heads/main.zip)
--   [tchaikovsky_seasons](https://github.com/DCMLab/tchaikovsky_seasons/archive/refs/heads/main.zip)
--   [wagner_overtures](https://github.com/DCMLab/wagner_overtures/archive/refs/heads/main.zip)
--   [wf_bach_sonatas](https://github.com/DCMLab/wf_bach_sonatas/archive/refs/heads/main.zip)
-
-## Data Formats
-
-Each piece in this corpus is represented by four files with identical
-names, each in its own folder. For example, the *Prélude* of J.S. Bach's
-first English Suite, BWV 806, has the following files:
-
--   `bach_en_fr_suites/MS3/BWV806_01_Prelude.mscx`: Uncompressed
-    MuseScore file including the music and annotation labels.
--   `bach_en_fr_suites/notes/BWV806_01_Prelude.tsv`: A table of all note
-    heads contained in the score and their relevant features (not each
-    of them represents an onset, some are tied together)
--   `bach_en_fr_suites/measures/BWV806_01_Prelude.tsv`: A table with
-    relevant information about the measures in the score.
--   `bach_en_fr_suites/harmonies/BWV806_01_Prelude.tsv`: A list of the
-    included harmony labels (including cadences and phrases) with their
-    positions in the score.
-
-### Opening Scores
-
-After navigating to your local copy, you can open the scores in the
-folder `MS3` with the free and open source score editor
-[MuseScore](https://musescore.org). Please note that the scores have
-been edited, annotated and tested with [MuseScore
-3.6.2](https://github.com/musescore/MuseScore/releases/tag/v3.6.2).
-MuseScore 4 has since been released and preliminary tests suggest that
-it renders them correctly.
-
-### Opening TSV files in a spreadsheet
-
-Tab-separated value (TSV) files are like Comma-separated value (CSV)
-files and can be opened with most modern text editors. However, for
-correctly displaying the columns, you might want to use a spreadsheet or
-an addon for your favourite text editor. When you use a spreadsheet such
-as Excel, it might annoy you by interpreting fractions as dates. This
-can be circumvented by using `Data --> From Text/CSV` or the free
-alternative [LibreOffice
-Calc](https://www.libreoffice.org/download/download/). Other than that,
-TSV data can be loaded with every modern programming language.
-
-### Loading TSV files in Python
-
-Since the TSV files contain null values, lists, fractions, and numbers
-that are to be treated as strings, you may want to use this code to load
-any TSV files related to this repository (provided you're doing it in
-Python). After a quick `pip install -U ms3` (requires Python 3.10)
-you'll be able to load any TSV like this:
-
-``` python
-import ms3
-
-labels = ms3.load_tsv('bach_en_fr_suites/harmonies/BWV806_01_Prelude.tsv')
-notes = ms3.load_tsv('bach_en_fr_suites/notes/BWV806_01_Prelude.tsv')
-```
-
-## How to read `metadata.tsv`
-
-This section explains the meaning of the columns contained in
-`metadata.tsv`.
-
-### File information
-
-| column                 | content                                                    |
-|------------------------|------------------------------------------------------------|
-| **fname**              | name without extension (for referencing related files)     |
-| **rel_path**           | relative file path of the score, including extension       |
-| **subdirectory**       | folder where the score is located                          |    
-| **last_mn**            | last measure number                                        |
-| **last_mn_unfolded**   | number of measures when playing all repeats                |
-| **length_qb**          | length of the piece, measured in quarter notes             |
-| **length_qb_unfolded** | length of the piece when playing all repeats               |
-| **volta_mcs**          | measure counts of first and second endings                 |
-| **all_notes_qb**       | summed up duration of all notes, measured in quarter notes |
-| **n_onsets**           | number of note onsets                                      |
-| **n_onset_positions**  | number of unique note onsets ("slices")                    |
-
-
-### Composition information
-
-| column             | content                   |
-|--------------------|---------------------------|
-| **composer**       | composer name             |
-| **workTitle**      | work title                |
-| **composed_start** | earliest composition date |
-| **composed_end**   | latest composition date   |
-| **workNumber**     | Catalogue number(s)       |
-| **movementNumber** | 1, 2, or 3                |
-| **movementTitle**  | title of the movement     |
-
-### Score information
-
-| column          | content                                                |
-|-----------------|--------------------------------------------------------|
-| **label_count** | number of chord labels                                 |
-| **KeySig**      | key signature(s) (negative = flats, positive = sharps) |
-| **TimeSig**     | time signature(s)                                      |
-| **musescore**   | MuseScore version                                      |
-| **source**      | URL to the first typesetter's file                     |
-| **typesetter**  | first typesetter                                       |
-| **annotators**  | creator(s) of the chord labels                         |
-| **reviewers**   | reviewer(s) of the chord labels                        |
-
-### Identifiers
-
-These columns provide a mapping between multiple identifiers for the sonatas (not for individual movements).
-
-| column          | content                                                                                                 |
-|-----------------|---------------------------------------------------------------------------------------------------------|
-| **wikidata**    | URL of the [WikiData](https://www.wikidata.org/) item                                                   |
-| **viaf**        | URL of the Virtual International Authority File ([VIAF](http://viaf.org/)) entry                        |
-| **musicbrainz** | [MusicBrainz](https://musicbrainz.org/) identifier                                                      |
-| **imslp**       | URL to the wiki page within the International Music Score Library Project ([IMSLP](https://imslp.org/)) |
-
-## Generating all TSV files from the scores
-
-When you have made changes to the scores and want to update the TSV
-files accordingly, you can use the following command (provided you have
-pip-installed [ms3](https://github.com/johentsch/ms3)):
-
-``` python
-ms3 extract -M -N -X -F -D # for measures, notes, expanded harmony labels, form labels, and metadata
-```
-
-If, in addition, you want to generate the reviewed scores with
-out-of-label notes colored in red, you can do
-
-``` python
-ms3 review -M -N -X -F -D # for extracting measures, notes, expanded harmony labels, form labels, and metadata
-```
-
-By adding the flag `-c` to the review command, it will additionally
-compare the (potentially modified) annotations in the score with the
-ones currently present in the harmonies TSV files and reflect the
-comparison in the reviewed scores.
 
 ## Questions, Suggestions, Corrections, Bug Reports
 
-For questions, remarks etc., please [create an
-issue](https://github.com/DCMLab/distant_listening_corpus/issues) and
-feel free to fork and submit pull requests.
+Please [create an issue](https://github.com/DCMLab/distant_listening_corpus/issues) and/or feel free to fork and submit pull requests.
+
+## Cite as
+
+> Johannes Hentschel, Yannis Rammos, Markus Neuwirth, & Martin Rohrmeier. (2025). The Distant Listening Corpus (A corpus of annotated scores) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.13844105
 
 ## License
 
