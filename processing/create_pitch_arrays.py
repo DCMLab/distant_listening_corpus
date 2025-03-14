@@ -33,6 +33,7 @@ def get_ms3_corpus(corpus_path):
     
 
 DLC_PATH = ms3.resolve_dir("..")
+METADATA_PATH = "distant_listening_corpus.metadata.tsv"
 DATASET = "pitch_arrays"
 
 # %%
@@ -78,6 +79,15 @@ def store_pitch_array(
     )
     return filepath
 
+
+def load_metadata(metadata_path):
+    metadata = ms3.load_tsv(metadata_path, index_col=["corpus", "piece"])
+    return metadata
+
+def dataset_processing_stats(metadata_path, dataset):
+    metadata = load_metadata(metadata_path)
+    return metadata[dataset].value_counts(dropna=False)
+
 def store_pitch_arrays_for_corpus(
     corpus: ms3.Corpus,
     output_dir: str,
@@ -102,8 +112,8 @@ def store_pitch_arrays_for_corpus(
     output_dir = ms3.resolve_dir(output_dir)
     if corpus_subdir:
         output_dir = os.path.join(output_dir, corpus.name)
-    metadata = ms3.load_tsv(metadata_path, index_col=["corpus", "piece"])
-    metadata.head()
+    metadata = load_metadata(metadata_path)
+
     if column_name not in metadata.columns:
         metadata.insert(0, column_name, value=False)
     elif reset:
@@ -172,6 +182,10 @@ def store_pitch_arrays_for_corpora(
 
 
 # %%
+dataset_processing_stats(metadata_path=METADATA_PATH, dataset=DATASET)
+
+
+# %%
 def inspect(corpus: str, piece: str):
     corpus_obj = get_ms3_corpus(os.path.join(DLC_PATH, corpus))
     piece_obj = next(pce for piece_id, pce in corpus_obj.iter_pieces() if piece_id == piece)
@@ -193,7 +207,7 @@ def inspect(corpus: str, piece: str):
 #     metadata_path="distant_listening_corpus.metadata.tsv",
 #     column_name=DATASET,
 #     corpus_subdir=corpus_subdir,
-#     reset=True
+#     reset=False
 # )
 
 # %%
@@ -381,7 +395,7 @@ if __name__ == "__main__":
     store_pitch_arrays_for_corpora(
         metacorpus_path=DLC_PATH,
         output_dir=DATASET,
-        metadata_path="distant_listening_corpus.metadata.tsv",
+        metadata_path=METADATA_PATH,
         column_name=DATASET,
-        reset=True,
+        reset=False,
     )
