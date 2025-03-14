@@ -76,63 +76,63 @@ the [DCML harmony annotation standard](https://github.com/DCMLab/standards).
 The publication covers the following public corpora (the DOI links always point at the latest version respectively):
 
 
-* [J.S. Bach – English and French Suites](https://doi.org/10.5281/zenodo.14996489)
-* [J.S. Bach – Solo Pieces (A corpus of annotated scores)](https://doi.org/10.5281/zenodo.14996765)
-* [Béla Bartók – 14 Bagatelles, Op. 6](https://doi.org/10.5281/zenodo.14996945)
-* [François Couperin – L'art de toucher le clavecin](https://doi.org/10.5281/zenodo.14984598)
-* [Clara Schumann – Lieder](https://doi.org/10.5281/zenodo.14996952)
-* [François Couperin – Concerts Royaux](https://doi.org/10.5281/zenodo.15027239)
-* [Carl Philipp Emanuel Bach – Works for Keyboard](https://doi.org/10.5281/zenodo.14996326)
-* [Girolamo Frescobaldi (1583-1643) – Fiori Musicali, op. 12 (1635)](https://doi.org/10.5281/zenodo.14984864)
-* [Georg Friedrich Händel – Grobschmied Variations (The Harmonious Blacksmith), HWV 430](https://doi.org/10.5281/zenodo.14996996)
-* [J.C. Bach – Keyboard Sonatas](https://doi.org/10.5281/zenodo.14996292)
-* [Heinrich Schütz – Kleine Geistliche Konzerte](https://doi.org/10.5281/zenodo.14997003)
-* [Leopold Koželuch – Piano Sonatas](https://doi.org/10.5281/zenodo.14997015)
-* [Gustav Mahler – Kindertotenlieder](https://doi.org/10.5281/zenodo.14997022)
-* [Felix Mendelssohn – String Quartets](https://doi.org/10.5281/zenodo.14996150)
-* [Claudio Monteverdi – Madrigals](https://doi.org/10.5281/zenodo.15003026)
-* [Giovanni Battista Pergolesi – Stabat Mater (1736)](https://doi.org/10.5281/zenodo.14990099)
-* [Jacopo Peri – Euridice (1600)](https://doi.org/10.5281/zenodo.14996445)
-* [Ignaz Pleyel – String Quartets](https://doi.org/10.5281/zenodo.14997048)
-* [Francis Poulenc – Mouvements Perpetuels](https://doi.org/10.5281/zenodo.14997053)
-* [Sergei Rachmaninoff – Piano Pieces](https://doi.org/10.5281/zenodo.14984155) 
-* [Maurice Ravel – Piano Pieces](https://doi.org/10.5281/zenodo.14997064)
-* [Domenico Scarlatti – Keyboard Sonatas](https://doi.org/10.5281/zenodo.14992884)
-* [Franz Schubert – Winterreise](https://doi.org/10.5281/zenodo.14997095)
-* [Erwin Schulhoff – Suite dansante en jazz](https://doi.org/10.5281/zenodo.14997098)
-* [Robert Schumann – Liederkreis](https://doi.org/10.5281/zenodo.14997104)
-* [Jan Sweelinck – Organ Pieces](https://doi.org/10.5281/zenodo.14997111)
-* [Richard Wagner – Overtures](https://doi.org/10.5281/zenodo.14997120)
-* [Wilhelm Friedemann Bach – Piano Sonatas](https://doi.org/10.5281/zenodo.14997133)
+* J.S. Bach – English and French Suites [[DOI](https://doi.org/10.5281/zenodo.14996489)][[repo](https://github.com/DCMLab/bach_en_fr_suites)][[ZIP](https://github.com/DCMLab/bach_en_fr_suites/archive/refs/heads/main.zip)]
+* J.S. Bach – Solo Pieces (A corpus of annotated scores) [[DOI](https://doi.org/10.5281/zenodo.14996765)][[repo](https://github.com/DCMLab/bach_solo)][[ZIP](https://github.com/DCMLab/bach_solo/archive/refs/heads/main.zip)]
+* Béla Bartók – 14 Bagatelles, Op. 6 [[DOI](https://doi.org/10.5281/zenodo.14996945)][[repo](https://github.com/DCMLab/bartok_bagatelles)][[ZIP](https://github.com/DCMLab/bartok_bagatelles/archive/refs/heads/main.zip)]
+* François Couperin – L'art de toucher le clavecin [[DOI](https://doi.org/10.5281/zenodo.14984598)][[repo](https://github.com/DCMLab/couperin_clavecin)][[ZIP](https://github.com/DCMLab/couperin_clavecin/archive/refs/heads/main.zip)]
+* Clara Schumann – Lieder [[DOI](https://doi.org/10.5281/zenodo.14996952)][[repo](https://github.com/DCMLab/c_schumann_lieder)][[ZIP](https://github.com/DCMLab/c_schumann_lieder/archive/refs/heads/main.zip)]
+* François Couperin – Concerts Royaux [[DOI](https://doi.org/10.5281/zenodo.15027239)][[repo](https://github.com/DCMLab/couperin_concerts)][[ZIP](https://github.com/DCMLab/couperin_concerts/archive/refs/heads/main.zip)]
+* Carl Philipp Emanuel Bach – Works for Keyboard [[DOI](https://doi.org/10.5281/zenodo.14996326)][[repo](https://github.com/DCMLab/cpe_bach_keyboard)][[ZIP](https://github.com/DCMLab/cpe_bach_keyboard/archive/refs/heads/main.zip)]
+* Girolamo Frescobaldi (1583-1643) – Fiori Musicali, op. 12 (1635) [[DOI](https://doi.org/10.5281/zenodo.14984864)][[repo](https://github.com/DCMLab/frescobaldi_fiori_musicali)][[ZIP](https://github.com/DCMLab/frescobaldi_fiori_musicali/archive/refs/heads/main.zip)]
+* Georg Friedrich Händel – Grobschmied Variations (The Harmonious Blacksmith), HWV 430 [[DOI](https://doi.org/10.5281/zenodo.14996996)][[repo](https://github.com/DCMLab/handel_keyboard)][[ZIP](https://github.com/DCMLab/handel_keyboard/archive/refs/heads/main.zip)]
+* J.C. Bach – Keyboard Sonatas [[DOI](https://doi.org/10.5281/zenodo.14996292)][[repo](https://github.com/DCMLab/jc_bach_sonatas)][[ZIP](https://github.com/DCMLab/jc_bach_sonatas/archive/refs/heads/main.zip)]
+* Heinrich Schütz – Kleine Geistliche Konzerte [[DOI](https://doi.org/10.5281/zenodo.14997003)][[repo](https://github.com/DCMLab/kleine_geistliche_konzerte)][[ZIP](https://github.com/DCMLab/kleine_geistliche_konzerte/archive/refs/heads/main.zip)]
+* Leopold Koželuch – Piano Sonatas [[DOI](https://doi.org/10.5281/zenodo.14997015)][[repo](https://github.com/DCMLab/kozeluh_sonatas)][[ZIP](https://github.com/DCMLab/kozeluh_sonatas/archive/refs/heads/main.zip)]
+* Gustav Mahler – Kindertotenlieder [[DOI](https://doi.org/10.5281/zenodo.14997022)][[repo](https://github.com/DCMLab/mahler_kindertotenlieder)][[ZIP](https://github.com/DCMLab/mahler_kindertotenlieder/archive/refs/heads/main.zip)]
+* Felix Mendelssohn – String Quartets [[DOI](https://doi.org/10.5281/zenodo.14996150)][[repo](https://github.com/DCMLab/mendelssohn_quartets)][[ZIP](https://github.com/DCMLab/mendelssohn_quartets/archive/refs/heads/main.zip)]
+* Claudio Monteverdi – Madrigals [[DOI](https://doi.org/10.5281/zenodo.15003026)][[repo](https://github.com/DCMLab/monteverdi_madrigals)][[ZIP](https://github.com/DCMLab/monteverdi_madrigals/archive/refs/heads/main.zip)]
+* Giovanni Battista Pergolesi – Stabat Mater (1736) [[DOI](https://doi.org/10.5281/zenodo.14990099)][[repo](https://github.com/DCMLab/pergolesi_stabat_mater)][[ZIP](https://github.com/DCMLab/pergolesi_stabat_mater/archive/refs/heads/main.zip)]
+* Jacopo Peri – Euridice (1600) [[DOI](https://doi.org/10.5281/zenodo.14996445)][[repo](https://github.com/DCMLab/peri_euridice)][[ZIP](https://github.com/DCMLab/peri_euridice/archive/refs/heads/main.zip)]
+* Ignaz Pleyel – String Quartets [[DOI](https://doi.org/10.5281/zenodo.14997048)][[repo](https://github.com/DCMLab/pleyel_quartets)][[ZIP](https://github.com/DCMLab/pleyel_quartets/archive/refs/heads/main.zip)]
+* Francis Poulenc – Mouvements Perpetuels [[DOI](https://doi.org/10.5281/zenodo.14997053)][[repo](https://github.com/DCMLab/poulenc_mouvements_perpetuels)][[ZIP](https://github.com/DCMLab/poulenc_mouvements_perpetuels/archive/refs/heads/main.zip)]
+* Sergei Rachmaninoff – Piano Pieces [[DOI](https://doi.org/10.5281/zenodo.14984155)][[repo](https://github.com/DCMLab/rachmaninoff_piano)][[ZIP](https://github.com/DCMLab/rachmaninoff_piano/archive/refs/heads/main.zip)] 
+* Maurice Ravel – Piano Pieces [[DOI](https://doi.org/10.5281/zenodo.14997064)][[repo](https://github.com/DCMLab/ravel_piano)][[ZIP](https://github.com/DCMLab/ravel_piano/archive/refs/heads/main.zip)]
+* Domenico Scarlatti – Keyboard Sonatas [[DOI](https://doi.org/10.5281/zenodo.14992884)][[repo](https://github.com/DCMLab/scarlatti_sonatas)][[ZIP](https://github.com/DCMLab/scarlatti_sonatas/archive/refs/heads/main.zip)]
+* Franz Schubert – Winterreise [[DOI](https://doi.org/10.5281/zenodo.14997095)][[repo](https://github.com/DCMLab/schubert_winterreise)][[ZIP](https://github.com/DCMLab/schubert_winterreise/archive/refs/heads/main.zip)]
+* Erwin Schulhoff – Suite dansante en jazz [[DOI](https://doi.org/10.5281/zenodo.14997098)][[repo](https://github.com/DCMLab/schulhoff_suite_dansante_en_jazz)][[ZIP](https://github.com/DCMLab/schulhoff_suite_dansante_en_jazz/archive/refs/heads/main.zip)]
+* Robert Schumann – Liederkreis [[DOI](https://doi.org/10.5281/zenodo.14997104)][[repo](https://github.com/DCMLab/schumann_liederkreis)][[ZIP](https://github.com/DCMLab/schumann_liederkreis/archive/refs/heads/main.zip)]
+* Jan Sweelinck – Organ Pieces [[DOI](https://doi.org/10.5281/zenodo.14997111)][[repo](https://github.com/DCMLab/sweelinck_keyboard)][[ZIP](https://github.com/DCMLab/sweelinck_keyboard/archive/refs/heads/main.zip)]
+* Richard Wagner – Overtures [[DOI](https://doi.org/10.5281/zenodo.14997120)][[repo](https://github.com/DCMLab/wagner_overtures)][[ZIP](https://github.com/DCMLab/wagner_overtures/archive/refs/heads/main.zip)]
+* Wilhelm Friedemann Bach – Piano Sonatas [[DOI](https://doi.org/10.5281/zenodo.14997133)][[repo](https://github.com/DCMLab/wf_bach_sonatas)][[ZIP](https://github.com/DCMLab/wf_bach_sonatas/archive/refs/heads/main.zip)]
 
 
 _Hentschel, J., Rammos, Y., Neuwirth, M., Moss, F. C., & Rohrmeier, M. (2024). An annotated corpus of tonal piano music 
 from the long 19th century. Empirical Musicology Review, 18(1), 84–95. https://doi.org/10.18061/emr.v18i1.8903_
 
-* [Ludwig van Beethoven - Piano Sonatas](https://doi.org/10.5281/zenodo.7473560)
-* [Frédéric Chopin - Mazurkas](https://doi.org/10.5281/zenodo.7473566)
-* [Claude Debussy - Suite Bergamasque](https://doi.org/10.5281/zenodo.7473568)
-* [Antonín Dvořák - Silhouettes](https://doi.org/10.5281/zenodo.7473576)
-* [Edvard Grieg - Lyric Pieces](https://doi.org/10.5281/zenodo.7473578)
-* [Franz Liszt - Années de Pèlerinage](https://doi.org/10.5281/zenodo.7473580)
-* [Nikolai Medtner - Tales](https://doi.org/10.5281/zenodo.7473528)
-* [Robert Schumann - Kinderszenen](https://doi.org/10.5281/zenodo.7473582)
-* [Pyotr Tchaikovsky - The Seasons](https://doi.org/10.5281/zenodo.7473586)
+* Ludwig van Beethoven - Piano Sonatas [[DOI](https://doi.org/10.5281/zenodo.7473560)][[repo](https://github.com/DCMLab/beethoven_piano_sonatas)][[ZIP](https://github.com/DCMLab/beethoven_piano_sonatas/archive/refs/heads/main.zip)]
+* Frédéric Chopin - Mazurkas [[DOI](https://doi.org/10.5281/zenodo.7473566)][[repo](https://github.com/DCMLab/chopin_mazurkas)][[ZIP](https://github.com/DCMLab/chopin_mazurkas/archive/refs/heads/main.zip)]
+* Claude Debussy - Suite Bergamasque [[DOI](https://doi.org/10.5281/zenodo.7473568)][[repo](https://github.com/DCMLab/debussy_suite_bergamasque)][[ZIP](https://github.com/DCMLab/debussy_suite_bergamasque/archive/refs/heads/main.zip)]
+* Antonín Dvořák - Silhouettes [[DOI](https://doi.org/10.5281/zenodo.7473576)][[repo](https://github.com/DCMLab/dvorak_silhouettes)][[ZIP](https://github.com/DCMLab/dvorak_silhouettes/archive/refs/heads/main.zip)]
+* Edvard Grieg - Lyric Pieces [[DOI](https://doi.org/10.5281/zenodo.7473578)][[repo](https://github.com/DCMLab/grieg_lyric_pieces)][[ZIP](https://github.com/DCMLab/grieg_lyric_pieces/archive/refs/heads/main.zip)]
+* Franz Liszt - Années de Pèlerinage [[DOI](https://doi.org/10.5281/zenodo.7473580)][[repo](https://github.com/DCMLab/liszt_pelerinage)][[ZIP](https://github.com/DCMLab/liszt_pelerinage/archive/refs/heads/main.zip)]
+* Nikolai Medtner - Tales [[DOI](https://doi.org/10.5281/zenodo.7473528)][[repo](https://github.com/DCMLab/medtner_tales)][[ZIP](https://github.com/DCMLab/medtner_tales/archive/refs/heads/main.zip)]
+* Robert Schumann - Kinderszenen [[DOI](https://doi.org/10.5281/zenodo.7473582)][[repo](https://github.com/DCMLab/schumann_kinderszenen)][[ZIP](https://github.com/DCMLab/schumann_kinderszenen/archive/refs/heads/main.zip)]
+* Pyotr Tchaikovsky - The Seasons [[DOI](https://doi.org/10.5281/zenodo.7473586)][[repo](https://github.com/DCMLab/tchaikovsky_seasons)][[ZIP](https://github.com/DCMLab/tchaikovsky_seasons/archive/refs/heads/main.zip)]
 
 _Hentschel, J., Moss, F. C., Neuwirth, M., & Rohrmeier, M. A. (2021). A semi-automated workflow paradigm for the distributed creation and curation of expert annotations. Proceedings of the 22nd International Society for Music Information Retrieval Conference, ISMIR, 262–269. https://doi.org/10.5281/ZENODO.5624417_
 
-* [Arcangelo Corelli – Trio Sonatas](https://zenodo.org/doi/10.5281/zenodo.7504011)
+* Arcangelo Corelli – Trio Sonatas [[DOI](https://zenodo.org/doi/10.5281/zenodo.7504011)][[repo](https://github.com/DCMLab/corelli)][[ZIP](https://github.com/DCMLab/corelli/archive/refs/heads/main.zip)]
 
 _Hentschel, J., Neuwirth, M., & Rohrmeier, M. (2021). The Annotated Mozart Sonatas: Score, harmony, and cadence. 
 Transactions of the International Society for Music Information Retrieval, 4(1), 67–80. https://doi.org/10.5334/tismir.63_
 
-* [Wolfgang Amadeus Mozart - Piano Sonatas](https://zenodo.org/doi/10.5281/zenodo.7424962)
+* Wolfgang Amadeus Mozart - Piano Sonatas [[DOI](https://zenodo.org/doi/10.5281/zenodo.7424962)][[repo](https://github.com/DCMLab/mozart_piano_sonatas)][[ZIP](https://github.com/DCMLab/mozart_piano_sonatas/archive/refs/heads/main.zip)]
 
 _Neuwirth, M., Harasim, D., Moss, F. C., & Rohrmeier, M. (2018). The Annotated Beethoven Corpus (ABC): 
 A Dataset of Harmonic Analyses of All Beethoven String Quartets. Frontiers in Digital Humanities, 
 5(July), 1–5. https://doi.org/10.3389/fdigh.2018.00016_
 
-* [Ludwig van Beethoven - String Quartets](https://zenodo.org/doi/10.5281/zenodo.7441343)
+* Ludwig van Beethoven - String Quartets [[DOI](https://zenodo.org/doi/10.5281/zenodo.7441343)][[repo](https://github.com/DCMLab/ABC)][[ZIP](https://github.com/DCMLab/ABC/archive/refs/heads/main.zip)]
 
 ## Getting the data
 
