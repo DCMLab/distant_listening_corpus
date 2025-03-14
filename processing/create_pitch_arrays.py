@@ -255,6 +255,13 @@ specs_df.to_csv("labeld_pitch_array_specs.csv", index=True)
 specs_df
 
 # %%
+df = utils.load_labeled_pitch_array(
+    "labeld_pitch_array_specs.csv", 
+    "pitch_arrays/kozeluh_sonatas/14op13no2c.tsv", 
+    int64="Int64")
+df
+
+# %%
 if __name__ == "__main__":
     utils.store_pitch_arrays_for_corpora(
         metacorpus_path=DLC_PATH,

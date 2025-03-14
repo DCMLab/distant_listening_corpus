@@ -961,3 +961,26 @@ def store_pitch_arrays_for_corpora(
 
     colorprint("EVERYTHING DONE", bcolors.OKGREEN)
 
+
+def load_labeled_pitch_array(
+        specs_csv: str,
+        pitch_array_tsv: str,
+        dropna: bool = True,
+        **replace_dtypes
+) -> pd.DataFrame:
+    """
+
+    Args:
+        specs_csv:
+            Path to a CSV file where the first column contains the column names of the pitch array
+            to be loaded and a column "dtype" containing the corresponding dtypes as output by
+            pd.DataFrame.dtypes
+        pitch_array_tsv:
+        dropna:
+        **replace_dtypes: Keyword arguments can be used to overwrite the dtypes from the CSV.
+    """
+    loaded_specs = pd.read_csv(specs_csv, index_col=0)
+    replace_dtypes = dict(object="string", **replace_dtypes)
+    dtype_dict = loaded_specs.dtype.replace(replace_dtypes).to_dict()
+    result = pd.read_csv(pitch_array_tsv, sep="\t", dtype=dtype_dict)
+    return result.dropna(subset="tpc") if dropna else result
