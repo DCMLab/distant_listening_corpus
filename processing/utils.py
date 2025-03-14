@@ -1,4 +1,5 @@
 import itertools
+import os
 import warnings
 from fractions import Fraction
 from functools import cache
@@ -808,3 +809,155 @@ def make_labeled_pitch_array(
     return merged
 
 #endregion make_labeled_pitch_array
+def filter_corpus(corpus):
+    corpus.view.include("facets", "scores")#, "expanded")
+    #corpus.disambiguate_facet("expanded")
+    corpus.disambiguate_facet("scores")
+    corpus.view.pieces_with_incomplete_facets = False
+
+
+def get_ms3_corpus(corpus_path):
+    corpus = ms3.Corpus(corpus_path)
+    #filter_corpus(corpus)
+    return corpus
+
+
+def get_facet_dict_from_piece(piece: ms3.Piece) -> dict:
+    fileinfo, facets = next(piece.iter_extracted_facets(
+            ("measures", "notes", "expanded"),
+            force=True,
+            unfold=True,
+            interval_index=False
+    ))
+    return facets
+
+
+def get_pitch_array_from_piece(
+    piece: ms3.Piece,
+):
+    facets = get_facet_dict_from_piece(piece)
+    return make_labeled_pitch_array(
+        notes=facets["notes"],
+        labels=facets["expanded"],
+        measures=facets["measures"],
+        beat_decimals=3
+    )
+
+
+def store_pitch_array(
+        pitch_array: pd.DataFrame,
+    output_dir: str,
+        tsv_name: str
+):
+    os.makedirs(output_dir, exist_ok=True)
+    filepath = os.path.join(output_dir, tsv_name)
+    pitch_array.to_csv(
+        filepath,
+        sep="\t",
+        index=False
+    )
+    return filepath
+
+
+def load_metadata(metadata_path):
+    metadata = ms3.load_tsv(metadata_path, index_col=["corpus", "piece"])
+    return metadata
+
+
+def dataset_processing_stats(metadata_path, dataset):
+    metadata = load_metadata(metadata_path)
+    return metadata[dataset].value_counts(dropna=False)
+
+
+def store_pitch_arrays_for_corpus(
+    corpus: ms3.Corpus,
+    output_dir: str,
+    metadata_path: str,
+    column_name: str,
+    corpus_subdir: bool = True,
+    reset: bool = False
+):
+    """
+
+    Args:
+        corpus:
+        output_dir:
+        metadata_path:
+        column_name: The name of the column in which the progress for parsing the dataset will be stored.
+        corpus_subdir:
+        reset: Set to True in order to not skip pieces that have already been marked as processed in the metadata.
+
+    Returns:
+
+    """
+    output_dir = ms3.resolve_dir(output_dir)
+    if corpus_subdir:
+        output_dir = os.path.join(output_dir, corpus.name)
+    metadata = load_metadata(metadata_path)
+
+    if column_name not in metadata.columns:
+        metadata.insert(0, column_name, value=False)
+    elif reset:
+        piece_names = corpus.get_all_pnames(pieces_not_in_metadata=False)
+        ids = [(corpus.name, piece) for piece in piece_names]
+        metadata.loc[ids, column_name] = False
+        ms3.write_tsv(metadata, metadata_path, index=True)
+    for piece_id, piece in corpus.iter_pieces():
+        id_tuple = (corpus.name, piece_id)
+        print(f"\n{id_tuple}", end=" ")
+        if metadata.loc[id_tuple, column_name]:
+            print("SKIPPED")
+            continue
+        try:
+            colorprint("I")
+            pitch_array = get_pitch_array_from_piece(piece)
+            filepath = store_pitch_array(pitch_array, output_dir=output_dir, tsv_name=f"{piece_id}.tsv")
+            metadata.loc[id_tuple, column_name] = True
+            colorprint("O")
+            ms3.write_tsv(metadata, metadata_path, index=True)
+            print(filepath, end="")
+            colorprint("O", bcolors.OKGREEN)
+        except Exception as e:
+            print(e)
+
+    colorprint(f"{corpus.name} DONE", bcolors.OKGREEN)
+
+
+def store_pitch_arrays_for_corpora(
+        metacorpus_path: str,
+        output_dir: str,
+        metadata_path: str,
+        column_name: str,
+        corpus_subdir: bool = True,
+        reset: bool = False
+):
+    """
+
+    Args:
+        metacorpus_path:
+        output_dir:
+        metadata_path:
+        column_name: The name of the column in which the progress for parsing the dataset will be stored.
+        corpus_subdir:
+        reset: Set to True in order to not skip pieces that have already been marked as processed in the metadata.
+    """
+    for subcorpus_dir in os.listdir(metacorpus_path):
+        if subcorpus_dir.startswith("."): continue
+        subcorpus_path = os.path.join(metacorpus_path, subcorpus_dir)
+        if os.path.isfile(subcorpus_path): continue
+        try:
+            corpus = get_ms3_corpus(subcorpus_path)
+        except AssertionError as e:
+            print(f"{subcorpus_path} seems not be a corpus: failed with {e}")
+            continue
+        store_pitch_arrays_for_corpus(
+            corpus=corpus,
+            output_dir=output_dir,
+            metadata_path=metadata_path,
+            column_name=column_name,
+            corpus_subdir=corpus_subdir,
+            reset=reset
+        )
+
+    colorprint("EVERYTHING DONE", bcolors.OKGREEN)
+
