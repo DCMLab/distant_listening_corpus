@@ -92,6 +92,12 @@ spec_specs = dict(
         description = "Proportional integer duration",
         used_for = Purpose.input,
         ),
+    continuous_beats = dict(
+        description = "A continuous offset value measured in metrical beats whose durations depend "
+                      "on the denominators of the respective time signatures (and a measure's "
+                      "actual duration).",
+        used_for = Purpose.input,
+        ),
     pitch = dict(
         description = "MIDI value",
         used_for = Purpose.input,
@@ -107,6 +113,19 @@ spec_specs = dict(
     alter = dict(
         description = "Note accidental: [-3, 3]",
         used_for = Purpose.input,
+        ),
+    beat_float = dict(
+        description = "The decimal beat position of any event within the current measure. A measure in n/m meter "
+                      "is considered to consist of n beats that have duration of 1/m of a whole note; except if "
+                      "n is a multiple of 3 (6, 9, 12, but not 3), in which case a measure is considered to have "
+                      "n/3 beats of length 3/m whole notes. All positions that fall in between downbeats are scaled "
+                      "linearly. For example, the first for eigths in a 9/8 meter have beat floats 1, 1.333, 1.667, "
+                      "2. Values are rounded to three decimals.",
+        used_for = Purpose.auxiliary,
+        ),
+    downbeat = dict(
+        description = "Adopts the integer values from beat_float and the value 0 for the rest.",
+        used_for = Purpose.beat_inference,
         ),
     ts_beats = dict(
         description = "Numerator of the time signature",
@@ -124,14 +143,13 @@ spec_specs = dict(
         description = "Notational layer containing the note: [1, 4]",
         used_for = Purpose.input,
         ),
+    duration = dict(
+        description = "Note duration expressed as fraction of a whole note",
+        used_for = Purpose.auxiliary,
+        ),
     is_note_onset = dict(
         description = "False when a note is tied to a previous one",
         used_for = Purpose.input,
-        ),
-    beat = dict(
-        description = "Values >= 1. Natural numbers represent beat positions according to the time signature. "
-                      "The number of beats in a measure is defined by ts_beats but divided by 3 if it's a multiple of 3.",
-        used_for = Purpose.beat_inference,
         ),
     ks_fifths = dict(
         description = "Key signature: [-7, 7]",
@@ -141,35 +159,31 @@ spec_specs = dict(
         description = "Measure count, ID of the measure-like object (non-unique in unfolded score)",
         used_for = Purpose.metadata,
         ),
-    mn = dict(
-        description = "Measure number as per conventions. One MN can be composed of several MC.",
-        used_for = Purpose.metadata,
-        ),
     mc_playthrough = dict(
         description = "Measure count, unique in unfolded score",
+        used_for = Purpose.metadata,
+        ),
+    mn = dict(
+        description = "Measure number as per conventions. One MN can be composed of several MC.",
         used_for = Purpose.metadata,
         ),
     mn_playthrough = dict(
         description = "Conventional measure numbers but for unfolded score (means of identifying complete measures)",
         used_for = Purpose.input,
         ),
+    octave = dict(
+        description = "Octave of the note with 4 = middle octave. Does not always correspond to pitch // 12 - 1.",
+        used_for = Purpose.metadata,
+    ),
     quarterbeats_playthrough = dict(
         description = "Continuous offset (\"qstamp\") in unfolded score",
         used_for = Purpose.input,
-        ),
-    duration = dict(
-        description = "Note duration expressed as fraction of a whole note",
-        used_for = Purpose.auxiliary,
         ),
     section_start = dict(
         description = "True for notes on the first position following a double/repeat bar line or section break. "
                       "True values always correspond to the beginning of an MC, so a section beginning with a rest "
                       "will not be taken into account.",
         used_for = Purpose.section_inference,
-    ),
-    octave = dict(
-        description = "Octave of the note with 4 = middle octave. Does not always correspond to pitch // 12 - 1.",
-        used_for = Purpose.metadata,
     ),
     is_harmony_onset = dict(
         description = "True for notes coinciding with a change in harmony.",
@@ -231,13 +245,14 @@ spec_specs = dict(
     ),
 )
 
-# specs = labeled_pitch_array.dtypes.rename("dtype")
-# specs_df = pd.concat([
-#     specs,
-#     pd.DataFrame.from_dict(spec_specs, orient="index")
-# ], axis=1)[["dtype", "used_for", "description"]]
-# specs_df.to_csv("labeld_pitch_array_specs.csv", index=True)
-# specs_df
+lpa = inspect("beethoven_piano_sonatas", "01-1")
+specs = lpa.dtypes.rename("dtype")
+specs_df = pd.concat([
+    specs,
+    pd.DataFrame.from_dict(spec_specs, orient="index")
+], axis=1)[["dtype", "used_for", "description"]]
+specs_df.to_csv("labeld_pitch_array_specs.csv", index=True)
+specs_df
 
 # %%
 if __name__ == "__main__":
