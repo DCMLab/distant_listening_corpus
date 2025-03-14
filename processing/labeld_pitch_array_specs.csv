@@ -1,25 +1,25 @@
 ,dtype,used_for,description
-onset_div,int64,input graph creation,Proportional integer position
-duration_div,int64,input graph creation,Proportional integer duration
+onset_div,Int64,input graph creation,Proportional integer position
+duration_div,Int64,input graph creation,Proportional integer duration
 continuous_beats,float64,input graph creation,A continuous offset value measured in metrical beats whose durations depend on the denominators of the respective time signatures (and a measure's actual duration).
 pitch,Int64,input graph creation,MIDI value
 tpc,Int64,computing fields,"Tonal Pitch Class (0=C, -1=F, 1=G, etc., aka specific pitch, aka fifths)"
-step,object,input graph creation,Note name without accidental (A-G)
-alter,int64,input graph creation,"Note accidental: [-3, 3]"
+step,string,input graph creation,Note name without accidental (A-G)
+alter,Int64,input graph creation,"Note accidental: [-3, 3]"
 beat_float,float64,computing fields,"The decimal beat position of any event within the current measure. A measure in n/m meter is considered to consist of n beats that have duration of 1/m of a whole note; except if n is a multiple of 3 (6, 9, 12, but not 3), in which case a measure is considered to have n/3 beats of length 3/m whole notes. All positions that fall in between downbeats are scaled linearly. For example, the first for eigths in a 9/8 meter have beat floats 1, 1.333, 1.667, 2. Values are rounded to three decimals."
 downbeat,Int64,training beat inference task,Adopts the integer values from beat_float and the value 0 for the rest.
 ts_beats,string,input graph creation,Numerator of the time signature
 ts_beat_type,string,input graph creation,Denominator of the time signature
-staff,int64,input graph creation,"Number of the staff containing the note, 1 being the upper staff"
-voice,int64,input graph creation,"Notational layer containing the note: [1, 4]"
+staff,Int64,input graph creation,"Number of the staff containing the note, 1 being the upper staff"
+voice,Int64,input graph creation,"Notational layer containing the note: [1, 4]"
 duration,object,computing fields,Note duration expressed as fraction of a whole note
 is_note_onset,boolean,input graph creation,False when a note is tied to a previous one
 ks_fifths,Int64,input graph creation,"Key signature: [-7, 7]"
-mc,int64,input graph metadata and informational purposes,"Measure count, ID of the measure-like object (non-unique in unfolded score)"
-mc_playthrough,int64,input graph metadata and informational purposes,"Measure count, unique in unfolded score"
-mn,int64,input graph metadata and informational purposes,Measure number as per conventions. One MN can be composed of several MC.
+mc,Int64,input graph metadata and informational purposes,"Measure count, ID of the measure-like object (non-unique in unfolded score)"
+mc_playthrough,Int64,input graph metadata and informational purposes,"Measure count, unique in unfolded score"
+mn,Int64,input graph metadata and informational purposes,Measure number as per conventions. One MN can be composed of several MC.
 mn_playthrough,string,input graph creation,Conventional measure numbers but for unfolded score (means of identifying complete measures)
-octave,object,input graph metadata and informational purposes,Octave of the note with 4 = middle octave. Does not always correspond to pitch // 12 - 1.
+octave,Int64,input graph metadata and informational purposes,Octave of the note with 4 = middle octave. Does not always correspond to pitch // 12 - 1.
 quarterbeats_playthrough,object,input graph creation,"Continuous offset (""qstamp"") in unfolded score"
 section_start,boolean,training section inference task,"True for notes on the first position following a double/repeat bar line or section break. True values always correspond to the beginning of an MC, so a section beginning with a rest will not be taken into account."
 is_harmony_onset,boolean,training harmony inference task,True for notes coinciding with a change in harmony.

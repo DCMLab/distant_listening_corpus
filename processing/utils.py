@@ -540,6 +540,14 @@ def prepare_notes(
         beat_float_name: str = "beat_float",
         downbeat_name: str = "downbeat"
 ) -> pd.DataFrame:
+    dtype_dict = dict(
+        staff = "Int64",
+        voice = "Int64",
+        mc = "Int64",
+        mc_playthrough = "Int64",
+        mn = "Int64",
+    )
+    notes = notes.astype(dtype_dict)
     beat_float = ms3.transform(notes, onset2beat, ["mn_onset", "timesig"], beat_decimals=beat_decimals)
     is_downbeat_mask = beat_float.map(float_is_integer)
     downbeat = beat_float.where(is_downbeat_mask, 0).astype("Int64")
@@ -627,8 +635,10 @@ def make_pitch_array(
 
     # specific pitch
     specific_pitch = prepared_notes.name.str.extract(r"^(?P<step>[A-G])(?P<accidentals>b*|#*)(?P<octave>\d)$")
-    new_dataframes.append(specific_pitch[["step", "octave"]])
-    new_columns["alter"] = specific_pitch.accidentals.str.count("#") - specific_pitch.accidentals.str.count("b")
+    new_columns["step"] = specific_pitch.step.astype("string")
+    new_columns["octave"] = specific_pitch.octave.astype("Int64")
+    alter_col = specific_pitch.accidentals.str.count("#") - specific_pitch.accidentals.str.count("b")
+    new_columns["alter"] = alter_col.astype("Int64")
 
     # time signatures & beats
     new_dataframes.append(
@@ -642,7 +652,8 @@ def make_pitch_array(
                 dict(
                     onset_div=onset_div,
                     duration_div=duration_div
-                )
+                ),
+                dtype="Int64"
             ),
             pd.concat(new_columns, axis=1),
             renamed_columns,
@@ -961,6 +972,34 @@ def store_pitch_arrays_for_corpora(
 
     colorprint("EVERYTHING DONE", bcolors.OKGREEN)
 
+def safe_fraction(s: str) -> Fraction | str:
+    try:
+        return Fraction(s)
+    except Exception:
+        return s
+
+def str2inttuple(tuple_string: str, strict: bool = True) -> Tuple[int]:
+    tuple_string = tuple_string.strip("[](),")
+    if tuple_string == "":
+        return tuple()
+    res = []
+    for s in tuple_string.split(", "):
+        try:
+            res.append(int(s))
+        except ValueError:
+            if strict:
+                print(
+                    f"String value '{s}' could not be converted to an integer, "
+                    f"'{tuple_string}' not to an integer tuple."
+                )
+                raise
+            if s[0] == s[-1] and s[0] in ('"', "'"):
+                s = s[1:-1]
+            try:
+                res.append(int(s))
+            except ValueError:
+                res.append(s)
+    return tuple(res)
 
 def load_labeled_pitch_array(
         specs_csv: str,
@@ -980,7 +1019,21 @@ def load_labeled_pitch_array(
         **replace_dtypes: Keyword arguments can be used to overwrite the dtypes from the CSV.
     """
     loaded_specs = pd.read_csv(specs_csv, index_col=0)
-    replace_dtypes = dict(object="string", **replace_dtypes)
-    dtype_dict = loaded_specs.dtype.replace(replace_dtypes).to_dict()
-    result = pd.read_csv(pitch_array_tsv, sep="\t", dtype=dtype_dict)
+    converters = dict(
+        chord_tones = str2inttuple,
+        added_tones = str2inttuple,
+        duration = safe_fraction,
+        quarterbeats_playthrough = safe_fraction,
+    )
+    dtype_dict = {
+        col: dtype
+        for col, dtype in loaded_specs.dtype.replace(replace_dtypes).items()
+        if col not in converters
+    }
+    result = pd.read_csv(
+        pitch_array_tsv,
+        sep="\t",
+        dtype=dtype_dict,
+        converters=converters
+    )
     return result.dropna(subset="tpc") if dropna else result
