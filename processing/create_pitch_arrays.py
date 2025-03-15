@@ -46,8 +46,13 @@ def inspect(corpus: str, piece: str):
 
 
 # %%
-# corpus_subdir = "beethoven_piano_sonatas"
-# corpus = get_ms3_corpus(f"~/distant_listening_corpus/{corpus_subdir}")
+corpus_subdir = "beethoven_piano_sonatas"
+corpus = utils.get_ms3_corpus(f"~/distant_listening_corpus/{corpus_subdir}")
+corpus
+
+# %%
+piece = corpus["01-1"]
+facets = utils.get_facet_dict_from_piece(piece)
 
 # %%
 # store_pitch_arrays_for_corpus(
@@ -58,10 +63,6 @@ def inspect(corpus: str, piece: str):
 #     corpus_subdir=corpus_subdir,
 #     reset=False
 # )
-
-# %%
-# piece = corpus["01-1"]
-# facets = get_facet_dict_from_piece(piece)
 
 # %%
 # pitch_array = get_pitch_array_from_piece(piece)
@@ -258,7 +259,7 @@ specs_df
 df = utils.load_labeled_pitch_array(
     "labeld_pitch_array_specs.csv", 
     "pitch_arrays/kozeluh_sonatas/14op13no2c.tsv", 
-    int64="Int64")
+)
 df
 
 # %%
@@ -268,5 +269,5 @@ if __name__ == "__main__":
         output_dir=DATASET,
         metadata_path=METADATA_PATH,
         column_name=DATASET,
-        reset=False,
+        reset=True,
     )
