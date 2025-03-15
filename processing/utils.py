@@ -3,8 +3,9 @@ import os
 import warnings
 from fractions import Fraction
 from functools import cache
-from typing import Iterable, Dict, Optional, Tuple, overload, Literal
+from typing import Iterable, Dict, Optional, Tuple, overload, Literal, Any
 
+import git
 import ms3
 import numpy as np
 import pandas as pd
@@ -879,6 +880,17 @@ def dataset_processing_stats(metadata_path, dataset):
     metadata = load_metadata(metadata_path)
     return metadata[dataset].value_counts(dropna=False)
 
+def get_commit_where_file_last_changed(repo: git.Repo, paths: str) -> git.Commit:
+    try:
+        return next(repo.iter_commits(paths=paths))
+    except StopIteration as e:
+        raise StopIteration(f"{repo!r} does not have any commits for {paths}") from e
+
+def describe_commit_where_file_last_changed(repo: git.Repo, paths: str) -> str:
+    file_last_changed_commit = get_commit_where_file_last_changed(repo, paths=paths)
+    file_last_changed_commit_sha = file_last_changed_commit.hexsha
+    file_last_changed_commit_version = repo.git.describe(file_last_changed_commit_sha, tags=True, always=True)
+    return file_last_changed_commit_version
 
 def store_pitch_arrays_for_corpus(
     corpus: ms3.Corpus,
@@ -906,9 +918,20 @@ def store_pitch_arrays_for_corpus(
         output_dir = os.path.join(output_dir, corpus.name)
     metadata = load_metadata(metadata_path)
 
-    if column_name not in metadata.columns:
-        metadata.insert(0, column_name, value=False)
-    elif reset:
+    def insert_column_if_missing(
+            df: pd.DataFrame,
+            col_name,
+            position = 0,
+            value: Any=""
+    ):
+        if col_name not in df.columns:
+            df.insert(position, col_name, value=value)
+
+    insert_column_if_missing(metadata, column_name, value=False)
+    insert_column_if_missing(metadata, "last_modified", position=1)
+    insert_column_if_missing(metadata, "last_modified_url", position=2)
+
+    if reset:
         piece_names = corpus.get_all_pnames(pieces_not_in_metadata=False)
         ids = [(corpus.name, piece) for piece in piece_names]
         metadata.loc[ids, column_name] = False
@@ -923,8 +946,16 @@ def store_pitch_arrays_for_corpus(
             colorprint("I")
             pitch_array = get_pitch_array_from_piece(piece)
             filepath = store_pitch_array(pitch_array, output_dir=output_dir, tsv_name=f"{piece_id}.tsv")
-            metadata.loc[id_tuple, column_name] = True
+            colorprint("i", bcolors.OKGREEN)
+
             colorprint("O")
+            musescore_file_info, _ = piece.get_parsed_score()
+            rel_filepath = musescore_file_info.rel_path
+            last_modified = describe_commit_where_file_last_changed(corpus.repo, rel_filepath)
+            last_modified_url = f"https://github.com/DCMLab/{corpus.name}/blob/{last_modified}/{rel_filepath}"
+            metadata.loc[id_tuple, column_name] = True
+            metadata.loc[id_tuple, "last_modified"] = last_modified
+            metadata.loc[id_tuple, "last_modified_url"] = last_modified_url
             ms3.write_tsv(metadata, metadata_path, index=True)
             print(filepath, end="")
             colorprint("O", bcolors.OKGREEN)
