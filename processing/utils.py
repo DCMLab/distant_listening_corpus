@@ -876,8 +876,10 @@ def load_metadata(metadata_path):
     return metadata
 
 
-def dataset_processing_stats(metadata_path, dataset):
+def dataset_processing_stats(metadata_path, dataset) -> Optional[pd.Series]:
     metadata = load_metadata(metadata_path)
+    if dataset not in metadata.columns:
+        return None
     return metadata[dataset].value_counts(dropna=False)
 
 def get_commit_where_file_last_changed(repo: git.Repo, paths: str) -> git.Commit:
