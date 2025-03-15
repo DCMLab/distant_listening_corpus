@@ -46,22 +46,22 @@ def inspect(corpus: str, piece: str):
 
 
 # %%
-corpus_subdir = "beethoven_piano_sonatas"
+corpus_subdir = "bach_en_fr_suites"
 corpus = utils.get_ms3_corpus(f"~/distant_listening_corpus/{corpus_subdir}")
 corpus
 
 # %%
-piece = corpus["01-1"]
+piece = corpus["BWV806_01_Prelude"]
 facets = utils.get_facet_dict_from_piece(piece)
 
 # %%
-# store_pitch_arrays_for_corpus(
+# utils.store_pitch_arrays_for_corpus(
 #     corpus=corpus,
 #     output_dir=DATASET,
 #     metadata_path="distant_listening_corpus.metadata.tsv",
 #     column_name=DATASET,
 #     corpus_subdir=corpus_subdir,
-#     reset=False
+#     reset=True
 # )
 
 # %%
@@ -269,5 +269,5 @@ if __name__ == "__main__":
         output_dir=DATASET,
         metadata_path=METADATA_PATH,
         column_name=DATASET,
-        reset=False,
+        reset=True,
     )
