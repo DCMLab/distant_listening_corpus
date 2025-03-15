@@ -868,6 +868,7 @@ def store_pitch_array(
         sep="\t",
         index=False
     )
+    print(filepath, end="")
     return filepath
 
 
@@ -947,7 +948,7 @@ def store_pitch_arrays_for_corpus(
         try:
             colorprint("I")
             pitch_array = get_pitch_array_from_piece(piece)
-            filepath = store_pitch_array(pitch_array, output_dir=output_dir, tsv_name=f"{piece_id}.tsv")
+            _ = store_pitch_array(pitch_array, output_dir=output_dir, tsv_name=f"{piece_id}.tsv")
             colorprint("i", bcolors.OKGREEN)
 
             colorprint("O")
@@ -959,7 +960,6 @@ def store_pitch_arrays_for_corpus(
             metadata.loc[id_tuple, "last_modified"] = last_modified
             metadata.loc[id_tuple, "last_modified_url"] = last_modified_url
             ms3.write_tsv(metadata, metadata_path, index=True)
-            print(filepath, end="")
             colorprint("O", bcolors.OKGREEN)
         except Exception as e:
             print(e)
