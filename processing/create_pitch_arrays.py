@@ -269,5 +269,5 @@ if __name__ == "__main__":
         output_dir=DATASET,
         metadata_path=METADATA_PATH,
         column_name=DATASET,
-        reset=True,
+        reset=False,
     )
