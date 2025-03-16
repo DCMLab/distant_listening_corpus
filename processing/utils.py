@@ -751,7 +751,7 @@ DLC_CHORD_TYPE_MAPPING = {
 def convert_chord_types_to_qualities(labels: pd.DataFrame) -> pd.DataFrame:
     return pd.concat([
         labels,
-        labels.chord_type.map(DLC_CHORD_TYPE_MAPPING).rename("a_quality")
+        labels.chord_type.map(DLC_CHORD_TYPE_MAPPING).astype("string").rename("a_quality")
     ], axis=1)
 
 def convert_column_types(labels: pd.DataFrame) -> pd.DataFrame:
@@ -1017,7 +1017,7 @@ def store_pitch_arrays_for_corpus(
         except Exception as e:
             print(e)
 
-    colorprint(f"{corpus.name} DONE", bcolors.OKGREEN)
+    colorprint(f"\n{corpus.name} DONE", bcolors.OKGREEN)
 
 
 def store_pitch_arrays_for_corpora(
@@ -1056,7 +1056,7 @@ def store_pitch_arrays_for_corpora(
             reset=reset
         )
 
-    colorprint("EVERYTHING DONE", bcolors.OKGREEN)
+    colorprint("\nEVERYTHING DONE", bcolors.OKGREEN)
 
 def safe_fraction(s: str) -> Fraction | str:
     try:
@@ -1212,3 +1212,19 @@ def roman_numeral2scale_degree(
     elif alter < 0:
         accidentals = -alter * flat_character
     return accidentals + degree
+
+
+def create_specs(
+        lpa: pd.DataFrame,
+        specs_specs: Dict[str, dict]
+):
+    dtypes = lpa.dtypes.rename("dtype")
+    specs_df = pd.DataFrame.from_dict(specs_specs, orient="index")
+    specs_df = pd.concat(
+        [
+            dtypes,
+            specs_df
+        ], axis=1
+    )
+    column_order = ["dtype", "used_for", "description"]
+    return specs_df[column_order + [col for col in specs_df.columns if col not in column_order]]

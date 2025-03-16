@@ -18,7 +18,8 @@ import os
 from enum import Enum
 
 import ms3
-import pandas as pd
+
+# from processing.utils import create_specs
 
 DLC_PATH = ms3.resolve_dir("..")
 METADATA_PATH = "distant_listening_corpus.metadata.tsv"
@@ -31,7 +32,22 @@ import utils
 
 
 # %%
-utils.dataset_processing_stats(metadata_path=METADATA_PATH, dataset=DATASET)
+# bps1 = pd.read_csv("/home/laser/git/AugmentedNet/events/test/bps-01-op002-no1-1_joint.tsv", sep="\t")
+# bps1.head()
+
+# %%
+# roman_numeral = bps1.a_romanNumeral.str.extract("(Ger|It|Fr|N|VII|VI|V|IV|III|II|I|vii|vi|v|iv|iii|ii|i)")
+# bps1["degree1"] = ms3.transform(roman_numeral, utils.roman_numeral2scale_degree)
+# bps1.head()
+
+# %%
+# bps1[bps1.a_degree1 != bps1.degree1]
+
+# %%
+# bps1[bps1.a_romanNumeral.str.contains("vii")]
+
+# %%
+# utils.dataset_processing_stats(metadata_path=METADATA_PATH, dataset=DATASET)
 
 
 # %%
@@ -41,7 +57,7 @@ def inspect(corpus: str, piece: str):
     labeled_pitch_array = utils.get_pitch_array_from_piece(piece_obj)
     return labeled_pitch_array
 
-# lpa = inspect("kozeluh_sonatas", "09op08no1a")
+# lpa = inspect("beethoven_piano_sonatas", "01-1")
 # lpa
 
 
@@ -244,23 +260,34 @@ spec_specs = dict(
         description = "True if a note's tonal pitch class is the harmony label's bass",
         used_for = Purpose.harmony_inference,
     ),
+    a_degree1 = dict(
+        description = "Chordal root expressed as scale degree, preceeded by '#' for sharps and '-' for flats,"
+                      "as music21 would output them. For applied chords, such as #vii/vi, the scale degree represents "
+                      "the numeral before the slash; the second part will be represented in a_degree2.",
+        used_for = Purpose.harmony_inference,
+    ),
+    a_degree2 = dict(
+        description = "Only defined for applied chords where this value expresses the tonicized key as a scale degree "
+                      "of the localkey in vigour. The format is the same as for a_degree1.",
+        used_for = Purpose.harmony_inference,
+    ),
+    a_quality = dict(
+        description = "This is a mapping of the chord_type column to music21's vocabulary for chord qualities.",
+        used_for = Purpose.harmony_inference,
+    ),
 )
 
 lpa = inspect("beethoven_piano_sonatas", "01-1")
-specs = lpa.dtypes.rename("dtype")
-specs_df = pd.concat([
-    specs,
-    pd.DataFrame.from_dict(spec_specs, orient="index")
-], axis=1)[["dtype", "used_for", "description"]]
+specs_df = utils.create_specs(lpa, spec_specs)
 specs_df.to_csv("labeld_pitch_array_specs.csv", index=True)
 specs_df
 
 # %%
-df = utils.load_labeled_pitch_array(
-    "labeld_pitch_array_specs.csv", 
-    "pitch_arrays/kozeluh_sonatas/14op13no2c.tsv", 
-)
-df
+# df = utils.load_labeled_pitch_array(
+#     "labeld_pitch_array_specs.csv",
+#     "pitch_arrays/kozeluh_sonatas/14op13no2c.tsv",
+# )
+# df
 
 # %%
 if __name__ == "__main__":
