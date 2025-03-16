@@ -728,6 +728,32 @@ def convert_roman_numerals_to_scale_degrees(
     return labels
 
 
+DLC_CHORD_TYPE_MAPPING = {
+ 'M': 'major triad',
+ 'm': 'minor triad',
+ 'o': 'diminished triad',
+ '+': 'augmented triad',
+ '+7': 'augmented seventh chord',          # check if that's what's meant in music21
+ '+M7': 'augmented major tetrachord',      # check if that's what's meant in music21
+ 'm7': 'minor seventh chord',
+ 'M7': 'major seventh chord',
+ 'Mm7': 'dominant seventh chord',
+ 'incomplete dominant-seventh chord': 'incomplete dominant-seventh chord', # not available in DLC
+ 'o7': 'diminished seventh chord',
+ '%7': 'half-diminished seventh chord',
+ 'It': 'Italian augmented sixth chord',
+ 'Ger': 'German augmented sixth chord',
+ 'Fr': 'French augmented sixth chord',
+ 'mM7': 'minor-augmented tetrachord',
+ pd.NA: 'None',
+}
+
+def convert_chord_types_to_qualities(labels: pd.DataFrame) -> pd.DataFrame:
+    return pd.concat([
+        labels,
+        labels.chord_type.map(DLC_CHORD_TYPE_MAPPING).rename("a_quality")
+    ], axis=1)
+
 def convert_column_types(labels: pd.DataFrame) -> pd.DataFrame:
     conversion_dict = {col: "Int64" for col in INT_COLUMNS if col in labels.columns}
     conversion_dict.update(
@@ -759,6 +785,7 @@ def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
     labels = extend_harmony_feature(labels)
     labels = convert_roman_numerals_to_scale_degrees(labels, flat_character="-")
     labels = convert_roman_numerals_to_fifths(labels)
+    labels = convert_chord_types_to_qualities(labels)
     labels = extend_cadence_feature(labels)
     labels = add_boolean_phrase_ending_column(labels)
     labels = convert_column_types(labels)
