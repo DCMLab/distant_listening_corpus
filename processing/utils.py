@@ -1,5 +1,6 @@
 import itertools
 import os
+import re
 import warnings
 from fractions import Fraction
 from functools import cache
@@ -702,6 +703,30 @@ def convert_roman_numerals_to_fifths(labels: pd.DataFrame) -> pd.DataFrame:
     labels = pd.concat(concatenate_this, axis=1)
     return labels
 
+def convert_roman_numerals_to_scale_degrees(
+        labels: pd.DataFrame,
+    flat_character: str = "b",
+) -> pd.DataFrame:
+    concatenate_this = [
+        labels,
+        (
+            ms3.transform(
+                labels.numeral,
+                roman_numeral2scale_degree,
+                flat_character=flat_character
+            )
+        ).astype("string").rename("a_degree1"),
+        (
+            ms3.transform(
+                labels.relativeroot_resolved,
+                roman_numeral2scale_degree,
+                flat_character=flat_character
+            )
+        ).astype("string").rename("a_degree2"),
+    ]
+    labels = pd.concat(concatenate_this, axis=1)
+    return labels
+
 
 def convert_column_types(labels: pd.DataFrame) -> pd.DataFrame:
     conversion_dict = {col: "Int64" for col in INT_COLUMNS if col in labels.columns}
@@ -732,6 +757,7 @@ def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
     labels.reset_index(drop=False, inplace=True)
     labels = extend_keys_feature(labels)
     labels = extend_harmony_feature(labels)
+    labels = convert_roman_numerals_to_scale_degrees(labels, flat_character="-")
     labels = convert_roman_numerals_to_fifths(labels)
     labels = extend_cadence_feature(labels)
     labels = add_boolean_phrase_ending_column(labels)
@@ -1070,3 +1096,92 @@ def load_labeled_pitch_array(
         converters=converters
     )
     return result.dropna(subset="tpc") if dropna else result
+
+
+def split_scale_degree(
+    sd, count=False
+) -> Tuple[Optional[int], Optional[str]]:
+    """Copied from ms3 @ v2.6.0
+    Splits a scale degree such as 'bbVI' or 'b6' into accidentals and numeral.
+
+    sd : :obj:`str`
+        Scale degree.
+    count : :obj:`bool`, optional
+        Pass True to get the accidentals as integer rather than as string.
+    """
+    m = re.match(r"^(#*|b*)(VII|VI|V|IV|III|II|I|vii|vi|v|iv|iii|ii|i|Ger|It|Fr|N)$", str(sd))
+    if m is None:
+        if "/" in sd:
+            raise ValueError(
+                f"{sd} needs to be resolved, which requires information about the mode of the local key. "
+                f"You can use ms3.utils.resolve_relative_keys(scale_degree, is_minor_context)."
+            )
+        else:
+            raise ValueError(f"{sd} is not a valid scale degree.")
+        return None, None
+    acc, num = m.group(1), m.group(2)
+    if count:
+        acc = acc.count("#") - acc.count("b")
+    return acc, num
+
+ROMAN_NUMERAL2SCALE_DEGREE = {
+    "I": ("1", 0),
+    "II": ("2", 0),
+    "III": ("3", 0),
+    "IV": ("4", 0),
+    "V": ("5", 0),
+    "VI": ("6", 0),
+    "VII": ("7", 0),
+    "FR": ("2", 0),
+    "GER": ("4", 1),
+    "IT": ("4", 1),
+    "N": ("2", -1),
+    "CAD": ("1", 0),
+}
+
+def roman_numeral2scale_degree(
+        RN: str,
+        key_is_minor: Optional[bool] = None,
+        flat_character: str = "b",
+):
+    """ Copied from ms3 @ v2.6.0
+    Turn a Roman numeral into a scale degree, assuming that the accidentals are the same. Does not accept slash
+    notation.
+
+    If you need to convert between different meaning of scale degrees 6 and 7 in minor, you need apply
+    roman_numeral2fifths() using the appropriate ``meaning_of_vi_and_vii`` parameter, and then fifths2sd().
+
+
+    Args:
+        RN:
+        key_is_minor:
+            If you pass True the capitalization of the RN is exceptionally taken into account in the for degrees
+            VI and VII: if they are lowercase, #6 and #7 are returned rather than 6 and 7, which is the default for
+            major and upper case. In other words, True says we are in minor and we are dealing with music21's
+            default behaviour which interprets scale degrees based on the chord quality. On the flipside, to use this
+            on DCML labels for the same result, do not pass this parameter for consistent results.
+        flat_character:
+
+    Returns:
+
+    """
+    if pd.isnull(RN):
+        return RN
+    alter, rn_step = split_scale_degree(RN, count=True)
+    if any(v is None for v in (alter, rn_step)):
+        return None
+    rn_step_upper = rn_step.upper()
+    degree, degree_alter = ROMAN_NUMERAL2SCALE_DEGREE[rn_step_upper]
+    alter += degree_alter
+    if key_is_minor and rn_step_upper in ("VI", "VII"):
+        if rn_step.islower() and RN[0] != "#":
+            alter += 1
+        elif RN[0] in ("b", "-"): # opposite case where an already flat numeral comes with flat
+            alter += 1
+    if alter == 0:
+        return degree
+    if alter > 0:
+        accidentals = alter * "#"
+    elif alter < 0:
+        accidentals = -alter * flat_character
+    return accidentals + degree
