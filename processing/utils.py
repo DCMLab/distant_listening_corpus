@@ -540,12 +540,13 @@ def prepare_notes_with_measure_information(
         left=notes,
         right=prepared_measures[merge_measure_columns],
         on="quarterbeats_playthrough",
-        how="left",
+        how="outer",
     )
-    merged.keysig = merged.keysig.ffill()
+    merged.keysig = merged.keysig.ffill().bfill()
     if label_notes:
         merged.section_start = merged.section_start.fillna(False)
 
+    merged = merged.dropna(subset="tpc")
     # continuous beats
     merged = add_continuous_beat_column(merged, measures, beat_decimals)
     return merged
