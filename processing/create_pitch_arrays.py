@@ -14,7 +14,6 @@
 # ---
 
 # %%
-import os
 from enum import Enum
 
 import ms3
@@ -23,6 +22,8 @@ import ms3
 # %load_ext autoreload
 # %autoreload 2
 import utils
+
+from processing.debugging import inspect
 
 # from processing.utils import create_specs
 
@@ -50,13 +51,6 @@ utils.dataset_processing_stats(metadata_path=METADATA_PATH, dataset=DATASET)
 
 
 # %%
-def inspect(corpus: str, piece: str):
-    corpus_obj = utils.get_ms3_corpus(os.path.join(DLC_PATH, corpus))
-    piece_obj = next(
-        pce for piece_id, pce in corpus_obj.iter_pieces() if piece_id == piece
-    )
-    labeled_pitch_array = utils.get_pitch_array_from_piece(piece_obj)
-    return labeled_pitch_array
 
 
 # lpa = inspect("beethoven_piano_sonatas", "01-1")
