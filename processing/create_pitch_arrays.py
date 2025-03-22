@@ -95,6 +95,7 @@ class Purpose(str, Enum):
     harmony_inference = "training harmony inference task"
     phrase_inference = "training phrase inference task"
     section_inference = "training section inference task"
+    filtering = "filtering notes based on the available annotations"
     # none = unused columns should not be included in the specs
 
 
@@ -275,6 +276,27 @@ specs_specs = dict(
     a_quality=dict(
         description="This is a mapping of the chord_type column to music21's vocabulary for chord qualities.",
         used_for=Purpose.harmony_inference,
+    ),
+    valid_chord_label=dict(
+        description="True when a valid chord label is available for a note.",
+        used_for=Purpose.filtering,
+    ),
+    valid_cadence_label=dict(
+        description="True when some of the notes in a piece come with a cadence label.",
+        used_for=Purpose.filtering,
+    ),
+    valid_phrase_label=dict(
+        description="True when some of the notes in a piece come with a phrase label.",
+        used_for=Purpose.filtering,
+    ),
+    valid_pedal_point_label=dict(
+        description="True when pedal point annotations will be available for this piece if it has any (always True "
+        "for DLC).",
+        used_for=Purpose.filtering,
+    ),
+    valid_section_start_label=dict(
+        description="True when some of the notes in a piece come with a section label.",
+        used_for=Purpose.filtering,
     ),
 )
 

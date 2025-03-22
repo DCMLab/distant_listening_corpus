@@ -158,5 +158,25 @@
   "a_quality": {
     "description": "This is a mapping of the chord_type column to music21's vocabulary for chord qualities.",
     "used_for": "training harmony inference task"
+  },
+  "valid_chord_label": {
+    "description": "True when a valid chord label is available for a note.",
+    "used_for": "filtering notes based on the available annotations"
+  },
+  "valid_cadence_label": {
+    "description": "True when some of the notes in a piece come with a cadence label.",
+    "used_for": "filtering notes based on the available annotations"
+  },
+  "valid_phrase_label": {
+    "description": "True when some of the notes in a piece come with a phrase label.",
+    "used_for": "filtering notes based on the available annotations"
+  },
+  "valid_pedal_point_label": {
+    "description": "True when pedal point annotations will be available for this piece if it has any (always True for DLC).",
+    "used_for": "filtering notes based on the available annotations"
+  },
+  "valid_section_start_label": {
+    "description": "True when some of the notes in a piece come with a section label.",
+    "used_for": "filtering notes based on the available annotations"
   }
 }

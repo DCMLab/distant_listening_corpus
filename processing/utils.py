@@ -722,6 +722,11 @@ BOOL_COLUMNS = [
     "a_isOnset",
     "a_phraseend",
     "section_start",
+    "valid_chord_label",
+    "valid_cadence_label",
+    "valid_phrase_label",
+    "valid_pedal_point_label",
+    "valid_section_start_label",
 ]
 STRING_COLUMNS = [
     "label",
@@ -774,6 +779,8 @@ NON_FORWARD_FILLING_COLUMNS = [
     "a_phraseend",
     "section_start",
 ]  # these are not propagated over the whole duration of their harmony label and are therefore moved to the left
+# of the column unfolded_harmony_index which serves as the boundary between (non-forward-filled) notes on the left,
+# and forward-filled (within the reach of each valid label) labels on the right
 
 
 def convert_roman_numerals_to_fifths(labels: pd.DataFrame) -> pd.DataFrame:
@@ -829,6 +836,33 @@ def add_boolean_phrase_labels(labels: pd.DataFrame) -> pd.DataFrame:
     concatenate_this = [
         labels,
         labels.phraseend.isin([r"\\", "}", "}{"]).rename("a_phraseend"),
+    ]
+    labels = pd.concat(concatenate_this, axis=1)
+    return labels
+
+
+def add_boolean_annotation_type_columns(labels: pd.DataFrame) -> pd.DataFrame:
+    concatenate_this = [
+        labels,
+        labels.root.notna().rename("valid_chord_label"),
+        pd.Series(
+            labels.cadence.notna().any(),
+            index=labels.index,
+            dtype="boolean",
+            name="valid_cadence_label",
+        ),
+        pd.Series(
+            labels.phraseend.notna().any(),
+            index=labels.index,
+            dtype="boolean",
+            name="valid_phrase_label",
+        ),
+        pd.Series(
+            True, index=labels.index, dtype="boolean", name="valid_pedal_point_label"
+        ),
+        pd.Series(
+            True, index=labels.index, dtype="boolean", name="valid_section_start_label"
+        ),
     ]
     labels = pd.concat(concatenate_this, axis=1)
     return labels
@@ -949,6 +983,7 @@ def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
     labels = convert_figbass_to_inversion(labels)
     labels = extend_cadence_feature(labels)
     labels = add_boolean_phrase_labels(labels)
+    labels = add_boolean_annotation_type_columns(labels)
     column_order = [col for col in NON_FORWARD_FILLING_COLUMNS if col in labels.columns]
     column_order += [col for col in labels.columns if col not in column_order]
     return convert_column_types(labels[column_order])

@@ -75,6 +75,11 @@ a_localKey,string,,
 a_tonicizedKey,string,,
 a_quality,string,training harmony inference task,This is a mapping of the chord_type column to music21's vocabulary for chord qualities.
 a_inversion,Int64,,
+valid_chord_label,boolean,filtering notes based on the available annotations,True when a valid chord label is available for a note.
+valid_cadence_label,boolean,filtering notes based on the available annotations,True when some of the notes in a piece come with a cadence label.
+valid_phrase_label,boolean,filtering notes based on the available annotations,True when some of the notes in a piece come with a phrase label.
+valid_pedal_point_label,boolean,filtering notes based on the available annotations,True when pedal point annotations will be available for this piece if it has any (always True for DLC).
+valid_section_start_label,boolean,filtering notes based on the available annotations,True when some of the notes in a piece come with a section label.
 sic_with_global,Int64,,
 sic_with_local,Int64,computing fields,"Relative position of the note's tonal pitch class in the local key, expressed as Specific Interval Class (0=unison, -1=+P4/-P5, 3=+M6/-m3, etc.)"
 sic_with_tonicized,Int64,,
