@@ -43,10 +43,8 @@ c_name, p_name = "kozeluh_sonatas", "28op30no1a"  # "beethoven_piano_sonatas", "
 # %%
 corpus = utils.get_ms3_corpus(f"~/distant_listening_corpus/{c_name}")
 piece = corpus[p_name]
-facets = utils.get_facet_dict_from_piece(piece)
-notes = facets["notes"]
-labels = facets["expanded"]
-measures = facets["measures"]
+measures, notes, labels = utils.get_unfolded_facets_from_piece(piece)
+
 
 # %%
 # prepared_m = utils.prepare_measures(measures)

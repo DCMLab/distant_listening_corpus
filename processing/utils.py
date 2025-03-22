@@ -405,7 +405,7 @@ def prepare_measures(
     )
     measures = pd.concat(
         [
-            measures.rename(columns=dict(quarterbeats="quarterbeats_playthrough")),
+            measures.drop(columns="quarterbeats"),
             continous_beats_column,
             section_start_column,
         ],
@@ -573,7 +573,7 @@ def prepare_notes(
         mc_playthrough="Int64",
         mn="Int64",
     )
-    notes = notes.astype(dtype_dict)
+    notes = notes.drop(columns="quarterbeats").astype(dtype_dict)
     beat_float = ms3.transform(
         notes, onset2beat, ["mn_onset", "timesig"], beat_decimals=beat_decimals
     )
@@ -880,7 +880,8 @@ def add_boolean_phrase_ending_column(labels: pd.DataFrame) -> pd.DataFrame:
 
 
 def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
-    labels = labels.copy()
+    labels = labels.drop(columns="quarterbeats")
+    labels = extend_keys_feature(labels)
     labels["is_harmony_onset"] = True
     labels.is_harmony_onset = labels.is_harmony_onset.where(
         labels.chord.notna() & (labels.chord != labels.chord.shift(-1)),
@@ -888,7 +889,6 @@ def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
     )
     labels.index.rename("unfolded_harmony_index", inplace=True)
     labels.reset_index(drop=False, inplace=True)
-    labels = extend_keys_feature(labels)
     labels = extend_harmony_feature(labels)
     labels = convert_roman_numerals_to_scale_degrees(labels, flat_character="-")
     labels = convert_roman_numerals_to_fifths(labels)
@@ -1006,26 +1006,23 @@ def get_ms3_corpus(corpus_path):
     return corpus
 
 
-def get_facet_dict_from_piece(piece: ms3.Piece) -> dict:
-    fileinfo, facets = next(
-        piece.iter_extracted_facets(
-            ("measures", "notes", "expanded"),
-            force=True,
-            unfold=True,
-            interval_index=False,
-        )
+def get_unfolded_facets_from_piece(
+    piece: ms3.Piece,
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    (_, measures), (_, notes), (_, labels) = piece.get_parsed_tsvs(
+        ("measures", "notes", "expanded"), unfold=True, force=True, choose="auto"
     )
-    return facets
+    return measures, notes, labels
 
 
 def get_pitch_array_from_piece(
     piece: ms3.Piece,
 ):
-    facets = get_facet_dict_from_piece(piece)
+    measures, notes, labels = get_unfolded_facets_from_piece(piece)
     return make_labeled_pitch_array(
-        notes=facets["notes"],
-        labels=facets["expanded"],
-        measures=facets["measures"],
+        notes=notes,
+        labels=labels,
+        measures=measures,
         beat_decimals=3,
     )
 
