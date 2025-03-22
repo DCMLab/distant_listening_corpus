@@ -26,7 +26,7 @@ a_isOnset,boolean,training harmony inference task,True for notes coinciding with
 cadence,string,computing fields,Original cadence label (my include cadence subtypes)
 cadence_type,string,training cadence induction task,"Cadence label ∈ (PAC, IAC, HC, EC, DC, PC)"
 phraseend,string,computing fields,Original phrase labels.
-is_phrase_ending,boolean,training phrase inference task,"True for notes that coincide with the structural ending of a phrase (i.e., the phrase can have a codetta after this position before the next one begins)."
+a_phraseend,boolean,training phrase inference task,"True for all notes that coincide with the structural ending of a phrase (i.e., the phrase can have a codetta after this position before the next one begins)."
 unfolded_harmony_index,Int64,computing fields,Index of the labels in the original unfolded table (before merging it with the notes)
 label,string,computing fields,Original annotation labels
 alt_label,string,,

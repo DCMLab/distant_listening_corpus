@@ -720,8 +720,7 @@ BOOL_COLUMNS = [
     "globalkey_is_minor",
     "localkey_is_minor",
     "a_isOnset",
-    "is_phrase_ending",
-    "a_phrase",
+    "a_phraseend",
     "section_start",
 ]
 STRING_COLUMNS = [
@@ -772,8 +771,8 @@ NON_FORWARD_FILLING_COLUMNS = [
     "cadence_type",
     "cadence_subtype",
     "phraseend",
+    "a_phraseend",
     "section_start",
-    "is_phrase_ending",
 ]  # these are not propagated over the whole duration of their harmony label and are therefore moved to the left
 
 
@@ -829,7 +828,7 @@ def convert_tpc_to_note_names(labels: pd.DataFrame) -> pd.DataFrame:
 def add_boolean_phrase_labels(labels: pd.DataFrame) -> pd.DataFrame:
     concatenate_this = [
         labels,
-        labels.phraseend.isin([r"\\", "}", "}{"]).rename("a_phrase"),
+        labels.phraseend.isin([r"\\", "}", "}{"]).rename("a_phraseend"),
     ]
     labels = pd.concat(concatenate_this, axis=1)
     return labels
@@ -930,18 +929,6 @@ def convert_column_types(labels: pd.DataFrame, **kwargs) -> pd.DataFrame:
     return labels.astype(conversion_dict)
 
 
-def add_boolean_phrase_ending_column(labels: pd.DataFrame) -> pd.DataFrame:
-    phraseend_column = labels.phraseend.fillna("")
-    is_phrase_end = (
-        (phraseend_column == r"\\")
-        .fillna(False)
-        .astype("boolean")
-        .rename("is_phrase_ending")
-    )
-    is_phrase_end |= phraseend_column.str.contains("}")
-    return pd.concat([labels, is_phrase_end], axis=1)
-
-
 def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
     labels = labels.drop(columns="quarterbeats")
     labels = extend_keys_feature(labels)
@@ -961,7 +948,7 @@ def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
     labels = convert_chord_types_to_qualities(labels)
     labels = convert_figbass_to_inversion(labels)
     labels = extend_cadence_feature(labels)
-    labels = add_boolean_phrase_ending_column(labels)
+    labels = add_boolean_phrase_labels(labels)
     column_order = [col for col in NON_FORWARD_FILLING_COLUMNS if col in labels.columns]
     column_order += [col for col in labels.columns if col not in column_order]
     return convert_column_types(labels[column_order])
@@ -1035,7 +1022,7 @@ def make_labeled_pitch_array(
         indicator=False,
     )
     merged.a_isOnset = merged.a_isOnset.fillna(False)
-    merged.is_phrase_ending = merged.is_phrase_ending.fillna(False)
+    merged.a_phraseend = merged.a_phraseend.fillna(False)
     colorprint("M", bcolors.OKGREEN)
 
     colorprint("P")

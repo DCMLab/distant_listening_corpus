@@ -219,9 +219,9 @@ specs_specs = dict(
         description="Original phrase labels.",
         used_for=Purpose.auxiliary,
     ),
-    is_phrase_ending=dict(
-        description="True for notes that coincide with the structural ending of a phrase (i.e., the phrase can have "
-        "a codetta after this position before the next one begins).",
+    a_phraseend=dict(
+        description="True for all notes that coincide with the structural ending of a phrase (i.e., the phrase "
+        "can have a codetta after this position before the next one begins).",
         used_for=Purpose.phrase_inference,
     ),
     unfolded_harmony_index=dict(
