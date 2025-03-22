@@ -203,7 +203,7 @@ specs_specs = dict(
         "will not be taken into account.",
         used_for=Purpose.section_inference,
     ),
-    is_harmony_onset=dict(
+    a_isOnset=dict(
         description="True for notes coinciding with a change in harmony.",
         used_for=Purpose.harmony_inference,
     ),

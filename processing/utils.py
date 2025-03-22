@@ -719,7 +719,7 @@ INT_COLUMNS = [
 BOOL_COLUMNS = [
     "globalkey_is_minor",
     "localkey_is_minor",
-    "is_harmony_onset",
+    "a_isOnset",
     "is_phrase_ending",
     "a_phrase",
     "section_start",
@@ -767,7 +767,7 @@ OBJECT_COLUMNS = [
     "added_tones",
 ]  # unused, leave them as they are
 NON_FORWARD_FILLING_COLUMNS = [
-    "is_harmony_onset",
+    "a_isOnset",
     "cadence",
     "cadence_type",
     "cadence_subtype",
@@ -945,9 +945,9 @@ def add_boolean_phrase_ending_column(labels: pd.DataFrame) -> pd.DataFrame:
 def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
     labels = labels.drop(columns="quarterbeats")
     labels = extend_keys_feature(labels)
-    labels["is_harmony_onset"] = True
+    labels["a_isOnset"] = True
     ffilled_chord = labels.chord.ffill().fillna("") + labels.localkey_resolved
-    labels.is_harmony_onset = labels.is_harmony_onset.where(
+    labels.a_isOnset = labels.a_isOnset.where(
         labels.chord.notna() & (ffilled_chord != ffilled_chord.shift(1)).fillna(True),
         False,  # set False where the label does not define a harmony or merely the same harmony as the preceding one
     )
@@ -1034,7 +1034,7 @@ def make_labeled_pitch_array(
         suffixes=("", "_label"),
         indicator=False,
     )
-    merged.is_harmony_onset = merged.is_harmony_onset.fillna(False)
+    merged.a_isOnset = merged.a_isOnset.fillna(False)
     merged.is_phrase_ending = merged.is_phrase_ending.fillna(False)
     colorprint("M", bcolors.OKGREEN)
 

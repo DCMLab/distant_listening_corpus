@@ -22,7 +22,7 @@ mn_playthrough,string,input graph creation,Conventional measure numbers but for 
 octave,Int64,input graph metadata and informational purposes,Octave of the note with 4 = middle octave. Does not always correspond to pitch // 12 - 1.
 quarterbeats_playthrough,object,input graph creation,"Continuous offset (""qstamp"") in unfolded score"
 section_start,boolean,training section inference task,"True for notes on the first position following a double/repeat bar line or section break. True values always correspond to the beginning of an MC, so a section beginning with a rest will not be taken into account."
-is_harmony_onset,boolean,training harmony inference task,True for notes coinciding with a change in harmony.
+a_isOnset,boolean,training harmony inference task,True for notes coinciding with a change in harmony.
 cadence,string,computing fields,Original cadence label (my include cadence subtypes)
 cadence_type,string,training cadence induction task,"Cadence label ∈ (PAC, IAC, HC, EC, DC, PC)"
 phraseend,string,computing fields,Original phrase labels.
