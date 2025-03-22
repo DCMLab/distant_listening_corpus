@@ -883,8 +883,9 @@ def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
     labels = labels.drop(columns="quarterbeats")
     labels = extend_keys_feature(labels)
     labels["is_harmony_onset"] = True
+    ffilled_chord = labels.chord.ffill().fillna("") + labels.localkey_resolved
     labels.is_harmony_onset = labels.is_harmony_onset.where(
-        labels.chord.notna() & (labels.chord != labels.chord.shift(-1)),
+        labels.chord.notna() & (ffilled_chord != ffilled_chord.shift(1)).fillna(True),
         False,  # set False where the label does not define a harmony or merely the same harmony as the preceding one
     )
     labels.index.rename("unfolded_harmony_index", inplace=True)
