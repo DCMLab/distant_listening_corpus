@@ -697,7 +697,7 @@ def make_pitch_array(
     colorprint("C", bcolors.OKGREEN)
     column_order = [col for col in COLUMN_ORDER if col in result.columns]
     column_order += sorted(col for col in result.columns if col not in column_order)
-    return result[column_order].astype(PITCH_ARRAY_DTYPES)
+    return convert_column_types(result[column_order], **PITCH_ARRAY_DTYPES)
 
 
 # endregion make_pitch_array
@@ -710,15 +710,17 @@ INT_COLUMNS = [
     "globalkey_tpc",
     "localkey_tpc",
     "tonicized_tpc",
+    "ts_beats",
+    "ts_beat_type",
 ]
 BOOL_COLUMNS = [
     "globalkey_is_minor",
     "localkey_is_minor",
     "is_harmony_onset",
     "is_phrase_ending",
+    "section_start",
 ]
 STRING_COLUMNS = [
-    "section_start",
     "label",
     "alt_label",
     "globalkey",
@@ -856,7 +858,7 @@ def convert_chord_types_to_qualities(labels: pd.DataFrame) -> pd.DataFrame:
     )
 
 
-def convert_column_types(labels: pd.DataFrame) -> pd.DataFrame:
+def convert_column_types(labels: pd.DataFrame, **kwargs) -> pd.DataFrame:
     conversion_dict = {col: "Int64" for col in INT_COLUMNS if col in labels.columns}
     conversion_dict.update(
         {col: "boolean" for col in BOOL_COLUMNS if col in labels.columns}
@@ -864,6 +866,8 @@ def convert_column_types(labels: pd.DataFrame) -> pd.DataFrame:
     conversion_dict.update(
         {col: "string" for col in STRING_COLUMNS if col in labels.columns}
     )
+    conversion_dict.update(kwargs)
+    # print(conversion_dict)
     return labels.astype(conversion_dict)
 
 

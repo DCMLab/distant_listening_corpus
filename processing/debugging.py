@@ -36,7 +36,10 @@ def inspect(corpus: str, piece: str):
     return labeled_pitch_array
 
 
-c_name, p_name = "kozeluh_sonatas", "28op30no1a"  # "beethoven_piano_sonatas", "01-1"  #
+c_name, p_name = (
+    "bach_en_fr_suites",
+    "BWV809_07_Gigue",
+)  # "beethoven_piano_sonatas", "01-1"  #
 # lpa = inspect(c_name, p_name)
 # lpa
 
