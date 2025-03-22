@@ -707,6 +707,8 @@ INT_COLUMNS = [
     "unfolded_harmony_index",
     "root",
     "bass_note",
+    "root_tpc",
+    "bass_note_tpc",
     "globalkey_tpc",
     "localkey_tpc",
     "tonicized_tpc",
@@ -718,7 +720,8 @@ BOOL_COLUMNS = [
     "localkey_is_minor",
     "is_harmony_onset",
     "is_phrase_ending",
-    "section_start",
+    "a_phrase",
+    "section_start"
 ]
 STRING_COLUMNS = [
     "label",
@@ -753,6 +756,10 @@ STRING_COLUMNS = [
     "numeral_or_applied_to_numeral",
     "cadence_type",
     "_merge",
+    "a_root",
+    "a_bass",
+    "a_localKey",
+    "a_tonicizedKey",
 ]
 OBJECT_COLUMNS = [
     "chord_tones",
@@ -791,6 +798,37 @@ def convert_roman_numerals_to_fifths(labels: pd.DataFrame) -> pd.DataFrame:
             )
             + globalkey_tpc
         ).rename("tonicized_tpc"),
+    ]
+    labels = pd.concat(concatenate_this, axis=1)
+    return labels
+
+
+def convert_chord_tones_to_tpc(labels: pd.DataFrame) -> pd.DataFrame:
+    concatenate_this = [
+        labels,
+        (labels.globalkey_tpc + labels.root).rename("root_tpc"),
+        (labels.globalkey_tpc + labels.bass_note).rename("bass_note_tpc"),
+    ]
+    labels = pd.concat(concatenate_this, axis=1)
+    return labels
+
+
+def convert_tpc_to_note_names(labels: pd.DataFrame) -> pd.DataFrame:
+    concatenate_this = [
+        labels,
+        ms3.transform(labels.root_tpc, ms3.fifths2name).rename("a_root"),
+        ms3.transform(labels.bass_note_tpc, ms3.fifths2name).rename("a_bass"),
+        ms3.transform(labels.localkey_tpc, ms3.fifths2name).rename("a_localKey"),
+        ms3.transform(labels.tonicized_tpc, ms3.fifths2name).rename("a_tonicizedKey"),
+    ]
+    labels = pd.concat(concatenate_this, axis=1)
+    return labels
+
+
+def add_boolean_phrase_labels(labels: pd.DataFrame) -> pd.DataFrame:
+    concatenate_this = [
+        labels,
+        labels.phraseend.isin([r"\\", "}", "}{"]).rename("a_phrase"),
     ]
     labels = pd.concat(concatenate_this, axis=1)
     return labels
@@ -897,6 +935,8 @@ def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
     labels = extend_harmony_feature(labels)
     labels = convert_roman_numerals_to_scale_degrees(labels, flat_character="-")
     labels = convert_roman_numerals_to_fifths(labels)
+    labels = convert_chord_tones_to_tpc(labels)
+    labels = convert_tpc_to_note_names(labels)
     labels = convert_chord_types_to_qualities(labels)
     labels = extend_cadence_feature(labels)
     labels = add_boolean_phrase_ending_column(labels)
