@@ -714,6 +714,7 @@ INT_COLUMNS = [
     "tonicized_tpc",
     "ts_beats",
     "ts_beat_type",
+    "a_inversion",
 ]
 BOOL_COLUMNS = [
     "globalkey_is_minor",
@@ -721,7 +722,7 @@ BOOL_COLUMNS = [
     "is_harmony_onset",
     "is_phrase_ending",
     "a_phrase",
-    "section_start"
+    "section_start",
 ]
 STRING_COLUMNS = [
     "label",
@@ -896,6 +897,26 @@ def convert_chord_types_to_qualities(labels: pd.DataFrame) -> pd.DataFrame:
     )
 
 
+FIGBASS2INVERSION = {"6": "1", "65": "1", "64": "2", "43": "2", "42": "3", "2": "3"}
+
+
+def convert_figbass_to_inversion(labels: pd.DataFrame) -> pd.DataFrame:
+    inversion_column = (
+        labels.figbass.replace(FIGBASS2INVERSION)
+        .fillna("0")
+        .astype("Int64")
+        .rename("a_inversion")
+    )
+    inversion_column = inversion_column.where(labels.chord.notna(), pd.NA)
+    return pd.concat(
+        [
+            labels,
+            inversion_column,
+        ],
+        axis=1,
+    )
+
+
 def convert_column_types(labels: pd.DataFrame, **kwargs) -> pd.DataFrame:
     conversion_dict = {col: "Int64" for col in INT_COLUMNS if col in labels.columns}
     conversion_dict.update(
@@ -938,12 +959,12 @@ def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
     labels = convert_chord_tones_to_tpc(labels)
     labels = convert_tpc_to_note_names(labels)
     labels = convert_chord_types_to_qualities(labels)
+    labels = convert_figbass_to_inversion(labels)
     labels = extend_cadence_feature(labels)
     labels = add_boolean_phrase_ending_column(labels)
-    labels = convert_column_types(labels)
     column_order = [col for col in NON_FORWARD_FILLING_COLUMNS if col in labels.columns]
     column_order += [col for col in labels.columns if col not in column_order]
-    return labels[column_order]
+    return convert_column_types(labels[column_order])
 
 
 def compute_interval_classes_to_keys(merged: pd.DataFrame) -> pd.DataFrame:
