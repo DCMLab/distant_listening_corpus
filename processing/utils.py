@@ -1116,6 +1116,7 @@ def make_labeled_pitch_array(
         ),
         on="quarterbeats_playthrough",
         how="outer",
+        sort=True,
         suffixes=("", "_label"),
         indicator=False,
     )
