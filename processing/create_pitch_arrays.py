@@ -111,7 +111,7 @@ specs_specs = dict(
         description="Proportional integer duration",
         used_for=Purpose.input,
     ),
-    continuous_beats=dict(
+    onset_beat=dict(
         description="A continuous offset value measured in metrical beats whose durations depend "
         "on the denominators of the respective time signatures (and a measure's "
         "actual duration).",

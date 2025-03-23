@@ -1,7 +1,7 @@
 ,dtype,used_for,description
 onset_div,Int64,input graph creation,Proportional integer position
 duration_div,Int64,input graph creation,Proportional integer duration
-continuous_beats,float64,input graph creation,A continuous offset value measured in metrical beats whose durations depend on the denominators of the respective time signatures (and a measure's actual duration).
+onset_beat,float64,input graph creation,A continuous offset value measured in metrical beats whose durations depend on the denominators of the respective time signatures (and a measure's actual duration).
 pitch,Int64,input graph creation,MIDI value
 tpc,Int64,computing fields,"Tonal Pitch Class (0=C, -1=F, 1=G, etc., aka specific pitch, aka fifths)"
 step,string,input graph creation,Note name without accidental (A-G)

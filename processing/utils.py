@@ -240,7 +240,7 @@ def make_continuous_mc_beats_series(
     measures: pd.DataFrame,
     negative_anacrusis: Optional[Fraction] = None,
     beat_decimals: Optional[int] = None,
-    name: str = "continuous_beats",
+    name: str = "onset_beat",
 ) -> pd.Series:
     """This is an adapted copy of ms3.utils.make_continuous_offset_series() which is originally used for getting the
     quarternote offset position ("quarterbeats") for the beginning of each measure (MC).
@@ -290,7 +290,7 @@ def make_continuous_mn_beats_series(
     measures: pd.DataFrame,
     negative_anacrusis: Optional[Fraction] = None,
     beat_decimals: Optional[int] = None,
-    name: str = "continuous_beats",
+    name: str = "onset_beat",
     mn_col_name: str = "mn_playthrough",
 ) -> pd.Series:
     """Gets the continuous MC beats and drops the MC rows that duplicate MN values.
@@ -318,11 +318,11 @@ def make_continuous_mn_beats_series(
     return continuous_mc_beats[~continuous_mc_beats.index.duplicated()]
 
 
-def make_continuous_beats_column(
+def make_onset_beat_column(
     mn_column: pd.Series,
     beat_float_column: Optional[pd.Series],
     mn_offsets: pd.Series | dict,
-    name: str = "continuous_beats",
+    name: str = "onset_beat",
 ) -> pd.Series:
     """This is an adapted copy of ms3.utils.make_quarterbeats_column()
 
@@ -338,10 +338,10 @@ def make_continuous_beats_column(
     Returns:
         Quarterbeats column.
     """
-    continuous_beats = mn_column.map(mn_offsets)
+    onset_beat = mn_column.map(mn_offsets)
     if beat_float_column is not None:
-        continuous_beats += beat_float_column
-    return continuous_beats.rename(name)
+        onset_beat += beat_float_column
+    return onset_beat.rename(name)
 
 
 def add_continuous_beat_column(merged, measures, beat_decimals):
@@ -360,10 +360,10 @@ def add_continuous_beat_column(merged, measures, beat_decimals):
         anacrusis_beats -= first_value
         beat.loc[anacrusis_mask] = anacrusis_beats
     mn_offsets = make_continuous_mn_beats_series(measures, beat_decimals=beat_decimals)
-    continuous_beats = make_continuous_beats_column(
+    onset_beat = make_onset_beat_column(
         mn_column=merged.mn_playthrough, beat_float_column=beat, mn_offsets=mn_offsets
     )
-    merged = pd.concat([merged, continuous_beats], axis=1)
+    merged = pd.concat([merged, onset_beat], axis=1)
     return merged
 
 
@@ -435,7 +435,7 @@ RENAME_ORIGINAL_COLUMNS = dict(  # columns to keep under a different name
 COLUMN_ORDER = [
     "onset_div",
     "duration_div",
-    "continuous_beats",
+    "onset_beat",
     "pitch",
     "tpc",
     "step",
