@@ -22,10 +22,32 @@ import pandas as pd
 DLC_PATH = ms3.resolve_dir("..")
 
 # %%
+excluded_pieces = [
+    ("ABC", "n01op18-1_01"),
+    ("ABC", "n01op18-1_03"),
+    ("ABC", "n06op18-6_03"),
+    ("ABC", "n07op59-1_01"),
+    ("ABC", "n08op59-2_03"),
+    ("ABC", "n10op74_03"),
+    ("ABC", "n10op74_04"),
+    ("ABC", "n11op95_03"),
+    ("ABC", "n12op127_02"),
+    ("ABC", "n16op135_02"),
+    ("beethoven_piano_sonatas", "01-1"),
+    ("beethoven_piano_sonatas", "07-1"),
+    ("beethoven_piano_sonatas", "10-1"),
+    ("beethoven_piano_sonatas", "23-1"),
+    ("monteverdi_madrigals", "5-04d"),
+]
+
+# %%
 dlc_metadata = ms3.load_tsv(
     "distant_listening_corpus.metadata.tsv", index_col=["corpus", "piece"]
 )
-dlc_metadata = dlc_metadata[dlc_metadata.label_count > 0]
+dlc_metadata = dlc_metadata[dlc_metadata.label_count > 0]  # only annotated pieces
+dlc_metadata = dlc_metadata.loc[
+    dlc_metadata.index.difference(excluded_pieces)
+]  # without excluded pieces
 dlc_metadata
 
 # %%
@@ -76,3 +98,5 @@ def min_maj_test_split(row) -> pd.Series:
 
 test_min_maj = split_size.apply(min_maj_test_split, axis=1)
 pd.concat([split_size, test_min_maj], axis=1)
+
+# %%
