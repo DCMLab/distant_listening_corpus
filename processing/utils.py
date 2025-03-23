@@ -1134,14 +1134,29 @@ def make_labeled_pitch_array(
         harmony_side.chord.notna()
     ).ffill()  # takes only index positions for which a harmony is defined
     # and forward-fills gaps with indices of the harmonies
+    bfill = False
     if pd.isnull(harmony_grouper.iloc[0]):
         warnings.warn(
-            "The first row of the merged pitch array does not come with a valid label."
+            "The first row of the merged pitch array does not come with a valid label. "
+            "The first label will be considered to start with the first note of the piece."
         )
         harmony_grouper = harmony_grouper.bfill()
-    merged = pd.concat(
-        [pitch_side, harmony_side.groupby(harmony_grouper).ffill()], axis=1
-    )
+        bfill = True
+    filled_harmony_side = harmony_side.groupby(harmony_grouper).ffill()
+    if bfill:
+        # this extends the info of the first label back to the notes occurring before it
+        # This probably contradicts the annotator's intention but is better than having no
+        # key information etc. filled
+        columns_exept_valid = [
+            c for c in filled_harmony_side.columns if c != "valid_chord_label"
+        ]
+        filled_harmony_side.loc[:, columns_exept_valid] = filled_harmony_side.loc[
+            :, columns_exept_valid
+        ].bfill()
+        filled_harmony_side.valid_chord_label = (
+            filled_harmony_side.valid_chord_label.fillna(False)
+        )
+    merged = pd.concat([pitch_side, filled_harmony_side], axis=1)
     if drop_labels_starting_between_notes:
         merged = merged.dropna(subset="tpc")
     colorprint("P", bcolors.OKGREEN)
