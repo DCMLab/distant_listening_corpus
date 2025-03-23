@@ -1088,6 +1088,7 @@ def make_labeled_pitch_array(
     labels: pd.DataFrame,
     measures: Optional[pd.DataFrame] = None,
     beat_decimals: Optional[int] = 3,
+    drop_labels_starting_between_notes: bool = True,
 ):
     pitch_array = make_pitch_array(
         notes, measures, label_notes=True, beat_decimals=beat_decimals
@@ -1141,6 +1142,8 @@ def make_labeled_pitch_array(
     merged = pd.concat(
         [pitch_side, harmony_side.groupby(harmony_grouper).ffill()], axis=1
     )
+    if drop_labels_starting_between_notes:
+        merged = merged.dropna(subset="tpc")
     colorprint("P", bcolors.OKGREEN)
     colorprint("C")
     merged = compute_interval_classes_to_keys(merged)
@@ -1173,7 +1176,7 @@ def get_unfolded_facets_from_piece(
 
 
 def get_pitch_array_from_piece(
-    piece: ms3.Piece,
+    piece: ms3.Piece, drop_labels_starting_between_notes: bool = True
 ):
     measures, notes, labels = get_unfolded_facets_from_piece(piece)
     return make_labeled_pitch_array(
@@ -1181,6 +1184,7 @@ def get_pitch_array_from_piece(
         labels=labels,
         measures=measures,
         beat_decimals=3,
+        drop_labels_starting_between_notes=drop_labels_starting_between_notes,
     )
 
 
@@ -1311,7 +1315,7 @@ def store_pitch_arrays_for_corpora(
         corpus_subdir:
         reset: Set to True in order to not skip pieces that have already been marked as processed in the metadata.
     """
-    for subcorpus_dir in os.listdir(metacorpus_path):
+    for subcorpus_dir in sorted(os.listdir(metacorpus_path)):
         if subcorpus_dir.startswith("."):
             continue
         subcorpus_path = os.path.join(metacorpus_path, subcorpus_dir)
