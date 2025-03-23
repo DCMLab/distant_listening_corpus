@@ -62,6 +62,7 @@ pedal_resolved,string,,
 chord_and_mode,string,,
 applied_to_numeral,string,,
 numeral_or_applied_to_numeral,string,,
+a_simpleNumeral,string,,
 a_degree1,string,training harmony inference task,"Chordal root expressed as scale degree, preceeded by '#' for sharps and '-' for flats,as music21 would output them. For applied chords, such as #vii/vi, the scale degree represents the numeral before the slash; the second part will be represented in a_degree2."
 a_degree2,string,training harmony inference task,Only defined for applied chords where this value expresses the tonicized key as a scale degree of the localkey in vigour. The format is the same as for a_degree1.
 globalkey_tpc,Int64,computing fields,"Root of the global key expressed as Tonal Pitch Class (0=C, -1=F, 1=G, etc., aka specific pitch, aka fifths)"

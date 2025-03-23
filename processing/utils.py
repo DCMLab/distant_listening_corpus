@@ -963,6 +963,68 @@ def convert_column_types(labels: pd.DataFrame, **kwargs) -> pd.DataFrame:
     return labels.astype(conversion_dict)
 
 
+REPLACE_ROOT = {"bII": "N", "@none": "none"}
+ADAPT_CHORD_TYPE = {
+    "M": "",
+    "m": "",
+    "M7": "",
+    "Mm7": "7",
+    "mm7": "7",
+    "MM7": "7",
+    "mM7": "7",
+    "+M7": "+7",
+}
+ADAPT_SPECIAL_CHORDS = {
+    "Fr": "Fr7",
+    "Ger": "Ger7",
+}
+
+
+def add_simpleNumeral_columns(labels: pd.DataFrame) -> pd.DataFrame:
+
+    numeral = labels.numeral.replace(REPLACE_ROOT)
+
+    reference_is_minor = labels.relativeroot_resolved.str.islower().fillna(
+        labels.localkey_is_minor
+    )
+    add_flat_for_67_minor = labels.numeral.isin(("vi", "vii")) & reference_is_minor
+    numeral = numeral.where(
+        ~add_flat_for_67_minor, labels.numeral.replace({"vi": "bvi", "vii": "bvii"})
+    )
+
+    remove_sharp_for_67_in_minor = (
+        labels.numeral.isin(("#vi", "#vii")) & reference_is_minor
+    )
+    numeral = numeral.where(
+        ~remove_sharp_for_67_in_minor,
+        labels.numeral.replace({"#vi": "vi", "#vii": "vii"}),
+    )
+
+    # add adapted chord type
+    adapted_chord_type = labels.chord_type.replace(ADAPT_CHORD_TYPE)
+    numeral = numeral + adapted_chord_type
+
+    cadential_V_mask = (labels.numeral == "V") & labels.changes.str.contains(
+        "64"
+    ).fillna(False)
+    numeral = numeral.where(~cadential_V_mask, "Cad")
+
+    if "special" in labels.columns:
+        special_column = labels.special.replace(ADAPT_SPECIAL_CHORDS)
+        numeral = numeral.where(special_column.isna(), special_column)
+
+    # ninths = pd.Series("9", index=dlc_labels.index).where(dlc_labels.changes.str.contains("9"), "")
+    a_romanNumeral = numeral.astype("string")  # + ninths
+
+    return pd.concat(
+        [
+            labels,
+            a_romanNumeral.rename("a_simpleNumeral"),
+        ],
+        axis=1,
+    )
+
+
 def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
     labels = labels.drop(columns="quarterbeats")
     labels = extend_keys_feature(labels)
@@ -975,6 +1037,7 @@ def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
     labels.index.rename("unfolded_harmony_index", inplace=True)
     labels.reset_index(drop=False, inplace=True)
     labels = extend_harmony_feature(labels)
+    labels = add_simpleNumeral_columns(labels)
     labels = convert_roman_numerals_to_scale_degrees(labels, flat_character="-")
     labels = convert_roman_numerals_to_fifths(labels)
     labels = convert_chord_tones_to_tpc(labels)
@@ -1487,3 +1550,11 @@ def create_specs(
 def load_json_file(path: str) -> dict:
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def print_rn_stats(label_column: pd.Series) -> None:
+    value_counts = label_column.value_counts()
+    print(
+        f"n_types={len(value_counts) - 1}, n_tokens={value_counts.sum()} "
+        f"({value_counts.loc['none']} of which 'none')"
+    )
