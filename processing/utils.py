@@ -564,7 +564,7 @@ def prepare_notes(
     notes: pd.DataFrame,
     beat_decimals: Optional[int] = None,
     beat_float_name: str = "beat_float",
-    downbeat_name: str = "downbeat",
+    downbeat_name: str = "is_downbeat",
 ) -> pd.DataFrame:
     dtype_dict = dict(
         staff="Int64",
