@@ -1437,7 +1437,6 @@ def split_scale_degree(sd, count=False) -> Tuple[Optional[int], Optional[str]]:
             )
         else:
             raise ValueError(f"{sd} is not a valid scale degree.")
-        return None, None
     acc, num = m.group(1), m.group(2)
     if count:
         acc = acc.count("#") - acc.count("b") - acc.count("-")
@@ -1488,7 +1487,10 @@ def roman_numeral2scale_degree(
     """
     if pd.isnull(RN):
         return RN
-    alter, rn_step = split_scale_degree(RN, count=True)
+    try:
+        alter, rn_step = split_scale_degree(RN, count=True)
+    except Exception:
+        return None
     if any(v is None for v in (alter, rn_step)):
         return None
     rn_step_upper = rn_step.upper()
