@@ -31,7 +31,7 @@
     "description": "The decimal beat position of any event within the current measure. A measure in n/m meter is considered to consist of n beats that have duration of 1/m of a whole note; except if n is a multiple of 3 (6, 9, 12, but not 3), in which case a measure is considered to have n/3 beats of length 3/m whole notes. All positions that fall in between downbeats are scaled linearly. For example, the first for eigths in a 9/8 meter have beat floats 1, 1.333, 1.667, 2. Values are rounded to three decimals.",
     "used_for": "computing fields"
   },
-  "downbeat": {
+  "is_downbeat": {
     "description": "Adopts the integer values from beat_float and the value 0 for the rest.",
     "used_for": "training beat inference task"
   },

@@ -1169,9 +1169,9 @@ def make_labeled_pitch_array(
 
 # endregion make_labeled_pitch_array
 def filter_corpus(corpus):
-    corpus.view.include("facets", "scores")  # , "expanded")
+    corpus.view.include("facets", "measures", "notes", "expanded")  # , "expanded")
     # corpus.disambiguate_facet("expanded")
-    corpus.disambiguate_facet("scores")
+    # corpus.disambiguate_facet("scores")
     corpus.view.pieces_with_incomplete_facets = False
 
 

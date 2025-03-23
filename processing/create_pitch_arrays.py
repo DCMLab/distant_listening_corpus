@@ -82,7 +82,7 @@ utils.dataset_processing_stats(metadata_path=METADATA_PATH, dataset=DATASET)
 # pitch_array
 
 
-# %%
+# %% jupyter={"is_executing": true}
 class Purpose(str, Enum):
     """Vocabulary defining what individual fields (columns) are used for.
     Description strings X fit gramatically as in "used for X"."""
@@ -142,7 +142,7 @@ specs_specs = dict(
         "2. Values are rounded to three decimals.",
         used_for=Purpose.auxiliary,
     ),
-    downbeat=dict(
+    is_downbeat=dict(
         description="Adopts the integer values from beat_float and the value 0 for the rest.",
         used_for=Purpose.beat_inference,
     ),
@@ -329,5 +329,5 @@ if __name__ == "__main__":
         output_dir=DATASET,
         metadata_path=METADATA_PATH,
         column_name=DATASET,
-        reset=True,
+        reset=False,
     )
