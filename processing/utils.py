@@ -1131,8 +1131,13 @@ def make_labeled_pitch_array(
 
     harmony_grouper = harmony_side.unfolded_harmony_index.where(
         harmony_side.chord.notna()
-    ).ffill()  # takes only index positions for which a harmony is defined  # and forward-fills gaps with indices of
-    # the harmonies
+    ).ffill()  # takes only index positions for which a harmony is defined
+    # and forward-fills gaps with indices of the harmonies
+    if pd.isnull(harmony_grouper.iloc[0]):
+        warnings.warn(
+            "The first row of the merged pitch array does not come with a valid label."
+        )
+        harmony_grouper = harmony_grouper.bfill()
     merged = pd.concat(
         [pitch_side, harmony_side.groupby(harmony_grouper).ffill()], axis=1
     )
