@@ -25,8 +25,9 @@ from processing import utils
 
 DLC_PATH = ms3.resolve_dir("..")
 
-
 # %%
+
+
 def inspect(corpus: str, piece: str):
     corpus_obj = utils.get_ms3_corpus(os.path.join(DLC_PATH, corpus))
     piece_obj = next(
@@ -36,16 +37,33 @@ def inspect(corpus: str, piece: str):
     return labeled_pitch_array
 
 
-c_name, p_name = "kozeluh_sonatas", "14op13no2c"  # "beethoven_piano_sonatas", "01-1"  #
+def get_labels(corpus: str, piece: str):
+    corpus_obj = utils.get_ms3_corpus(os.path.join(DLC_PATH, corpus))
+    piece_obj = next(
+        pce for piece_id, pce in corpus_obj.iter_pieces() if piece_id == piece
+    )
+    _, _, labels = utils.get_unfolded_facets_from_piece(piece_obj)
+    return labels
+
+
+def get_prepared_labels(corpus: str, piece: str):
+    labels = get_labels(corpus=corpus, piece=piece)
+    return utils.prepare_labels(labels)
+
+
+c_name, p_name = "ABC", "n01op18-1_01"  # "beethoven_piano_sonatas", "01-1"  #
 lpa = inspect(c_name, p_name)
 lpa
+# labels = get_prepared_labels(c_name, p_name)
+# labels[labels.chord == "V(64)"]
 
 # %%
 lpa[lpa.sic_with_local.isna()]
 
 # %%
 dlc_labels = ms3.load_tsv(
-    "/home/laser/Documents/Linz/DLC_version_comparison/distant_listening_corpus_v3.1/distant_listening_corpus.expanded.tsv"
+    "/home/laser/Documents/Linz/DLC_version_comparison/distant_listening_corpus_v3.1/"
+    "distant_listening_corpus.expanded.tsv"
 )
 
 # %%

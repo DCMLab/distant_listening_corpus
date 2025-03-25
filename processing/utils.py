@@ -813,8 +813,8 @@ def convert_roman_numerals_to_fifths(labels: pd.DataFrame) -> pd.DataFrame:
 def convert_chord_tones_to_tpc(labels: pd.DataFrame) -> pd.DataFrame:
     concatenate_this = [
         labels,
-        (labels.globalkey_tpc + labels.root).rename("root_tpc"),
-        (labels.globalkey_tpc + labels.bass_note).rename("bass_note_tpc"),
+        (labels.localkey_tpc + labels.root).rename("root_tpc"),
+        (labels.localkey_tpc + labels.bass_note).rename("bass_note_tpc"),
     ]
     labels = pd.concat(concatenate_this, axis=1)
     return labels
@@ -904,8 +904,8 @@ DLC_CHORD_TYPE_MAPPING = {
     "+": "augmented triad",
     "+7": "augmented seventh chord",  # check if that's what's meant in music21
     "+M7": "augmented major tetrachord",  # check if that's what's meant in music21
-    "m7": "minor seventh chord",
-    "M7": "major seventh chord",
+    "mm7": "minor seventh chord",
+    "MM7": "major seventh chord",
     "Mm7": "dominant seventh chord",
     "incomplete dominant-seventh chord": "incomplete dominant-seventh chord",  # not available in DLC
     "o7": "diminished seventh chord",

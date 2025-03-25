@@ -82,7 +82,7 @@ utils.dataset_processing_stats(metadata_path=METADATA_PATH, dataset=DATASET)
 # pitch_array
 
 
-# %% jupyter={"is_executing": true}
+# %%
 class Purpose(str, Enum):
     """Vocabulary defining what individual fields (columns) are used for.
     Description strings X fit gramatically as in "used for X"."""
