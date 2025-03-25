@@ -441,7 +441,7 @@ COLUMN_ORDER = [
     "step",
     "alter",
     "beat_float",
-    "downbeat",
+    "is_downbeat",
     "ts_beats",
     "ts_beat_type",
     "staff",
@@ -765,6 +765,7 @@ STRING_COLUMNS = [
     "a_bass",
     "a_localKey",
     "a_tonicizedKey",
+    "note_degree",
 ]
 OBJECT_COLUMNS = [
     "chord_tones",
@@ -1062,14 +1063,28 @@ def compute_interval_classes_to_keys(merged: pd.DataFrame) -> pd.DataFrame:
     return pd.concat(concatenate_this, axis=1)
 
 
+def fifths2scale_degree(fifths, minor=False):
+    try:
+        return ms3.fifths2sd(fifths=fifths, minor=minor)
+    except Exception:
+        return pd.NA
+
+
+def add_note_degree_column(merged: pd.DataFrame) -> pd.DataFrame:
+    note_degree = ms3.transform(
+        merged, fifths2scale_degree, ["sic_with_local", "localkey_is_minor"]
+    )
+    return pd.concat([merged, note_degree.rename("note_degree")], axis=1)
+
+
 def add_boolean_label_columns(merged: pd.DataFrame) -> pd.DataFrame:
 
     def is_in_chord_tones(sic: int, chord_tones: Tuple[int]) -> bool:
         """Used for element-wise containment check"""
         try:
             return sic in chord_tones
-        except TypeError as e:
-            print(f"{sic} in {chord_tones} resulted in {e!r}")
+        except TypeError:
+            # print(f"{sic} in {chord_tones} resulted in {e!r}")
             return pd.NA
 
     concatenate_this = [
@@ -1162,6 +1177,7 @@ def make_labeled_pitch_array(
     colorprint("P", bcolors.OKGREEN)
     colorprint("C")
     merged = compute_interval_classes_to_keys(merged)
+    merged = add_note_degree_column(merged)
     merged = add_boolean_label_columns(merged)
     colorprint("C", bcolors.OKGREEN)
     return merged

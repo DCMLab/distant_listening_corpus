@@ -95,6 +95,7 @@ class Purpose(str, Enum):
     harmony_inference = "training harmony inference task"
     phrase_inference = "training phrase inference task"
     section_inference = "training section inference task"
+    note_degree_inference = "training note_degree inference task"
     filtering = "filtering notes based on the available annotations"
     # none = unused columns should not be included in the specs
 
@@ -297,6 +298,12 @@ specs_specs = dict(
     valid_section_start_label=dict(
         description="True when some of the notes in a piece come with a section label.",
         used_for=Purpose.filtering,
+    ),
+    note_degree=dict(
+        description="A string expressing a note's position relative to the scale of the localkey. "
+        "E.g., for a passage in local key of F minor, "
+        "F: '1', Ab: '3', A: '#3', C: '5', Ab: '6', A: '#6', Bb: '7', B: '#'. etc.",
+        used_for=Purpose.note_degree_inference,
     ),
 )
 

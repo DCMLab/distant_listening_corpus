@@ -7,6 +7,7 @@ tpc,Int64,computing fields,"Tonal Pitch Class (0=C, -1=F, 1=G, etc., aka specifi
 step,string,input graph creation,Note name without accidental (A-G)
 alter,Int64,input graph creation,"Note accidental: [-3, 3]"
 beat_float,float64,computing fields,"The decimal beat position of any event within the current measure. A measure in n/m meter is considered to consist of n beats that have duration of 1/m of a whole note; except if n is a multiple of 3 (6, 9, 12, but not 3), in which case a measure is considered to have n/3 beats of length 3/m whole notes. All positions that fall in between downbeats are scaled linearly. For example, the first for eigths in a 9/8 meter have beat floats 1, 1.333, 1.667, 2. Values are rounded to three decimals."
+is_downbeat,Int64,training beat inference task,Adopts the integer values from beat_float and the value 0 for the rest.
 ts_beats,Int64,input graph creation,Numerator of the time signature
 ts_beat_type,Int64,input graph creation,Denominator of the time signature
 staff,Int64,input graph creation,"Number of the staff containing the note, 1 being the upper staff"
@@ -83,7 +84,7 @@ valid_section_start_label,boolean,filtering notes based on the available annotat
 sic_with_global,Int64,,
 sic_with_local,Int64,computing fields,"Relative position of the note's tonal pitch class in the local key, expressed as Specific Interval Class (0=unison, -1=+P4/-P5, 3=+M6/-m3, etc.)"
 sic_with_tonicized,Int64,,
+note_degree,object,training note_degree inference task,"A string expressing a note's position relative to the scale of the localkey. E.g., for a passage in local key of F minor, F: '1', Ab: '3', A: '#3', C: '5', Ab: '6', A: '#6', Bb: '7', B: '#'. etc."
 tpc_is_in_label,boolean,training harmony inference task,True if a note's pitch class is part of the harmony label
 tpc_is_root,boolean,training harmony inference task,True if a note's tonal pitch class is the harmony label's root
 tpc_is_bass,boolean,training harmony inference task,True if a note's tonal pitch class is the harmony label's bass
-is_downbeat,,training beat inference task,Adopts the integer values from beat_float and the value 0 for the rest.
