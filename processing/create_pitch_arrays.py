@@ -143,8 +143,13 @@ specs_specs = dict(
         "2. Values are rounded to three decimals.",
         used_for=Purpose.auxiliary,
     ),
-    is_downbeat=dict(
+    downbeat=dict(
         description="Adopts the integer values from beat_float and the value 0 for the rest.",
+        used_for=Purpose.beat_inference,
+    ),
+    is_downbeat=dict(
+        description="Indicates whether an event falls on a downbeat or not. "
+                    "Is False when downbeat == 0, True otherwise.",
         used_for=Purpose.beat_inference,
     ),
     ts_beats=dict(

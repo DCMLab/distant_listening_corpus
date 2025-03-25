@@ -441,6 +441,7 @@ COLUMN_ORDER = [
     "step",
     "alter",
     "beat_float",
+    "downbeat",
     "is_downbeat",
     "ts_beats",
     "ts_beat_type",
@@ -564,7 +565,7 @@ def prepare_notes(
     notes: pd.DataFrame,
     beat_decimals: Optional[int] = None,
     beat_float_name: str = "beat_float",
-    downbeat_name: str = "is_downbeat",
+    downbeat_name: str = "downbeat",
 ) -> pd.DataFrame:
     dtype_dict = dict(
         staff="Int64",
@@ -577,10 +578,15 @@ def prepare_notes(
     beat_float = ms3.transform(
         notes, onset2beat, ["mn_onset", "timesig"], beat_decimals=beat_decimals
     )
-    is_downbeat_mask = beat_float.map(float_is_integer)
-    downbeat = beat_float.where(is_downbeat_mask, 0).astype("Int64")
+    downbeat_mask = beat_float.map(float_is_integer)
+    downbeat = beat_float.where(downbeat_mask, 0).astype("Int64")
     beat_columns = pd.DataFrame(
-        {beat_float_name: beat_float, downbeat_name: downbeat}, index=notes.index
+        {
+            beat_float_name: beat_float,
+            downbeat_name: downbeat,
+            "is_downbeat": downbeat_mask,
+        },
+        index=notes.index,
     )
     mn_onset_pos = notes.columns.get_loc("mn_onset") + 1
     return pd.concat(
@@ -715,6 +721,7 @@ INT_COLUMNS = [
     "ts_beats",
     "ts_beat_type",
     "a_inversion",
+    "downbeat",
 ]
 BOOL_COLUMNS = [
     "globalkey_is_minor",
@@ -727,6 +734,7 @@ BOOL_COLUMNS = [
     "valid_phrase_label",
     "valid_pedal_point_label",
     "valid_section_start_label",
+    "is_downbeat",
 ]
 STRING_COLUMNS = [
     "label",
