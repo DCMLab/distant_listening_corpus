@@ -1307,6 +1307,9 @@ def store_pitch_arrays_for_corpus(
     for piece_id, piece in corpus.iter_pieces():
         id_tuple = (corpus.name, piece_id)
         print(f"\n{id_tuple}", end=" ")
+        if id_tuple not in metadata.index:
+            print("NOT ANNOTATED")
+            continue
         if metadata.loc[id_tuple, column_name]:
             print("SKIPPED")
             continue
