@@ -74,7 +74,7 @@ def compute_split_dimensions(
         .unstack()
         .fillna(0)
         .astype(int)
-        .replace(columns={False: "major", True: "minor"})
+        .rename(columns={False: "major", True: "minor"})
     )
 
     div5, mod5 = pieces_per_corpus.divmod(5)
@@ -169,11 +169,18 @@ print(f"Resulting size of test set: {n_test_pieces}")
 fully_annotated_split_dimensions
 
 # %%
-test_set = []
+test_set_names, test_set_ids = [], []
 for (c_name, mode), group_df in dlc_fully.groupby(["corpus", "piece_mode"]):
     sample_n = fully_annotated_split_dimensions.loc[c_name, f"n_test_{mode}"]
     sample = group_df.sample(n=sample_n, random_state=12)
-    sampled_ids = [f"{c_name}_{p_name}" for c_name, p_name in sample.index]
-    test_set.extend(sampled_ids)
-print(len(test_set))
-list(sorted(test_set))
+    sampled_ids = sample.index.tolist()
+    test_set_ids.extend(sampled_ids)
+    sampled_nicknames = [f"{c_name}_{p_name}" for c_name, p_name in sampled_ids]
+    test_set_names.extend(sampled_nicknames)
+print(len(test_set_names))
+list(sorted(test_set_names))
+
+# %%
+dlc_metadata.loc[test_set_ids, "split"] = "test"
+ms3.write_tsv(dlc_metadata, "distant_listening_corpus.metadata.tsv", index=True)
+dlc_metadata
