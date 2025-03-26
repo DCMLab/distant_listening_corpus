@@ -1149,10 +1149,7 @@ def make_labeled_pitch_array(
     colorprint("M", bcolors.OKGREEN)
 
     colorprint("P")
-    harmony_index_col = merged.columns.get_loc("unfolded_harmony_index")
-    pitch_side = merged.iloc[:, :harmony_index_col]
-    harmony_side = merged.iloc[:, harmony_index_col:]
-
+    harmony_side = merged.loc[:, "unfolded_harmony_index":]
     harmony_grouper = harmony_side.unfolded_harmony_index.where(
         harmony_side.chord.notna()
     ).ffill()  # takes only index positions for which a harmony is defined
@@ -1179,7 +1176,7 @@ def make_labeled_pitch_array(
         filled_harmony_side.valid_chord_label = (
             filled_harmony_side.valid_chord_label.fillna(False)
         )
-    merged = pd.concat([pitch_side, filled_harmony_side], axis=1)
+    merged.loc[:, "unfolded_harmony_index":] = filled_harmony_side
     if drop_labels_starting_between_notes:
         merged = merged.dropna(subset="tpc")
     colorprint("P", bcolors.OKGREEN)
