@@ -352,16 +352,23 @@ def add_continuous_beat_column(merged, measures, beat_decimals):
         first_beat=0,
         beat_decimals=beat_decimals,
     )
-    anacrusis_mask = merged.mn_playthrough == "0a"
+    if "mn_playthrough" in merged.columns:
+        mn_column = "mn_playthrough"
+        anacrusis_mask = merged.mn_playthrough == "0a"
+    else:
+        mn_column = "mn"
+        anacrusis_mask = merged.mn == 0
     if anacrusis_mask.any():
         # beats of an anacrusis measure need to start from zero rather than their metrical value
         anacrusis_beats = beat[anacrusis_mask].copy()
         first_value = anacrusis_beats.iat[0]
         anacrusis_beats -= first_value
         beat.loc[anacrusis_mask] = anacrusis_beats
-    mn_offsets = make_continuous_mn_beats_series(measures, beat_decimals=beat_decimals)
+    mn_offsets = make_continuous_mn_beats_series(
+        measures, beat_decimals=beat_decimals, mn_col_name=mn_column
+    )
     onset_beat = make_onset_beat_column(
-        mn_column=merged.mn_playthrough, beat_float_column=beat, mn_offsets=mn_offsets
+        mn_column=merged[mn_column], beat_float_column=beat, mn_offsets=mn_offsets
     )
     merged = pd.concat([merged, onset_beat], axis=1)
     return merged
@@ -405,7 +412,7 @@ def prepare_measures(
     )
     measures = pd.concat(
         [
-            measures.drop(columns="quarterbeats"),
+            remove_superfluous_quarterbeats_column(measures),
             continous_beats_column,
             section_start_column,
         ],
@@ -530,17 +537,20 @@ def prepare_notes_with_measure_information(
 
     """
     prepared_measures = prepare_measures(measures, beat_decimals=beat_decimals)
-    potential_columns = ["quarterbeats_playthrough"] + MERGE_MEASURE_COLUMNS
+    potential_columns = [
+        "quarterbeats_playthrough",
+        "quarterbeats",
+    ] + MERGE_MEASURE_COLUMNS
     if label_notes:
         potential_columns += MERGE_LABEL_COLUMNS
     merge_measure_columns = [
         col for col in potential_columns if col in prepared_measures.columns
     ]
-
+    merge_col = get_qb_column_name(notes)
     merged = pd.merge(
         left=notes,
         right=prepared_measures[merge_measure_columns],
-        on="quarterbeats_playthrough",
+        on=merge_col,
         how="outer",
     )
     merged.keysig = merged.keysig.ffill().bfill()
@@ -567,14 +577,18 @@ def prepare_notes(
     beat_float_name: str = "beat_float",
     downbeat_name: str = "downbeat",
 ) -> pd.DataFrame:
-    dtype_dict = dict(
-        staff="Int64",
-        voice="Int64",
-        mc="Int64",
-        mc_playthrough="Int64",
-        mn="Int64",
-    )
-    notes = notes.drop(columns="quarterbeats").astype(dtype_dict)
+    dtype_dict = {
+        col: dtype
+        for col, dtype in (
+            ("staff", "Int64"),
+            ("voice", "Int64"),
+            ("mc", "Int64"),
+            ("mc_playthrough", "Int64"),
+            ("mn", "Int64"),
+        )
+        if col in notes.columns
+    }
+    notes = remove_superfluous_quarterbeats_column(notes).astype(dtype_dict)
     beat_float = ms3.transform(
         notes, onset2beat, ["mn_onset", "timesig"], beat_decimals=beat_decimals
     )
@@ -642,8 +656,9 @@ def make_pitch_array(
     colorprint("N", bcolors.OKGREEN)
 
     colorprint("D")
+    qb_column = get_qb_column_name(prepared_notes)
     div_maker = DivMaker(
-        onsets=prepared_notes.quarterbeats_playthrough,
+        onsets=prepared_notes[qb_column],
         durations=prepared_notes.duration
         * 4,  # normally duration_qb but due to a bug these are currently floats
     )
@@ -967,7 +982,9 @@ def convert_column_types(labels: pd.DataFrame, **kwargs) -> pd.DataFrame:
     conversion_dict.update(
         {col: "string" for col in STRING_COLUMNS if col in labels.columns}
     )
-    conversion_dict.update(kwargs)
+    conversion_dict.update(
+        {col: dtype for col, dtype in kwargs.items() if col in labels.columns}
+    )
     # print(conversion_dict)
     return labels.astype(conversion_dict)
 
@@ -1034,8 +1051,14 @@ def add_simpleNumeral_columns(labels: pd.DataFrame) -> pd.DataFrame:
     )
 
 
+def remove_superfluous_quarterbeats_column(df):
+    if "quarterbeats_playthrough" in df.columns:
+        df = df.drop(columns="quarterbeats")
+    return df
+
+
 def prepare_labels(labels: pd.DataFrame) -> pd.DataFrame:
-    labels = labels.drop(columns="quarterbeats")
+    labels = remove_superfluous_quarterbeats_column(labels)
     labels = extend_keys_feature(labels)
     labels["a_isOnset"] = True
     ffilled_chord = labels.chord.ffill().fillna("") + labels.localkey_resolved
@@ -1121,24 +1144,28 @@ def make_labeled_pitch_array(
     colorprint("L", bcolors.OKGREEN)
 
     colorprint("M")
+    merge_col = get_qb_column_name(pitch_array)
+    drop_cols = [
+        col
+        for col in (
+            "mc",
+            "mn",
+            "mc_playthrough",
+            "mn_playthrough",
+            "quarterbeats_all_endings",
+            "duration_qb",
+            "mc_onset",
+            "mn_onset",
+            "timesig",
+            "staff",
+            "voice",
+        )
+        if col in prepared_labels
+    ]
     merged = pd.merge(
         left=pitch_array,
-        right=prepared_labels.drop(
-            columns=[
-                "mc",
-                "mn",
-                "mc_playthrough",
-                "mn_playthrough",
-                "quarterbeats_all_endings",
-                "duration_qb",
-                "mc_onset",
-                "mn_onset",
-                "timesig",
-                "staff",
-                "voice",
-            ]
-        ),
-        on="quarterbeats_playthrough",
+        right=prepared_labels.drop(columns=drop_cols),
+        on=merge_col,
         how="outer",
         sort=True,
         suffixes=("", "_label"),
@@ -1191,6 +1218,15 @@ def make_labeled_pitch_array(
     return merged
 
 
+def get_qb_column_name(pitch_array: pd.DataFrame) -> str:
+    """The presence of quarterbeats_playthrough means that this is unfolded. Use quarterbeats otherwise."""
+    return (
+        "quarterbeats_playthrough"
+        if "quarterbeats_playthrough" in pitch_array.columns
+        else "quarterbeats"
+    )
+
+
 # endregion make_labeled_pitch_array
 def filter_corpus(corpus):
     corpus.view.include("facets", "measures", "notes", "expanded")  # , "expanded")
@@ -1208,10 +1244,18 @@ def get_ms3_corpus(corpus_path):
 def get_unfolded_facets_from_piece(
     piece: ms3.Piece,
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    (_, measures), (_, notes), (_, labels) = piece.get_parsed_tsvs(
+    facets = piece.get_parsed_tsvs(
         ("measures", "notes", "expanded"), unfold=True, force=True, choose="auto"
     )
-    return measures, notes, labels
+    if len(facets) == 3:
+        (_, measures), (_, notes), (_, labels) = facets
+        return measures, notes, labels
+    if len(facets) == 0:
+        # assumes that the unfolding failed and gets the "normal" scores
+        (_, measures), (_, notes), (_, labels) = piece.get_parsed_tsvs(
+            ("measures", "notes", "expanded"), unfold=False, force=True, choose="auto"
+        )
+        return measures, notes, labels
 
 
 def get_pitch_array_from_piece(
