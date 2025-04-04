@@ -23,6 +23,7 @@ For information on how to obtain and use the dataset, please refer to [this docu
   * [Questions, Suggestions, Corrections, Bug Reports](#questions-suggestions-corrections-bug-reports)
   * [Cite as](#cite-as)
   * [License](#license)
+  * [Generating distant_listening_corpus.zip](#generating-distant_listening_corpuszip)
 * [Overview](#overview)
   * [ABC](#abc)
   * [bach_en_fr_suites](#bach_en_fr_suites)
@@ -206,6 +207,18 @@ Please [create an issue](https://github.com/DCMLab/distant_listening_corpus/issu
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License ([CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)).
 
 ![cc-by-nc-sa-image](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)
+
+## Generating distant_listening_corpus.zip
+
+This file is required for generating a new Zenodo release. Contrary to the corpus directories, 
+this needs to happen manually for meta-repositories which compile submodules because they appear
+as empty folders in the automatically generated ZIP file. So to create the file manually,
+head to the top level of your local clone, make sure it's clean and do:
+
+    zip -r distant_listening_corpus-v3.1.zip ./ -x '*.git*' '*.idea*'
+
+replacing `v3.1` with the relevant version number. The `'*.idea*'` exemplifies how more exclusions 
+can be added to the command (here, it's ignoring all directories called `.idea` and their contents).
 
 # Overview
 
