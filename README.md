@@ -220,9 +220,9 @@ this needs to happen manually for meta-repositories which compile submodules bec
 as empty folders in the automatically generated ZIP file. So to create the file manually,
 head to the top level of your local clone, make sure it's clean and do:
 
-    zip -r distant_listening_corpus-v3.1.zip ./ -x '*.git*' '*.idea*'
+    zip -r distant_listening_corpus-v3.2.zip ./ -x '*.git*' '*.idea*'
 
-replacing `v3.1` with the relevant version number. The `'*.idea*'` exemplifies how more exclusions 
+replacing `v3.2` with the relevant version number. The `'*.idea*'` exemplifies how more exclusions 
 can be added to the command (here, it's ignoring all directories called `.idea` and their contents).
 
 # Overview
