@@ -12,6 +12,11 @@ and serves as welcome page for both
 
 For information on how to obtain and use the dataset, please refer to [this documentation page](https://dcmlab.github.io/distant_listening_corpus/introduction).
 
+When you use (parts of) this dataset in your work, please read and cite the accompanying data report:
+
+_Hentschel, J., Rammos, Y., Neuwirth, M., & Rohrmeier, M. (2025). A corpus and a modular infrastructure for the 
+empirical study of (an)notated music. Scientific Data, 12(1), 685. https://doi.org/10.1038/s41597-025-04976-z_
+
 <!-- TOC -->
 * [The Distant Listening Corpus (A corpus of annotated scores)](#the-distant-listening-corpus-a-corpus-of-annotated-scores)
   * [Getting the data](#getting-the-data)
@@ -200,7 +205,7 @@ Please [create an issue](https://github.com/DCMLab/distant_listening_corpus/issu
 
 ## Cite as
 
-> Johannes Hentschel, Yannis Rammos, Markus Neuwirth, & Martin Rohrmeier. (2025). The Distant Listening Corpus (A corpus of annotated scores) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.13844105
+> Hentschel, J., Rammos, Y., Neuwirth, M., & Rohrmeier, M. (2025). A corpus and a modular infrastructure for the empirical study of (an)notated music. Scientific Data, 12(1), 685. https://doi.org/10.1038/s41597-025-04976-z
 
 ## License
 
