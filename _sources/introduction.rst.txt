@@ -35,8 +35,6 @@ If you are only interested in the current version of the corpus, you can downloa
 
 * `corelli <https://github.com/DCMLab/corelli/archive/refs/heads/main.zip>`__
 
-* `platti_sonatas <https://github.com/DCMLab/platti_sonatas/archive/refs/heads/main.zip>`__
-
 * `kleine_geistliche_konzerte <https://github.com/DCMLab/kleine_geistliche_konzerte/archive/refs/heads/main.zip>`__
 
 * `schumann_kinderszenen <https://github.com/DCMLab/schumann_kinderszenen/archive/refs/heads/main.zip>`__
@@ -64,8 +62,6 @@ If you are only interested in the current version of the corpus, you can downloa
 * `bach_en_fr_suites <https://github.com/DCMLab/bach_en_fr_suites/archive/refs/heads/main.zip>`__
 
 * `mendelssohn_quartets <https://github.com/DCMLab/mendelssohn_quartets/archive/refs/heads/main.zip>`__
-
-* `monteverdi_madrigals <https://github.com/DCMLab/monteverdi_madrigals/archive/refs/heads/main.zip>`__
 
 * `ravel_piano <https://github.com/DCMLab/ravel_piano/archive/refs/heads/main.zip>`__
 
@@ -99,8 +95,6 @@ If you are only interested in the current version of the corpus, you can downloa
 
 * `pergolesi_stabat_mater <https://github.com/DCMLab/pergolesi_stabat_mater/archive/refs/heads/main.zip>`__
 
-* `boccherini_ensemble <https://github.com/DCMLab/boccherini_ensemble/archive/refs/heads/main.zip>`__
-
 * `schulhoff_suite_dansante_en_jazz <https://github.com/DCMLab/schulhoff_suite_dansante_en_jazz/archive/refs/heads/main.zip>`__
 
 * `rachmaninoff_piano <https://github.com/DCMLab/rachmaninoff_piano/archive/refs/heads/main.zip>`__
@@ -113,17 +107,20 @@ If you are only interested in the current version of the corpus, you can downloa
 
 * `peri_euridice <https://github.com/DCMLab/peri_euridice/archive/refs/heads/main.zip>`__
 
+* `monteverdi_madrigals <https://github.com/DCMLab/monteverdi_madrigals/archive/refs/heads/main.zip>`__
+
 
 
 Data Formats
 ============
 
-Each piece in this corpus is represented by four files with identical names, each in its own folder. For example, the *Prélude* of J.S. Bach’s first English Suite, BWV 806, has the following files:
+Each piece in this corpus is represented by five files with identical names, each in its own folder. For example, the *Prélude* of J.S. Bach’s first English Suite, BWV 806, has the following files:
 
--  ``bach_en_fr_suites/MS3/BWV806_01_Prelude.mscx``: Uncompressed MuseScore file including the music and annotation labels.
--  ``bach_en_fr_suites/notes/BWV806_01_Prelude.tsv``: A table of all note heads contained in the score and their relevant features (not each of them represents an onset, some are tied together)
--  ``bach_en_fr_suites/measures/BWV806_01_Prelude.tsv``: A table with relevant information about the measures in the score.
--  ``bach_en_fr_suites/harmonies/BWV806_01_Prelude.tsv``: A list of the included harmony labels (including cadences and phrases) with their positions in the score.
+-  ``bach_en_fr_suites/MS3/BWV806_01_Prelude.mscx``: Uncompressed MuseScore 3.6.2 file including the music and annotation labels.
+-  ``bach_en_fr_suites/notes/BWV806_01_Prelude.notes.tsv``: A table of all note heads contained in the score and their relevant features (not each of them represents an onset, some are tied together)
+-  ``bach_en_fr_suites/measures/BWV806_01_Prelude.measures.tsv``: A table with relevant information about the measures in the score.
+-  ``bach_en_fr_suites/chords/BWV806_01_Prelude.chords.tsv``: A table containing layer-wise unique onset positions with the musical markup (such as dynamics, articulation, lyrics, figured bass, etc.).
+-  ``bach_en_fr_suites/harmonies/BWV806_01_Prelude.harmonies.tsv``: A table of the included harmony labels (including cadences and phrases) with their positions in the score.
 
 Opening Scores
 --------------
