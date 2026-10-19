@@ -200,10 +200,6 @@
           <program value="0"/>
           <synti>Fluid</synti>
           </Channel>
-        <Channel name="harmony">
-          <program value="0"/>
-          <synti>Fluid</synti>
-          </Channel>
         </Instrument>
       </Part>
     <Staff id="1">
@@ -2248,15 +2244,6 @@
           <subtype>line</subtype>
           </LayoutBreak>
         <voice>
-          <Chord>
-            <durationType>whole</durationType>
-            <Note>
-              <pitch>67</pitch>
-              <tpc>15</tpc>
-              </Note>
-            </Chord>
-          </voice>
-        <voice>
           <Spanner type="Volta">
             <Volta>
               <endHookType>1</endHookType>
@@ -2277,14 +2264,7 @@
               </Note>
             </Chord>
           </voice>
-        </Measure>
-      <Measure>
-        <irregular>1</irregular>
         <voice>
-          <Clef>
-            <concertClefType>G</concertClefType>
-            <transposingClefType>G</transposingClefType>
-            </Clef>
           <Chord>
             <durationType>whole</durationType>
             <Note>
@@ -2293,7 +2273,14 @@
               </Note>
             </Chord>
           </voice>
+        </Measure>
+      <Measure>
+        <irregular>1</irregular>
         <voice>
+          <Clef>
+            <concertClefType>G</concertClefType>
+            <transposingClefType>G</transposingClefType>
+            </Clef>
           <Spanner type="Volta">
             <prev>
               <location>
@@ -2321,10 +2308,26 @@
               </Note>
             </Chord>
           </voice>
+        <voice>
+          <Chord>
+            <durationType>whole</durationType>
+            <Note>
+              <pitch>67</pitch>
+              <tpc>15</tpc>
+              </Note>
+            </Chord>
+          </voice>
         </Measure>
       <Measure>
         <startRepeat/>
         <voice>
+          <Spanner type="Volta">
+            <prev>
+              <location>
+                <measures>-1</measures>
+                </location>
+              </prev>
+            </Spanner>
           <Chord>
             <durationType>16th</durationType>
             <Note>
@@ -2386,15 +2389,6 @@
               <tpc>15</tpc>
               </Note>
             </Chord>
-          </voice>
-        <voice>
-          <Spanner type="Volta">
-            <prev>
-              <location>
-                <measures>-1</measures>
-                </location>
-              </prev>
-            </Spanner>
           </voice>
         </Measure>
       <Measure>
@@ -6566,22 +6560,6 @@
                 </location>
               </prev>
             </Spanner>
-          <Chord>
-            <durationType>whole</durationType>
-            <Note>
-              <pitch>72</pitch>
-              <tpc>14</tpc>
-              </Note>
-            </Chord>
-          <BarLine>
-            <subtype>end</subtype>
-            </BarLine>
-          </voice>
-        <voice>
-          <Fermata>
-            <subtype>fermataAbove</subtype>
-            <placement>above</placement>
-            </Fermata>
           <Spanner type="Volta">
             <Volta>
               <endHookType>1</endHookType>
@@ -6601,6 +6579,9 @@
               <tpc>14</tpc>
               </Note>
             </Chord>
+          <BarLine>
+            <subtype>end</subtype>
+            </BarLine>
           <Spanner type="Volta">
             <prev>
               <location>
@@ -6608,6 +6589,19 @@
                 </location>
               </prev>
             </Spanner>
+          </voice>
+        <voice>
+          <Fermata>
+            <subtype>fermataAbove</subtype>
+            <placement>above</placement>
+            </Fermata>
+          <Chord>
+            <durationType>whole</durationType>
+            <Note>
+              <pitch>72</pitch>
+              <tpc>14</tpc>
+              </Note>
+            </Chord>
           </voice>
         </Measure>
       </Staff>
